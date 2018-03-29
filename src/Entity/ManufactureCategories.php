@@ -7,28 +7,29 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoriesRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ManufactureCategoriesRepository")
  */
-class Categories extends BaseEntity
+class ManufactureCategories extends BaseEntity
 {
     use PageContentTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Categories", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="App\Entity\ManufactureCategories", mappedBy="parent")
      */
     private $children;
 
     /**
-     * @var Categories
+     * @var ManufactureCategories
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ManufactureCategories", inversedBy="children")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Products", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Manufacture", mappedBy="category")
      */
     private $products;
+
 
     public function __construct()
     {
@@ -37,14 +38,14 @@ class Categories extends BaseEntity
     }
 
     /**
-     * @return Collection|Categories[]
+     * @return Collection|ManufactureCategories[]
      */
     public function getChildren(): Collection
     {
         return $this->children;
     }
 
-    public function addChild(Categories $child): self
+    public function addChild(ManufactureCategories $child): self
     {
         if (!$this->children->contains($child)) {
             $this->children[] = $child;
@@ -54,7 +55,7 @@ class Categories extends BaseEntity
         return $this;
     }
 
-    public function removeChild(Categories $child): self
+    public function removeChild(ManufactureCategories $child): self
     {
         if ($this->children->contains($child)) {
             $this->children->removeElement($child);
@@ -68,32 +69,32 @@ class Categories extends BaseEntity
     }
 
     /**
-     * @return Categories
+     * @return ManufactureCategories
      */
-    public function getParent(): Categories
+    public function getParent(): ManufactureCategories
     {
         return $this->parent;
     }
 
     /**
-     * @param Categories $parent
-     * @return Categories
+     * @param ManufactureCategories $parent
+     * @return ManufactureCategories
      */
-    public function setParent(Categories $parent): self
+    public function setParent(ManufactureCategories $parent): self
     {
         $this->parent = $parent;
         return $this;
     }
 
     /**
-     * @return Collection|Products[]
+     * @return Collection|Manufacture[]
      */
     public function getProducts(): Collection
     {
         return $this->products;
     }
 
-    public function addProduct(Products $product): self
+    public function addProduct(Manufacture $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
@@ -103,7 +104,7 @@ class Categories extends BaseEntity
         return $this;
     }
 
-    public function removeProduct(Products $product): self
+    public function removeProduct(Manufacture $product): self
     {
         if ($this->products->contains($product)) {
             $this->products->removeElement($product);
@@ -115,5 +116,4 @@ class Categories extends BaseEntity
 
         return $this;
     }
-
 }
