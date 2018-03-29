@@ -14,18 +14,6 @@ class ManufactureCategories extends BaseEntity
     use PageContentTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ManufactureCategories", mappedBy="parent")
-     */
-    private $children;
-
-    /**
-     * @var ManufactureCategories
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\ManufactureCategories", inversedBy="children")
-     */
-    private $parent;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manufacture", mappedBy="category")
      */
     private $products;
@@ -33,57 +21,7 @@ class ManufactureCategories extends BaseEntity
 
     public function __construct()
     {
-        $this->children = new ArrayCollection();
         $this->products = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection|ManufactureCategories[]
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    public function addChild(ManufactureCategories $child): self
-    {
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-            $child->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChild(ManufactureCategories $child): self
-    {
-        if ($this->children->contains($child)) {
-            $this->children->removeElement($child);
-            // set the owning side to null (unless already changed)
-            if ($child->getParent() === $this) {
-                $child->setParent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return ManufactureCategories
-     */
-    public function getParent(): ManufactureCategories
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param ManufactureCategories $parent
-     * @return ManufactureCategories
-     */
-    public function setParent(ManufactureCategories $parent): self
-    {
-        $this->parent = $parent;
-        return $this;
     }
 
     /**
