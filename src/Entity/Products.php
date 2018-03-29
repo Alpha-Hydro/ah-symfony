@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Products extends BaseEntity
 {
     use PageContentTrait;
+    use CategoriesIdxTrait;
     /**
      * @ORM\Column(type="string", length=255)
      */

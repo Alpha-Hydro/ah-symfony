@@ -24,6 +24,8 @@ class Version20180329074649 extends AbstractMigration
         $this->addSql('UPDATE products SET name = sku WHERE name is null');
         $this->addSql('ALTER TABLE products CHANGE add_date create_date date');
         $this->addSql('ALTER TABLE products CHANGE mod_date update_date date');
+        $this->addSql('ALTER TABLE products CHANGE category_id category_idx int(11)');
+
 
         $this->addSql('ALTER TABLE manufacture CHANGE title name varchar(255) NOT NULL');
         $this->addSql('ALTER TABLE manufacture_categories CHANGE title name varchar(255) NOT NULL');
