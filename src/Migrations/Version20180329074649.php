@@ -34,6 +34,8 @@ class Version20180329074649 extends AbstractMigration
 
         $this->addSql('ALTER TABLE manufacture CHANGE title name varchar(255) NOT NULL');
         $this->addSql('ALTER TABLE manufacture_categories CHANGE title name varchar(255) NOT NULL');
+
+        $this->addSql('ALTER TABLE pages CHANGE title name varchar(255) NOT NULL');
     }
 
     public function down(Schema $schema)
