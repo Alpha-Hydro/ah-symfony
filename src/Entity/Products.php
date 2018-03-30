@@ -6,11 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductsRepository")
+ * @ORM\Table(
+ *     indexes={
+ *          @ORM\Index(
+ *              columns={"name", "s_name", "sku", "meta_keywords"},
+ *              flags={"fulltext"}
+ *          )
+ *     }
+ * )
  */
 class Products extends BaseEntity
 {
     use PageContentTrait;
-    use CategoriesIdxTrait;
     /**
      * @ORM\Column(type="string", length=255)
      */
