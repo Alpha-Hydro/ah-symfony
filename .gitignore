@@ -28,3 +28,6 @@
 out
 gen
 /.sass-cache/
+/public/ah-bs3/
+/public/fonts/
+/public/upload/

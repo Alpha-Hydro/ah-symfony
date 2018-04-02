@@ -1,0 +1,20 @@
+<form class="search-form" role="search" id="search" action="{{ path('index') }}" method="get">
+    <div class="input-group">
+        <div class="dropdown">
+            <input
+                    type="text"
+                    name="query"
+                    autocomplete="off"
+                    value="{{ searchQuery | default('') }}"
+                    class="col-md-12"
+                    placeholder="Поиск..."
+                    id="search-query"
+            />
+            <ul id="search-autocomplete" class="dropdown-menu search-autocomplete col-md-12"> </ul>
+        </div>
+        <span class="input-group-btn">
+            <button class="btn btn-link" type="submit"><i class="fa fa-search"> </i></button>
+        </span>
+    </div>
+</form>
+

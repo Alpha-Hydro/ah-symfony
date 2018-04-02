@@ -1,0 +1,60 @@
+<nav class="navbar main-menu">
+    <div class="container main-menu-dropdown">
+        <ul>
+            <li class="visible-sm">
+                <button class="btn btn-link sidebar-toggle" type="button"><i class="fa fa-bars"></i></button>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    Главная
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    Каталог
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    Производство
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    Партнеры
+                </a>
+            </li>
+            {#<li>
+                <a href="{{ path('home') }}">
+                    Клиентам
+                </a>
+            </li>#}
+            <li>
+                <a href="{{ path('index') }}">
+                    Новости
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    О компании
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('index') }}">
+                    Контакты
+                </a>
+            </li>
+            <li class="visible-xs visible-sm">
+                <a href="{{ path('index') }}">
+                    Поиск
+                </a>
+            </li>
+        </ul>
+        <div class="visible-sm navbar-right">
+            <button class="btn btn-link" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="navbar-right col-md-4 pr0 hidden-xs hidden-sm">
+            {{ include('components/_search_form.twig') }}
+        </div>
+    </div>
+</nav>
