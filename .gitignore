@@ -8,7 +8,6 @@
 
 ###> symfony/webpack-encore-pack ###
 /node_modules/
-/public/build/
 ###< symfony/webpack-encore-pack ###
 
 ###> symfony/phpunit-bridge ###
@@ -28,6 +27,3 @@
 out
 gen
 /.sass-cache/
-/public/ah-bs3/
-/public/fonts/
-/public/upload/

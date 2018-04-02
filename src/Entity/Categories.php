@@ -69,6 +69,7 @@ class Categories extends BaseEntity
 
     /**
      * @return Categories
+     * @TODO ??? is not null
      */
     public function getParent(): Categories
     {

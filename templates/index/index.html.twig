@@ -2,6 +2,14 @@
 
 {% block title %}Гидравлика. Гидравлическое оборудование{% endblock %}
 
+{% set productions = [
+    {'name':'Гидростанции, гидравлические стенды и модули', 'link': path('index', {'full_path': 'gidrostancii'}), 'img': 'files/images/category/icons/production.png'},
+] %}
+
+{% set partners = [
+    {'name':'Гидроаппаратура Wandfluh', 'link': path('index', {'full_path': 'wandfull'}), 'img': 'upload/wandfluh/img/wandfluh.png'},
+] %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-6 hidden-sm hidden-xs">
@@ -11,7 +19,50 @@
             <h1 class="text-size-header-large">Гидравлика
                 <small>гидравлическое оборудование</small>
             </h1>
-            <p class="ah-info-block ah-info-block-info">Производство и поставка гидравлического оборудования и гидрокомпонентов. Опрессовка рукавов высокого давления (РВД), фитингов, шлангов, труб и трубных соединений. Проектировка и производство гидростанций и гидроцилиндров.</p>
+            <p class="ah-info-block ah-info-block-info">Производство и поставка гидравлического оборудования и
+                гидрокомпонентов. Опрессовка рукавов высокого давления (РВД), фитингов, шлангов, труб и трубных
+                соединений. Проектировка и производство гидростанций и гидроцилиндров.</p>
+        </div>
+    </div>
+    <div class="row">
+        {{ include('index/_home_page_sidebar.twig') }}
+        <div class="flex-box col-3">
+            {% for item in categories %}
+                <div class="flex-box-item card hover">
+                    <a href="{{ path('index', {'full_path' : item.fullPath}) }}">
+                        <div class="card-image">
+                            <img src="{{ asset(item.uploadPath ~ item.image) }}"/>
+                        </div>
+                        <div class="card-title bottom text-center">
+                            {{ item.name }}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            {% for item in productions %}
+                <div class="flex-box-item card hover">
+                    <a href="{{ item.link }}">
+                        <div class="card-image">
+                            <img src="{{ asset(item.img) }}"/>
+                        </div>
+                        <div class="card-title bottom text-center">
+                            {{ item.name }}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            {% for item in partners %}
+                <div class="flex-box-item card hover">
+                    <a href="{{ item.link }}">
+                        <div class="card-image">
+                            <img src="{{ asset(item.img) }}"/>
+                        </div>
+                        <div class="card-title bottom text-center">
+                            {{ item.name }}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

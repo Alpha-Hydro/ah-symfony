@@ -14,9 +14,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CategoriesRepository extends ServiceEntityRepository
 {
+    /**
+     * CategoriesRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Categories::class);
+    }
+
+    /**
+     * @return Categories[] Returns an array of Categories objects
+     */
+    public function findByRootCategories()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->andWhere('c.parent is null')
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

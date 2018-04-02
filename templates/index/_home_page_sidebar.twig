@@ -1,0 +1,24 @@
+{% extends 'components/_sidebar.twig' %}
+
+{% block sidebarList %}
+    <ul class="list-group crop-bottom-shadow">
+        <li class="list-group-item sidebar-heading">
+            <span class="span">Каталог</span>
+        </li>
+        {% for item in categories %}
+            <li class="list-group-item sidebar-item">
+                <a href="{{ path('index', {'full_path':item.fullPath}) }}">{{ item.name }}</a>
+            </li>
+        {% endfor %}
+        {% for item in productions %}
+            <li class="list-group-item sidebar-item">
+                <a href="{{ item.link }}">{{ item.name }}</a>
+            </li>
+        {% endfor %}
+        {% for item in partners %}
+            <li class="list-group-item sidebar-item">
+                <a href="{{ item.link }}">{{ item.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
