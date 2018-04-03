@@ -1,0 +1,21 @@
+{% block stylesheets %}
+    <style>
+        h1 {
+            font-size: 36px;
+        }
+        .page-header {
+            margin-top: 0;
+        }
+        @media (min-width: 768px) {
+            .page-header {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+<div class="col-md-9 col-md-offset-3">
+    <div class="page-header">
+        <h1>{{ pageTitle | default('Каталог продукции') }}</h1>
+    </div>
+</div>

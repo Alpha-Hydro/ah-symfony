@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,12 @@ class Categories extends BaseEntity
     /**
      * @var Categories
      *
+     * the association is marked as EAGER or LAZY
+     * See https://stackoverflow.com/questions/26891658/what-is-the-difference-between-fetch-eager-and-fetch-lazy-in-doctrine
+     *
+     * the association is marked as EXTRA_LAZY
+     * See http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/extra-lazy-associations.html
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="children")
      */
     private $parent;
@@ -37,11 +44,20 @@ class Categories extends BaseEntity
     }
 
     /**
+     * @param bool $all
      * @return Collection|Categories[]
      */
-    public function getChildren(): Collection
+    public function getChildren(bool $all = false): Collection
     {
-        return $this->children;
+        if ($all === true) return $this->children;
+
+        $criteria = Criteria::create();
+        $criteria
+            ->where(Criteria::expr()->eq('active', 1))
+            ->where(Criteria::expr()->eq('deleted', 0));
+        $criteria->orderBy(['sorting' => Criteria::ASC]);
+
+        return $this->children->matching($criteria);
     }
 
     public function addChild(Categories $child): self
@@ -68,10 +84,9 @@ class Categories extends BaseEntity
     }
 
     /**
-     * @return Categories
-     * @TODO ??? is not null
+     * @return Categories|null
      */
-    public function getParent(): Categories
+    public function getParent(): ?Categories
     {
         return $this->parent;
     }
@@ -116,5 +131,4 @@ class Categories extends BaseEntity
 
         return $this;
     }
-
 }

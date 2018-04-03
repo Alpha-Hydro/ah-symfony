@@ -1,0 +1,20 @@
+<div class="row hidden-xs">
+    <div class="col-md-12">
+        <ul class="breadcrumb mb1">
+            <li><a href="{{ path('index') }}">Главная</a></li>
+            {% if category is defined %}
+                <li><a href="{{ path('catalog_index') }}">Каталог</a></li>
+            {% endif %}
+            {% if breadcrumbs is defined %}
+                {% for item in breadcrumbs %}
+                    <li>
+                        <a href="{{ path('catalog_list', {'fullPath': item.fullPath}) }}">{{ item.name }}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+            {% if product is not defined %}
+                <li class="active"><span>{{ category.name | default('Каталог') }}</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

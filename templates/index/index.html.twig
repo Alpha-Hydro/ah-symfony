@@ -29,7 +29,7 @@
         <div class="flex-box col-3">
             {% for item in categories %}
                 <div class="flex-box-item card hover">
-                    <a href="{{ path('index', {'full_path' : item.fullPath}) }}">
+                    <a href="{{ path('catalog_list', {'fullPath' : item.fullPath}) }}">
                         <div class="card-image">
                             <img src="{{ asset(item.uploadPath ~ item.image) }}"/>
                         </div>

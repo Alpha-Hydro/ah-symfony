@@ -26,7 +26,7 @@ class CategoriesRepository extends ServiceEntityRepository
     /**
      * @return Categories[] Returns an array of Categories objects
      */
-    public function findByRootCategories()
+    public function findByRootCategories(): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.active = true')
