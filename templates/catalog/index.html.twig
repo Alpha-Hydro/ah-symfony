@@ -6,16 +6,27 @@
 {% block title %}{{ pageTitle }}{% endblock %}
 
 {% block pageHeader %}
-    {{ include('components/_pageHeader.twig') }}
+    {{ include('components/_page_header.html.twig') }}
 {% endblock %}
 
 {% block sidebar %}
-    {{ include('catalog/_catalog_sidebar.twig') }}
+    {{ include('catalog/_catalog_sidebar.html.twig') }}
 {% endblock %}
 
 {% block body %}
     <div class="col-xs-12 col-sm-12 col-md-9">
-        {{ include('catalog/_catalog_breadcrumb.twig') }}
-        {{ include('catalog/_catalog_categories_list.twig') }}
+        {{ include('catalog/_catalog_breadcrumb..html.twig') }}
+
+        {% if category.products is defined and category.products is not empty %}
+            {{ include('catalog/_categories_list_product.html.twig') }}
+        {% else %}
+            {{ include('catalog/_catalog_categories_list.html.twig') }}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ category.contentHtml|default('')|raw }}
+            </div>
+        </div>
     </div>
 {% endblock %}

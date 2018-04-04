@@ -4,15 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
+use App\Service\CatalogService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
  * @Route("/catalog")
+ * @Cache(expires="tomorrow", public=true)
  */
-class CatalogController extends Controller
+class CatalogController extends AbstractController
 {
     /**
      * @Route("/", name="catalog_index", methods="GET")
@@ -21,38 +24,31 @@ class CatalogController extends Controller
      */
     public function index(CategoriesRepository $categoriesRepository): Response
     {
+        $categories = $categoriesRepository->findByRootCategories();
+
         return $this->render('catalog/index.html.twig', [
             'categories' => $categoriesRepository->findByRootCategories(),
+            'sidebarListCategories' => $categories,
         ]);
     }
 
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_list", methods="GET")
      * @param Categories $category
+     * @param CatalogService $catalogService
      * @return Response
      */
-    public function list(Categories $category): Response
+    public function list(Categories $category, CatalogService $catalogService): Response
     {
-        return $this->render('catalog/index.html.twig', [
+        $parentCategory = $category->getParent();
+
+        $data = [
             'category' => $category,
-            'breadcrumbs' =>  $this->getBreadcrumbs($category->getParent())
-        ]);
-    }
+            'breadcrumbs' => $catalogService->getBreadcrumbs($parentCategory),
+            'parentCategory' => $parentCategory,
+            'sidebarListCategories' => $catalogService->getSidebarListCategories($parentCategory),
+        ];
 
-    public function getBreadcrumbs(Categories $category = null){
-        if ($category == null)
-            return null;
-
-        $result = [];
-        do{
-            $result[] = $category;
-            $category = $category->getParent();
-        }
-        while($category != null);
-
-        if (!empty($result))
-            $result = array_reverse($result);
-
-        return $result;
+        return $this->render('catalog/index.html.twig', $data);
     }
 }

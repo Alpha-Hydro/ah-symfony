@@ -1,4 +1,4 @@
-{% extends 'components/_sidebar.twig' %}
+{% extends 'components/_sidebar.html.twig' %}
 
 {% block sidebarList %}
     <ul class="list-group crop-bottom-shadow">
@@ -7,7 +7,7 @@
         </li>
         {% for item in categories %}
             <li class="list-group-item sidebar-item">
-                <a href="{{ path('index', {'full_path':item.fullPath}) }}">{{ item.name }}</a>
+                <a href="{{ path('catalog_list', {'fullPath':item.fullPath}) }}">{{ item.name }}</a>
             </li>
         {% endfor %}
         {% for item in productions %}
