@@ -55,6 +55,21 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param string $value
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByFullPath(string $value): ?Categories
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.fullPath = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return Categories[] Returns an array of Categories objects
 //     */

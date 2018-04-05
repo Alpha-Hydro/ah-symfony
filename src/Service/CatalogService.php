@@ -78,4 +78,14 @@ class CatalogService
         return $this->categoriesRepository->findByChildren($category);
     }
 
+    /**
+     * @param string $fullPath
+     * @return Categories|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByFullPath(string $fullPath): ?Categories
+    {
+        return $this->categoriesRepository->findByFullPath($fullPath);
+    }
+
 }

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\Entity\Products;
 use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,12 +36,18 @@ class CatalogController extends AbstractController
 
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_list", methods="GET")
-     * @param Categories $category
+     * @param string $fullPath
      * @param CatalogService $catalogService
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function listCategories(Categories $category, CatalogService $catalogService): Response
+    public function listCategories(string $fullPath, CatalogService $catalogService): Response
     {
+        $category = $catalogService->findByFullPath($fullPath);
+
+        if (null === $category)
+            return $this->forward('App\Controller\CatalogController:productView', ['fullPath' => $fullPath]);
+
         $parentCategory = $category->getParent();
 
         $data = [
@@ -56,5 +64,14 @@ class CatalogController extends AbstractController
         $data['categories'] = $catalogService->findByChildren($category);
 
         return $this->render('catalog/catalog_categories_list.html.twig', $data);
+    }
+
+    /**
+     * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_product_view", methods="GET")
+     * @param Products $product
+     */
+    public function productView(Products $product)
+    {
+        die(var_dump($product->getName()));
     }
 }

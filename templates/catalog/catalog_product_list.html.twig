@@ -6,7 +6,7 @@
             <div class="row product-item">
                 <div class="col-sm-3">
                     <div class="thumbnail product-images">
-                        <a href="{{ path('catalog_index', {'fullPath': product.fullPath}) }}">
+                        <a href="{{ path('catalog_product_view', {'fullPath': product.fullPath}) }}">
                             <img src="{{ product.uploadPath }}{{ product.image }}"
                                  alt="{{ product.name }}">
                         </a>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-9">
                     <h2 class="h4">
-                        <a href="{{ path('catalog_index', {'fullPath': product.fullPath}) }}">{{ product.sku }}</a>
+                        <a href="{{ path('catalog_product_view', {'fullPath': product.fullPath}) }}">{{ product.sku }}</a>
                         <small>{{ product.name }}</small>
                     </h2>
                     {#{{ include('@catalog/components/_product_property.twig') }}#}
