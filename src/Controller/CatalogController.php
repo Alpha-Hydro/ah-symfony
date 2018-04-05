@@ -2,13 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Categories;
 use App\Entity\Products;
 use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,7 +26,7 @@ class CatalogController extends AbstractController
     {
         $categories = $categoriesRepository->findByRootCategories();
 
-        return $this->render('catalog/catalog_categories_list.html.twig', [
+        return $this->render('catalog/categories_list.html.twig', [
             'categories' => $categoriesRepository->findByRootCategories(),
             'sidebarListCategories' => $categories,
         ]);
@@ -59,19 +57,32 @@ class CatalogController extends AbstractController
 
         $childrenCategories = $catalogService->findByChildren($category);
         if(empty($childrenCategories))
-            return $this->render('catalog/catalog_product_list.html.twig', $data);
+            return $this->render('catalog/product_list.html.twig', $data);
 
         $data['categories'] = $catalogService->findByChildren($category);
 
-        return $this->render('catalog/catalog_categories_list.html.twig', $data);
+        return $this->render('catalog/categories_list.html.twig', $data);
     }
 
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_product_view", methods="GET")
      * @param Products $product
+     * @param CatalogService $catalogService
+     * @return Response
      */
-    public function productView(Products $product)
+    public function productView(Products $product, CatalogService $catalogService): Response
     {
-        die(var_dump($product->getName()));
+        $category = $product->getCategory();
+        $parentCategory = $category->getParent();
+
+        $data= [
+            'product' => $product,
+            'category' => $category,
+            'parentCategory' => $parentCategory,
+            'sidebarListCategories' => $catalogService->getSidebarListCategories($parentCategory),
+            'breadcrumbs' => $catalogService->getBreadcrumbs($category)
+        ];
+
+        return $this->render('catalog/product_view.html.twig', $data);
     }
 }
