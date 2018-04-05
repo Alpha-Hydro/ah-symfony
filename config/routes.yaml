@@ -7,3 +7,9 @@ about:
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
     defaults:
         template: static/about.html.twig
+
+contacts:
+    path: /contacts
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+    defaults:
+        template: static/contacts.html.twig
