@@ -64,9 +64,18 @@ class CatalogService
         $sidebarListCategories = $this->categoriesRepository->findByRootCategories();
 
         if ($parentCategory != null && $parentCategory->getId() != 0)
-            $sidebarListCategories = $parentCategory->getChildren();
+            $sidebarListCategories = $this->findByChildren($parentCategory);
 
         return $sidebarListCategories;
+    }
+
+    /**
+     * @param Categories $category
+     * @return Categories[]
+     */
+    public function findByChildren(Categories $category): array
+    {
+        return $this->categoriesRepository->findByChildren($category);
     }
 
 }

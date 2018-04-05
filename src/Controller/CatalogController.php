@@ -26,7 +26,7 @@ class CatalogController extends AbstractController
     {
         $categories = $categoriesRepository->findByRootCategories();
 
-        return $this->render('catalog/index.html.twig', [
+        return $this->render('catalog/catalog_categories_list.html.twig', [
             'categories' => $categoriesRepository->findByRootCategories(),
             'sidebarListCategories' => $categories,
         ]);
@@ -38,7 +38,7 @@ class CatalogController extends AbstractController
      * @param CatalogService $catalogService
      * @return Response
      */
-    public function list(Categories $category, CatalogService $catalogService): Response
+    public function listCategories(Categories $category, CatalogService $catalogService): Response
     {
         $parentCategory = $category->getParent();
 
@@ -49,6 +49,12 @@ class CatalogController extends AbstractController
             'sidebarListCategories' => $catalogService->getSidebarListCategories($parentCategory),
         ];
 
-        return $this->render('catalog/index.html.twig', $data);
+        $childrenCategories = $catalogService->findByChildren($category);
+        if(empty($childrenCategories))
+            return $this->render('catalog/catalog_product_list.html.twig', $data);
+
+        $data['categories'] = $catalogService->findByChildren($category);
+
+        return $this->render('catalog/catalog_categories_list.html.twig', $data);
     }
 }

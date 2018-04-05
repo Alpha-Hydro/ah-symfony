@@ -44,20 +44,11 @@ class Categories extends BaseEntity
     }
 
     /**
-     * @param bool $all
-     * @return Collection|Categories[]
+     * @return Collection
      */
-    public function getChildren(bool $all = false): Collection
+    public function getChildren(): Collection
     {
-        if ($all === true) return $this->children;
-
-        $criteria = Criteria::create();
-        $criteria
-            ->where(Criteria::expr()->eq('active', 1))
-            ->where(Criteria::expr()->eq('deleted', 0));
-        $criteria->orderBy(['sorting' => Criteria::ASC]);
-
-        return $this->children->matching($criteria);
+        return $this->children;
     }
 
     public function addChild(Categories $child): self

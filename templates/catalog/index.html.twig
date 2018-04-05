@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% set categories = (categories is defined) ? categories : category.children %}
 {% set pageTitle = (category is defined) ? category.name : 'Каталог продукции' %}
 
 {% block title %}{{ pageTitle }}{% endblock %}
@@ -17,16 +16,17 @@
     <div class="col-xs-12 col-sm-12 col-md-9">
         {{ include('catalog/_catalog_breadcrumb..html.twig') }}
 
-        {% if category.products is defined and category.products is not empty %}
-            {{ include('catalog/_categories_list_product.html.twig') }}
+        {% block content %}{% endblock %}
+        {#{% if category.products is defined and category.products is not empty %}
+            {{ include('catalog/catalog_product_list.html.twig') }}
         {% else %}
-            {{ include('catalog/_catalog_categories_list.html.twig') }}
+            {{ include('catalog/catalog_categories_list.html.twig') }}
         {% endif %}
 
         <div class="row">
             <div class="col-md-12">
                 {{ category.contentHtml|default('')|raw }}
             </div>
-        </div>
+        </div>#}
     </div>
 {% endblock %}

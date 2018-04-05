@@ -1,0 +1,25 @@
+{% extends 'catalog/index.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="categories-list flex-box">
+            {% for category in categories %}
+                <div class="flex-box-item card hover">
+                    <a href="{{ path('catalog_list', {'fullPath' : category.fullPath}) }}">
+                        <div class="card-image">
+                            <img src="{{ category.uploadPath ~ category.image }}" alt="{{ category.name }}"/>
+                        </div>
+                        <div class="card-title bottom text-center">
+                            {{ category.name }}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ category.contentHtml|default('')|raw }}
+        </div>
+    </div>
+{% endblock %}
