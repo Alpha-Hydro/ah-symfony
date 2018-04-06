@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use App\Entity\Products;
 use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,18 +35,17 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_list", methods="GET")
-     * @param string $fullPath
+     * @Route("/{fullPath}", requirements={"fullPath": "[a-z\-\/]+"}, name="catalog_list", methods="GET")
+     * @param Categories $category
      * @param CatalogService $catalogService
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function listCategories(string $fullPath, CatalogService $catalogService): Response
+    public function listCategories(Categories $category, CatalogService $catalogService): Response
     {
-        $category = $catalogService->findByFullPath($fullPath);
+        /*$category = $catalogService->findByFullPath($fullPath);
 
         if (null === $category)
-            return $this->forward('App\Controller\CatalogController:productView', ['fullPath' => $fullPath]);
+            return $this->forward('App\Controller\CatalogController:productView', ['fullPath' => $fullPath]);*/
 
         $parentCategory = $category->getParent();
 
@@ -65,7 +66,12 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @Route("/{fullPath}", requirements={"fullPath": "[\w\-\/]+"}, name="catalog_product_view", methods="GET")
+     * @Route("/{fullPathCategory}/{path}",
+     *     requirements={
+     *          "fullPathCategory": "[a-z\-\/]+",
+     *          "path": "[A-Z0-9\-]+"
+     *     },
+     *     name="catalog_product_view", methods="GET")
      * @param Products $product
      * @param CatalogService $catalogService
      * @return Response
