@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class Products extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="products")
      */
     private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductParams", mappedBy="product")
+     */
+    private $params;
+
+    public function __construct()
+    {
+        $this->params = new ArrayCollection();
+    }
 
     public function getSku(): ?string
     {
@@ -99,6 +111,37 @@ class Products extends BaseEntity
     public function setCategory(?Categories $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProductParams[]
+     */
+    public function getParams(): Collection
+    {
+        return $this->params;
+    }
+
+    public function addParam(ProductParams $param): self
+    {
+        if (!$this->params->contains($param)) {
+            $this->params[] = $param;
+            $param->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParam(ProductParams $param): self
+    {
+        if ($this->params->contains($param)) {
+            $this->params->removeElement($param);
+            // set the owning side to null (unless already changed)
+            if ($param->getProduct() === $this) {
+                $param->setProduct(null);
+            }
+        }
 
         return $this;
     }
