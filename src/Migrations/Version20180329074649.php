@@ -18,8 +18,10 @@ class Version20180329074649 extends AbstractMigration
         $this->addSql('ALTER TABLE forum MODIFY category text');
 
         $this->addSql('UPDATE categories SET parent_id = null WHERE parent_id = 0');
+        $this->addSql('UPDATE categories SET add_date = now() where add_date is null');
+        $this->addSql('UPDATE categories SET mod_date = now() where mod_date is null');
         $this->addSql('ALTER TABLE categories CHANGE add_date create_date date');
-        $this->addSql('ALTER TABLE categories CHANGE add_date create_date date');
+        $this->addSql('ALTER TABLE categories CHANGE mod_date update_date date');
         $this->addSql('UPDATE categories SET path = \'nabor-uplotnitelej-dlja-porshnja-nbr-cpom\', full_path = \'uplotnenija-i-uplotnitelnye-kolca/porshnevye-uplotnenija/nabor-uplotnitelej-dlja-porshnja-nbr-cpom\' WHERE id = 1456');
 
         $this->addSql('DROP INDEX category_id ON products');
@@ -37,12 +39,18 @@ class Version20180329074649 extends AbstractMigration
         $this->addSql('UPDATE products SET path = \'ADS-M\' WHERE id = 49540');
         $this->addSql('UPDATE products SET path = \'AW-VA\' WHERE id = 10356');
 
-        $this->addSql('ALTER TABLE products_params CHANGE `order` sorting int(11)');
+        $this->addSql('DROP INDEX `order` ON product_params');
+        $this->addSql('DROP INDEX product_id ON product_params');
+        $this->addSql('ALTER TABLE product_params CHANGE `order` sorting int(11)');
 
         $this->addSql('ALTER TABLE manufacture CHANGE title name varchar(255) NOT NULL');
         $this->addSql('ALTER TABLE manufacture_categories CHANGE title name varchar(255) NOT NULL');
+        $this->addSql('ALTER TABLE manufacture_categories ADD full_path varchar(255) NULL');
+        $this->addSql('UPDATE manufacture_categories SET full_path = path');
 
         $this->addSql('ALTER TABLE pages CHANGE title name varchar(255) NOT NULL');
+
+        $this->addSql('DROP INDEX unique_id ON media_categories');
     }
 
     public function down(Schema $schema)
