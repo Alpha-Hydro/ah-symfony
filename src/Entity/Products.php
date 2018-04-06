@@ -41,6 +41,12 @@ class Products extends BaseEntity
     private $uploadPathDraft;
 
     /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $path;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="products")
      */
     private $category;

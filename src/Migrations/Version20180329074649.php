@@ -20,6 +20,7 @@ class Version20180329074649 extends AbstractMigration
         $this->addSql('UPDATE categories SET parent_id = null WHERE parent_id = 0');
         $this->addSql('ALTER TABLE categories CHANGE add_date create_date date');
         $this->addSql('ALTER TABLE categories CHANGE add_date create_date date');
+        $this->addSql('UPDATE categories SET path = \'nabor-uplotnitelej-dlja-porshnja-nbr-cpom\', full_path = \'uplotnenija-i-uplotnitelnye-kolca/porshnevye-uplotnenija/nabor-uplotnitelej-dlja-porshnja-nbr-cpom\' WHERE id = 1456');
 
         $this->addSql('DROP INDEX category_id ON products');
         $this->addSql('DROP INDEX `order` ON products');
@@ -31,6 +32,10 @@ class Version20180329074649 extends AbstractMigration
         $this->addSql('ALTER TABLE products CHANGE add_date create_date date');
         $this->addSql('ALTER TABLE products CHANGE mod_date update_date date');
         $this->addSql('ALTER TABLE products CHANGE category_id category_idx int(11)');
+        $this->addSql('DELETE FROM products WHERE id = 1714 AND path = \'ASRS-30-100-PP\'');
+        $this->addSql('UPDATE products SET path = \'AT-M\' WHERE id = 8342');
+        $this->addSql('UPDATE products SET path = \'ADS-M\' WHERE id = 49540');
+        $this->addSql('UPDATE products SET path = \'AW-VA\' WHERE id = 10356');
 
         $this->addSql('ALTER TABLE products_params CHANGE `order` sorting int(11)');
 

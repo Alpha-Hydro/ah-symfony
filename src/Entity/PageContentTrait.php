@@ -33,9 +33,7 @@ trait PageContentTrait
     private $path;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @TODO add unuque=true
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $fullPath;
 
