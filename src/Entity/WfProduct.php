@@ -22,6 +22,17 @@ class WfProduct extends BaseEntity
     private $dataSheetPdf;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, unique=false)
+     */
+    private $fullPath;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\WfCategory", inversedBy="products")
      */
     private $category;

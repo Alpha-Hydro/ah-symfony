@@ -27,3 +27,5 @@
 out
 gen
 /.sass-cache/
+*.lock
+*-lock.json

@@ -22,7 +22,8 @@ class ProductParams
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
+     * @todo update to type="string", length=255 (product id 9222)
      */
     private $value;
 
