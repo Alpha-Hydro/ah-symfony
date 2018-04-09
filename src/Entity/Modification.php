@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +21,16 @@ class Modification extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Products", inversedBy="modifications")
      */
     private $product;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ModificationParamsValues", mappedBy="modification")
+     */
+    private $paramValues;
+
+    public function __construct()
+    {
+        $this->paramValues = new ArrayCollection();
+    }
 
     public function getSku(): ?string
     {
@@ -40,6 +52,37 @@ class Modification extends BaseEntity
     public function setProduct(?Products $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ModificationParamsValues[]
+     */
+    public function getParamValues(): Collection
+    {
+        return $this->paramValues;
+    }
+
+    public function addParamValue(ModificationParamsValues $paramValue): self
+    {
+        if (!$this->paramValues->contains($paramValue)) {
+            $this->paramValues[] = $paramValue;
+            $paramValue->setModification($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParamValue(ModificationParamsValues $paramValue): self
+    {
+        if ($this->paramValues->contains($paramValue)) {
+            $this->paramValues->removeElement($paramValue);
+            // set the owning side to null (unless already changed)
+            if ($paramValue->getModification() === $this) {
+                $paramValue->setModification(null);
+            }
+        }
 
         return $this;
     }
