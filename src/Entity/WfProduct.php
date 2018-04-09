@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class WfProduct extends BaseEntity
 {
-    use PageContentTrait;
-
     /**
      * @ORM\Column(type="string", length=11)
      */
@@ -21,16 +19,6 @@ class WfProduct extends BaseEntity
      */
     private $dataSheetPdf;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $path;
-
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, unique=false)
-     */
-    private $fullPath;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\WfCategory", inversedBy="products")

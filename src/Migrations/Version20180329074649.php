@@ -42,6 +42,7 @@ class Version20180329074649 extends AbstractMigration
 
 //        $this->addSql('ALTER TABLE products CHANGE category_id category_idx int(11)');
         $this->addSql('UPDATE products SET path = \'ASRS30-100PP\' WHERE id = 1714');
+        $this->addSql('UPDATE products SET full_path = \'gidravlicheskie-prinadlezhnosti/skoby/homuty-dlja-trub-tjazhelaja-serija/ASRS30-100PP\' WHERE id = 1714');
         $this->addSql('UPDATE products SET path = \'AT-M\' WHERE id = 8342');
         $this->addSql('UPDATE products SET path = \'ADS-M\' WHERE id = 49540');
         $this->addSql('UPDATE products SET path = \'AW-VA\' WHERE id = 10356');
@@ -83,9 +84,7 @@ class Version20180329074649 extends AbstractMigration
 
         //wf_product
         $this->addSql('ALTER TABLE wf_product DROP FOREIGN KEY fk_product_product_construction1, DROP FOREIGN KEY fk_product_product_size1, DROP FOREIGN KEY fk_product_product_type1, DROP FOREIGN KEY fk_product_product_control1');
-        $this->addSql('ALTER TABLE wf_product ADD create_date date, ADD update_date date');
-        $this->addSql('UPDATE wf_product SET create_date = now(), update_date = now()');
-        $this->addSql('UPDATE wf_product SET name = data_sheet_no');
+        $this->addSql('UPDATE wf_product SET name = data_sheet_pdf');
 
 
         //wf_category
