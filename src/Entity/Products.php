@@ -52,13 +52,28 @@ class Products extends BaseEntity
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProductParams", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductParams", mappedBy="product", fetch="EAGER")
+     * @ORM\OrderBy({"sorting" = "ASC"})
      */
     private $params;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Modification", mappedBy="product")
+     * @ORM\OrderBy({"sorting" = "ASC"})
+     */
+    private $modifications;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ModificationParams", mappedBy="product")
+     * @ORM\OrderBy({"sorting" = "ASC"})
+     */
+    private $modificationParams;
 
     public function __construct()
     {
         $this->params = new ArrayCollection();
+        $this->modifications = new ArrayCollection();
+        $this->modificationParams = new ArrayCollection();
     }
 
     public function getSku(): ?string
@@ -146,6 +161,68 @@ class Products extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($param->getProduct() === $this) {
                 $param->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Modification[]
+     */
+    public function getModifications(): Collection
+    {
+        return $this->modifications;
+    }
+
+    public function addModification(Modification $modification): self
+    {
+        if (!$this->modifications->contains($modification)) {
+            $this->modifications[] = $modification;
+            $modification->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModification(Modification $modification): self
+    {
+        if ($this->modifications->contains($modification)) {
+            $this->modifications->removeElement($modification);
+            // set the owning side to null (unless already changed)
+            if ($modification->getProduct() === $this) {
+                $modification->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ModificationParams[]
+     */
+    public function getModificationParams(): Collection
+    {
+        return $this->modificationParams;
+    }
+
+    public function addModificationParam(ModificationParams $modificationParam): self
+    {
+        if (!$this->modificationParams->contains($modificationParam)) {
+            $this->modificationParams[] = $modificationParam;
+            $modificationParam->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModificationParam(ModificationParams $modificationParam): self
+    {
+        if ($this->modificationParams->contains($modificationParam)) {
+            $this->modificationParams->removeElement($modificationParam);
+            // set the owning side to null (unless already changed)
+            if ($modificationParam->getProduct() === $this) {
+                $modificationParam->setProduct(null);
             }
         }
 

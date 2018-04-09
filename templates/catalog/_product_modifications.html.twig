@@ -1,0 +1,24 @@
+<table class="table table-striped modifications">
+    <thead>
+    <tr>
+        <td>Название</td>
+        {% for modificationParam in product.modificationParams %}
+            <td>{{ modificationParam.name }}</td>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for modification in product.modifications %}
+        <tr>
+            <td>{{ modification.sku }}</td>
+            {#{% for modificationParam in product.modificationParams %}
+                {% for paramValues in modification.paramValues %}
+                    {% if paramValues.paramId == modificationParam.id %}
+                        <td>{{ paramValues.value }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}#}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -90,6 +90,13 @@ class Version20180329074649 extends AbstractMigration
         //wf_category
         $this->addSql('ALTER TABLE wf_category ADD create_date date, ADD update_date date');
         $this->addSql('UPDATE wf_category SET create_date = now(), update_date = now()');
+
+        $this->addSql('ALTER TABLE subproducts CHANGE add_date create_date date');
+        $this->addSql('ALTER TABLE subproducts CHANGE mod_date update_date date');
+        $this->addSql('UPDATE subproducts SET create_date = curdate(), update_date = curdate() WHERE update_date IS NULL OR create_date IS NULL');
+
+        $this->addSql('AlTER TABLE subproduct_params CHANGE `order` sorting int(11)');
+
     }
 
     public function down(Schema $schema)

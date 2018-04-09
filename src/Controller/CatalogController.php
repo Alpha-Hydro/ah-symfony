@@ -7,7 +7,6 @@ use App\Entity\Products;
 use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,18 +34,13 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @Route("/{fullPath}", requirements={"fullPath": "[a-z\-\/]+"}, name="catalog_list", methods="GET")
+     * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="catalog_list", methods="GET")
      * @param Categories $category
      * @param CatalogService $catalogService
      * @return Response
      */
     public function listCategories(Categories $category, CatalogService $catalogService): Response
     {
-        /*$category = $catalogService->findByFullPath($fullPath);
-
-        if (null === $category)
-            return $this->forward('App\Controller\CatalogController:productView', ['fullPath' => $fullPath]);*/
-
         $parentCategory = $category->getParent();
 
         $data = [
@@ -68,7 +62,7 @@ class CatalogController extends AbstractController
     /**
      * @Route("/{fullPathCategory}/{path}",
      *     requirements={
-     *          "fullPathCategory": "[a-z\-\/]+",
+     *          "fullPathCategory": "[a-z0-9\-\/]+",
      *          "path": "[A-Z0-9\-]+"
      *     },
      *     name="catalog_product_view", methods="GET")

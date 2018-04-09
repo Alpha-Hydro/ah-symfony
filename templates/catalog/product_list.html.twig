@@ -17,7 +17,7 @@
                         <a href="{{ path('catalog_product_view', {'fullPathCategory': category.fullPath, 'path': product.path}) }}">{{ product.sku }}</a>
                         <small>{{ product.name }}</small>
                     </h2>
-                    {#{{ include('@catalog/components/_product_property.twig') }}#}
+                    {{ include('catalog/_product_params.html.twig') }}
                 </div>
             </div>
         {% endfor %}

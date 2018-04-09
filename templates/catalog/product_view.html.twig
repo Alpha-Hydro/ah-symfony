@@ -30,7 +30,7 @@
             {{ include('catalog/_product_images.html.twig') }}
         </div>
         <div class="col-sm-9">
-            {#{{ include('@catalog/components/_product_property.twig') }}#}
+            {{ include('catalog/_product_params.html.twig') }}
             {% if product.description != '' %}
                 {{ include('catalog/_product_description.html.twig') }}
             {% endif %}
@@ -39,7 +39,7 @@
     <div class="row product-modifications">
         <div class="col-md-12">
             <h4>Модификации и размеры</h4>
-            {#{{ include('@catalog/components/_product_modifications.twig') }}#}
+            {{ include('catalog/_product_modifications.html.twig') }}
         </div>
     </div>
 {% endblock %}

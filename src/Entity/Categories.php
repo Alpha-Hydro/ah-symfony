@@ -34,6 +34,7 @@ class Categories extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Products", mappedBy="category")
+     * @ORM\OrderBy({"sorting" = "ASC"})
      */
     private $products;
 

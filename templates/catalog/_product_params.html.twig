@@ -1,0 +1,12 @@
+<div class="product-property">
+    <table class="table table-striped table-condensed">
+        <tbody>
+        {% for productParam in product.params %}
+            <tr>
+                <th class="col-xs-4">{{ productParam.name }}</th>
+                <td>{{ productParam.value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
