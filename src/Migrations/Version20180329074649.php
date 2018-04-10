@@ -97,6 +97,7 @@ class Version20180329074649 extends AbstractMigration
 
         $this->addSql('AlTER TABLE subproduct_params CHANGE `order` sorting int(11)');
 
+        $this->addSql('DELETE subproduct_params_values FROM subproduct_params_values LEFT JOIN subproducts ON subproduct_id = subproducts.id WHERE subproducts.id is null');
     }
 
     public function down(Schema $schema)
