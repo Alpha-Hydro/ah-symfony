@@ -23,7 +23,7 @@ class Modification extends BaseEntity
     private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ModificationParamsValues", mappedBy="modification")
+     * @ORM\OneToMany(targetEntity="App\Entity\ModificationParamsValues", mappedBy="modification", fetch="EAGER")
      */
     private $paramValues;
 

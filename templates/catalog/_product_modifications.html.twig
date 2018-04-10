@@ -11,13 +11,13 @@
     {% for modification in product.modifications %}
         <tr>
             <td>{{ modification.sku }}</td>
-            {#{% for modificationParam in product.modificationParams %}
+            {% for modificationParam in product.modificationParams %}
                 {% for paramValues in modification.paramValues %}
                     {% if paramValues.paramId == modificationParam.id %}
                         <td>{{ paramValues.value }}</td>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}#}
+            {% endfor %}
         </tr>
     {% endfor %}
     </tbody>
