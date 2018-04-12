@@ -1,45 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>{% block title %}{% endblock %} - Альфа-Гидро</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-            <link rel="stylesheet" href="{{ asset('ah-bs3/css/bootstrap/ah-bootstrap.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('ah-bs3/css/global.css') }}" />
-        {% endblock %}
-    </head>
-    <body class="app">
-        <header class="app-header">
-            {% block header %}
-                {{ include('components/_main_head.html.twig') }}
-                {{ include('components/_main_menu.html.twig') }}
-            {% endblock %}
-        </header>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>{% block title %}{% endblock %} - Альфа-Гидро</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="{{ asset('ah-bs3/css/bootstrap/ah-bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('ah-bs3/css/global.css') }}"/>
+    {% endblock %}
+</head>
+<body class="app">
+<header class="app-header">
+    {% block header %}
+        {{ include('components/_main_head.html.twig') }}
+        {{ include('components/_main_menu.html.twig') }}
+    {% endblock %}
+</header>
 
-        <div class="app-content">
-            <main class="container">
-                {% block pageHeader %}{% endblock %}
-                {% block sidebar %}{% endblock %}
-                {% block body %}{% endblock %}
-            </main>
-        </div>
-
-        <footer class="app-footer">
-            <div class="container">
-                <hr />
-                {% block footer %}
-                    <p class="text-center">
-                        &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
-                    </p>
-                {% endblock %}
+<div class="app-content">
+    <main class="container">
+        {% block pageHeader %}{% endblock %}
+        {% block sidebar %}{% endblock %}
+        {% block body %}
+            <div class="col-xs-12 col-sm-12 col-md-9">
+                {% block breadcrumbs %}{% endblock %}
+                {% block content %}{% endblock %}
             </div>
-        </footer>
-        {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-            <script src="{{ asset('ah-bs3/js/bundle.js') }}"></script>
         {% endblock %}
-    </body>
+    </main>
+</div>
+
+<footer class="app-footer">
+    <div class="container">
+        <hr/>
+        {% block footer %}
+            <p class="text-center">
+                &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
+            </p>
+        {% endblock %}
+    </div>
+</footer>
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{{ asset('ah-bs3/js/bundle.js') }}"></script>
+{% endblock %}
+</body>
 </html>

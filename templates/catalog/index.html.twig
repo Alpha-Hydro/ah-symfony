@@ -12,21 +12,6 @@
     {{ include('catalog/_catalog_sidebar.html.twig') }}
 {% endblock %}
 
-{% block body %}
-    <div class="col-xs-12 col-sm-12 col-md-9">
-        {{ include('catalog/_catalog_breadcrumb..html.twig') }}
-
-        {% block content %}{% endblock %}
-        {#{% if category.products is defined and category.products is not empty %}
-            {{ include('catalog/product_list.html.twig') }}
-        {% else %}
-            {{ include('catalog/categories_list.html.twig') }}
-        {% endif %}
-
-        <div class="row">
-            <div class="col-md-12">
-                {{ category.contentHtml|default('')|raw }}
-            </div>
-        </div>#}
-    </div>
+{% block breadcrumbs %}
+    {{ include('catalog/_catalog_breadcrumb.html.twig') }}
 {% endblock %}
