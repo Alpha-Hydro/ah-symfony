@@ -1,0 +1,37 @@
+{% extends 'components/_sidebar.html.twig' %}
+
+{% set rootCategoryName = 'Wandfluh' %}
+
+{% block sidebarList %}
+    <ul class="list-group crop-bottom-shadow">
+        <li class="list-group-item sidebar-heading">
+            {% if parentCategory is defined %}
+                {% if parentCategory is not null %}
+                    <a href="{{ path('catalog_list', {'fullPath': parentCategory.fullPath}) }}">
+                        {{ parentCategory.name ~ ' ...' }}
+                        <span class="badge"><i class="fa fa-level-up fa-fw"></i></span>
+                    </a>
+                {% else %}
+                    <a href="{{ path('wandfluh_index') }}">
+                        {{ rootCategoryName }} ...
+                        <span class="badge"><i class="fa fa-level-up fa-fw"></i></span>
+                    </a>
+                {% endif %}
+            {% else %}
+                <span class="span">{{ rootCategoryName }}</span>
+            {% endif %}
+        </li>
+
+        {% for item in sidebarListCategories %}
+            {% if category is defined and item.id == category.id %}
+                <li class="list-group-item sidebar-item sidebar-item-current">
+                    <span>{{ item.name }}</span>
+                </li>
+            {% else %}
+                <li class="list-group-item sidebar-item">
+                    <a href="{{ path('wf_category_list', {'fullPath': item.fullPath}) }}">{{ item.name }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

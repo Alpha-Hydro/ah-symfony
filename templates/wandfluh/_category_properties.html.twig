@@ -1,0 +1,18 @@
+{% if category.properties.count != 0 %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="{{ asset('upload/wandfluh/img/' ~ category.image) }}" class="img-responsive"
+                     alt="{{ category.name }}">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-striped table-condensed text-size-small">
+                {% for property in category.properties %}
+                    <tr><td>{{ property.value }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <hr/>
+{% endif %}

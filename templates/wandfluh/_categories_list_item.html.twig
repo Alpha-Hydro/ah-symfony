@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="categories-list flex-box">
+        {% for category in categories %}
+            <div class="flex-box-item card hover">
+                <a href="{{ path('wf_category_list', {'fullPath' : category.fullPath}) }}">
+                    <div class="card-image">
+                        <img src="{{ asset(category.uploadPath|default('upload/wandfluh/img/') ~ category.image | default('wandfluh.svg')) }}" alt="{{ category.name }}"/>
+                    </div>
+                    <div class="card-title bottom text-center">
+                        {{ category.name }}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

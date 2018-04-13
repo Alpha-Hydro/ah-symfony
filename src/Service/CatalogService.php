@@ -11,81 +11,37 @@ namespace App\Service;
 
 
 use App\Entity\Categories;
-use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * Class CatalogService
- * @package App\Service
- */
-class CatalogService
+interface CatalogService
 {
     /**
-     * @var CategoriesRepository
+     * @return Categories[]
      */
-    private $categoriesRepository;
-
-    /**
-     * CatalogController constructor.
-     * @param CategoriesRepository $categoriesRepository
-     */
-    public function __construct(CategoriesRepository $categoriesRepository)
-    {
-        $this->categoriesRepository = $categoriesRepository;
-    }
+    public function findByRootCategories(): array;
 
     /**
      * @param Categories|null $category
      * @return array|null
      */
-    public function getBreadcrumbs(Categories $category = null): ?array
-    {
-        if ($category == null)
-            return null;
-
-        $result = [];
-        do {
-            $result[] = $category;
-            $category = $category->getParent();
-        } while ($category != null);
-
-        if (!empty($result))
-            $result = array_reverse($result);
-
-        return $result;
-    }
+    public function getBreadcrumbs(Categories $category = null): ?array;
 
     /**
-     * @param Categories $parentCategory
+     * @param Categories|null $parentCategory
      * @return Categories[]|array|Collection
      */
-    public function getSidebarListCategories(Categories $parentCategory = null)
-    {
-        $sidebarListCategories = $this->categoriesRepository->findByRootCategories();
-
-        if ($parentCategory != null && $parentCategory->getId() != 0)
-            $sidebarListCategories = $this->findByChildren($parentCategory);
-
-        return $sidebarListCategories;
-    }
+    public function getSidebarListCategories(Categories $parentCategory = null);
 
     /**
      * @param Categories $category
      * @return Categories[]
      */
-    public function findByChildren(Categories $category): array
-    {
-        return $this->categoriesRepository->findByChildren($category);
-    }
+    public function findByChildren(Categories $category): array;
 
     /**
      * @param string $fullPath
      * @return Categories|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findByFullPath(string $fullPath): ?Categories
-    {
-        return $this->categoriesRepository->findByFullPath($fullPath);
-    }
-
+    public function findByFullPath(string $fullPath): ?Categories;
 }

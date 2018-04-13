@@ -19,6 +19,51 @@ class WfCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, WfCategory::class);
     }
 
+    /**
+     * @return WfCategory[] Returns an array of WfCategory objects
+     */
+    public function findByRootCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->andWhere('c.parent is null')
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param WfCategory $category
+     * @return WfCategory[]
+     */
+    public function findByChildren(WfCategory $category): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->andWhere('c.parent = :category')
+            ->setParameter('category', $category)
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param string $value
+     * @return WfCategory|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByFullPath(string $value): ?WfCategory
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.fullPath = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return WfCategory[] Returns an array of WfCategory objects
 //     */

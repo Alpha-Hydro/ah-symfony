@@ -69,9 +69,9 @@ class WfCategory extends BaseEntity
     }
 
     /**
-     * @return WfCategory
+     * @return WfCategory|null
      */
-    public function getParent(): WfCategory
+    public function getParent(): ?WfCategory
     {
         return $this->parent;
     }

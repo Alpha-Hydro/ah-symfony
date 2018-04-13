@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Products;
-use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,15 +19,15 @@ class CatalogController extends AbstractController
 {
     /**
      * @Route("/", name="catalog_index", methods="GET")
-     * @param CategoriesRepository $categoriesRepository
+     * @param CatalogService $catalogService
      * @return Response
      */
-    public function index(CategoriesRepository $categoriesRepository): Response
+    public function index(CatalogService $catalogService): Response
     {
-        $categories = $categoriesRepository->findByRootCategories();
+        $categories = $catalogService->findByRootCategories();
 
         return $this->render('catalog/categories_list.html.twig', [
-            'categories' => $categoriesRepository->findByRootCategories(),
+            'categories' => $categories,
             'sidebarListCategories' => $categories,
         ]);
     }
@@ -54,7 +53,7 @@ class CatalogController extends AbstractController
         if(empty($childrenCategories))
             return $this->render('catalog/product_list.html.twig', $data);
 
-        $data['categories'] = $catalogService->findByChildren($category);
+        $data['categories'] = $childrenCategories;
 
         return $this->render('catalog/categories_list.html.twig', $data);
     }

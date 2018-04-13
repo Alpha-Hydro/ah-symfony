@@ -1,0 +1,14 @@
+<div class="row hidden-xs">
+    <div class="col-md-12">
+        <ul class="breadcrumb mb1">
+            <li><a href="{{ path('index') }}">Главная</a></li>
+            <li><a href="{{ path('wandfluh_index') }}">Гидроаппаратура Wandfluh</a></li>
+            {% for item in breadcrumbs %}
+                <li><a href="{{ path('wf_category_list', {'fullPath': item.fullPath}) }}">{{ item.name }}</a></li>
+            {% endfor %}
+            {% if product is not defined %}
+                <li class="active"><span>{{ category.name }}</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
