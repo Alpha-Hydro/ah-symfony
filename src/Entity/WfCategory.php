@@ -30,11 +30,17 @@ class WfCategory extends BaseEntity
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WfCategoryProperties", mappedBy="category")
+     */
+    private $properties;
+
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->properties = new ArrayCollection();
     }
 
     /**
@@ -111,6 +117,37 @@ class WfCategory extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($product->getCategory() === $this) {
                 $product->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WfCategoryProperties[]
+     */
+    public function getProperties(): Collection
+    {
+        return $this->properties;
+    }
+
+    public function addProperty(WfCategoryProperties $property): self
+    {
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProperty(WfCategoryProperties $property): self
+    {
+        if ($this->properties->contains($property)) {
+            $this->properties->removeElement($property);
+            // set the owning side to null (unless already changed)
+            if ($property->getCategory() === $this) {
+                $property->setCategory(null);
             }
         }
 

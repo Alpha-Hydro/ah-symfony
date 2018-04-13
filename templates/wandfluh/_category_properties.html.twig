@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="thumbnail">
-                <img src="{{ asset('upload/wandfluh/img/' ~ category.image) }}" class="img-responsive"
+                <img src="{{ asset(category.uploadPath|default('upload/wandfluh/img/') ~ category.image|default('wandfluh.svg')) }}" class="img-responsive"
                      alt="{{ category.name }}">
             </div>
         </div>

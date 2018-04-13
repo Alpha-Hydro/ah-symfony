@@ -7,7 +7,7 @@
         <li class="list-group-item sidebar-heading">
             {% if parentCategory is defined %}
                 {% if parentCategory is not null %}
-                    <a href="{{ path('catalog_list', {'fullPath': parentCategory.fullPath}) }}">
+                    <a href="{{ path('wf_category_list', {'fullPath': parentCategory.fullPath}) }}">
                         {{ parentCategory.name ~ ' ...' }}
                         <span class="badge"><i class="fa fa-level-up fa-fw"></i></span>
                     </a>
