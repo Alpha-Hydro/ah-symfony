@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        {% for name, productControl in productList %}
+            <h4>{{ name }}</h4>
+            <table class="table table-striped modifications">
+                <thead>
+                    <tr>
+                        <td>ТП.№</td>
+                        <td>Конструктивное исполнение</td>
+                        <td>Размеры</td>
+                        <td>Тип</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in productControl %}
+                    <tr>
+                        <td><a href="{{ asset('upload/wandfluh/pdf/' ~ product.dataSheetPdf) }}" target="_blank">{{ product.dataSheetNo }}</a></td>
+                        <td>{{ product.productConstruction.name | default('')}}</td>
+                        <td>{{ product.productSize.name | default('') }}</td>
+                        <td>{{ product.productType.name | default('') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+</div>

@@ -11,6 +11,7 @@ namespace App\Service;
 
 
 use App\Entity\WfCategory;
+use App\Entity\WfProduct;
 use Doctrine\Common\Collections\Collection;
 
 interface WandfluhService
@@ -44,4 +45,11 @@ interface WandfluhService
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findByFullPath(string $fullPath): ?WfCategory;
+
+
+    /**
+     * @param WfCategory $category
+     * @return WfProduct[]
+     */
+    public function groupProductsByControl(WfCategory $category): array;
 }

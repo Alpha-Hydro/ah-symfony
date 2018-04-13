@@ -25,6 +25,26 @@ class WfProduct extends BaseEntity
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\WfProductType", inversedBy="products", fetch="EAGER")
+     */
+    private $productType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\WfProductSize", inversedBy="products", fetch="EAGER")
+     */
+    private $productSize;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\WfProductControl", inversedBy="products", fetch="EAGER")
+     */
+    private $productControl;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\WfProductConstruction", inversedBy="products", fetch="EAGER")
+     */
+    private $productConstruction;
+
     public function getDataSheetNo(): ?string
     {
         return $this->dataSheetNo;
@@ -57,6 +77,54 @@ class WfProduct extends BaseEntity
     public function setCategory(?WfCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProductType(): ?WfProductType
+    {
+        return $this->productType;
+    }
+
+    public function setProductType(?WfProductType $productType): self
+    {
+        $this->productType = $productType;
+
+        return $this;
+    }
+
+    public function getProductSize(): ?WfProductSize
+    {
+        return $this->productSize;
+    }
+
+    public function setProductSize(?WfProductSize $productSize): self
+    {
+        $this->productSize = $productSize;
+
+        return $this;
+    }
+
+    public function getProductControl(): ?WfProductControl
+    {
+        return $this->productControl;
+    }
+
+    public function setProductControl(?WfProductControl $productControl): self
+    {
+        $this->productControl = $productControl;
+
+        return $this;
+    }
+
+    public function getProductConstruction(): ?WfProductConstruction
+    {
+        return $this->productConstruction;
+    }
+
+    public function setProductConstruction(?WfProductConstruction $productConstruction): self
+    {
+        $this->productConstruction = $productConstruction;
 
         return $this;
     }

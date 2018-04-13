@@ -51,6 +51,12 @@ class WandfluhController extends AbstractController
 
         $childrenCategories = $wandfluhService->findByChildren($category);
 
+        if(empty($childrenCategories)){
+            $data['productList'] = $wandfluhService->groupProductsByControl($category);
+            return $this->render('wandfluh/product_list.html.twig', $data);
+        }
+
+
         $data['categories'] = $childrenCategories;
 
         return $this->render('wandfluh/categories_list.html.twig', $data);

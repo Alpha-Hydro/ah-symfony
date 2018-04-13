@@ -11,6 +11,7 @@ namespace App\Service;
 
 
 use App\Entity\WfCategory;
+use App\Entity\WfProduct;
 use App\Repository\WfCategoryRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -75,7 +76,7 @@ class WfCategoryService implements WandfluhService
 
     /**
      * @param WfCategory $category
-     * @return array
+     * @return WfCategory[]|array
      */
     public function findByChildren(WfCategory $category): array
     {
@@ -85,5 +86,21 @@ class WfCategoryService implements WandfluhService
     public function findByFullPath(string $fullPath): ?WfCategory
     {
         return $this->repository->findByFullPath($fullPath);
+    }
+
+    /**
+     * @param WfCategory $category
+     * @return WfProduct[]|array
+     */
+    public function groupProductsByControl(WfCategory $category): array
+    {
+        $result = [];
+        if (!empty($productList = $category->getProducts())){
+            foreach ($productList as $product) {
+                $productControl = ($product->getProductControl() != null) ? $product->getProductControl()->getName() : $product->getCategory()->getName();
+                $result[$productControl][] = $product;
+            }
+        }
+        return $result;
     }
 }
