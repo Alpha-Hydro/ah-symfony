@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\WfCategory;
-use App\Repository\ModuleSiteRepository;
-use App\Repository\WfCategoryRepository;
+use App\Service\ModuleSiteService;
 use App\Service\WandfluhService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,20 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WandfluhController extends AbstractController
 {
-    /**
-     * @Route("/", name="wandfluh_index", methods="GET")
-     * @param ModuleSiteRepository $moduleSiteRepository
-     * @param WandfluhService $wandfluhService
-     * @return Response
-     */
-    public function index(ModuleSiteRepository $moduleSiteRepository, WandfluhService $wandfluhService): Response
-    {
-        return $this->render('wandfluh/index.html.twig', [
-            'page' => $moduleSiteRepository->findOneBy(['path' => 'wandfluh']),
-            'sidebarListCategories' => $wandfluhService->findByRootCategories(),
-        ]);
-    }
-
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="wf_category_list", methods="GET")
      * @param WfCategory $category

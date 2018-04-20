@@ -18,21 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class CatalogController extends AbstractController
 {
     /**
-     * @Route("/", name="catalog_index", methods="GET")
-     * @param CatalogService $catalogService
-     * @return Response
-     */
-    public function index(CatalogService $catalogService): Response
-    {
-        $categories = $catalogService->findByRootCategories();
-
-        return $this->render('catalog/categories_list.html.twig', [
-            'categories' => $categories,
-            'sidebarListCategories' => $categories,
-        ]);
-    }
-
-    /**
      * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="catalog_list", methods="GET")
      * @param Categories $category
      * @param CatalogService $catalogService
