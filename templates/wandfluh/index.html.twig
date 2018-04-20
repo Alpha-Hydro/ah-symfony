@@ -1,22 +1,5 @@
-{% extends 'base.html.twig' %}
-
-{% set pageTitle = (category is defined) ? category.name : 'Гидроаппаратура Wandfluh' %}
-
-{% block title %}{{ pageTitle }}{% endblock %}
-
-{% block pageHeader %}
-    {{ include('components/_page_header.html.twig') }}
-{% endblock %}
+{% extends 'default_page.html.twig' %}
 
 {% block sidebar %}
     {{ include('wandfluh/_wandfluh_sidebar.html.twig') }}
-{% endblock %}
-
-{% block content %}
-    <div class="page-content mt2">
-        {% if page.image is defined and page.image is not null %}
-            <img src="{{ page.image }}" alt="{{ page.name }}" class="pull-right">
-        {% endif %}
-        {{ page.contentHtml|default('')|raw }}
-    </div>
 {% endblock %}

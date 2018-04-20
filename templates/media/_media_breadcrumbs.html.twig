@@ -1,0 +1,12 @@
+<div class="row hidden-xs">
+    <div class="col-md-12">
+        <ul class="breadcrumb mb1">
+            <li><a href="{{ path('index') }}">Главная</a></li>
+            {% if product is not defined %}
+                <li class="active"><span>{{ category.name }}</span></li>
+            {% else %}
+                <li><a href="{{ path('media_category_list', {'path':category.fullPath}) }}">{{ category.name }}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

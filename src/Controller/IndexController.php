@@ -58,16 +58,6 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("/media", name="media_index")
-     */
-    public function indexMedia(): Response
-    {
-        return $this->render('media/index.html.twig', [
-            'controller_name' => 'MediaController',
-        ]);
-    }
-
-    /**
      * @Route("/manufacture", name="manufacture_index")
      */
     public function indexManufacture(): Response

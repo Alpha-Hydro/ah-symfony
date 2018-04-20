@@ -19,6 +19,20 @@ class MediaCategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, MediaCategories::class);
     }
 
+    /**
+     * @return MediaCategories[]
+     */
+    public function findByRootCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return MediaCategories[] Returns an array of MediaCategories objects
 //     */
