@@ -29,3 +29,7 @@ gen
 /.sass-cache/
 *.lock
 *-lock.json
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
