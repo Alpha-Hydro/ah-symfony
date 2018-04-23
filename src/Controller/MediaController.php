@@ -29,6 +29,7 @@ class MediaController extends Controller
         $data = [
             'category' => $category,
             'sidebarListCategories' => $mediaService->findByRootCategories(),
+            'posts' => $mediaService->findByPostsCriteria($category),
         ];
 
         return $this->render('media/categories_list.html.twig', $data);
