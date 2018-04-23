@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\WfCategory;
-use App\Service\ModuleSiteService;
 use App\Service\WandfluhService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

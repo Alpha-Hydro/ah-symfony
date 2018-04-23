@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Media extends BaseEntity
 {
     use PageContentTrait;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $path;
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */

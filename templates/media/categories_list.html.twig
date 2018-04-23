@@ -2,26 +2,5 @@
 
 {% block content %}
     {{ include('media/_media_breadcrumbs.html.twig') }}
-    <div class="row">
-        {% for post in posts %}
-            <div class="media media-item line line-dotted">
-                <div class="media-left col-xs-4 col-sm-3">
-                    <div class="thumbnail col-xs-12 col-sm-10 hover-shadow">
-                        <a href="{{ path('media_category_list', {'path':category.fullPath}) }}">
-                            <img src="{{ post.image | default(asset('upload/media/items/LOGO_shlang.png'))}}" alt="{{ post.name }}" class="media-object">
-                        </a>
-                    </div>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">
-                        <a href="{{ path('media_category_list', {'path':category.fullPath}) }}">{{ post.name }}</a>
-                    </h4>
-                    <p class="text-muted text-size-small">
-                        <small><em>{{ post.createDate | date('d.m.Y') ~ ' г.' }}</em></small>
-                    </p>
-                    {{ post.sContent | raw }}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    {{ include('media/_media_posts_list.html.twig') }}
 {% endblock %}

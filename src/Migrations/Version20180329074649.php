@@ -68,6 +68,7 @@ class Version20180329074649 extends AbstractMigration
         //Media
         $this->addSql('UPDATE media SET category_id = NULL WHERE category_id = 5');
         $this->addSql('UPDATE media SET category_id = NULL WHERE category_id = 7');
+        $this->addSql('DELETE FROM media WHERE category_id is null');
 
         //MediaCategories
         $this->addSql('DROP INDEX unique_id ON media_categories');

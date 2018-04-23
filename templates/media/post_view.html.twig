@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = post.name %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block pageHeader %}
+    {{ include('components/_page_header.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ include('media/_media_sidebar.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ include('media/_media_breadcrumbs.html.twig') }}
+    <div class="row">
+        <div class="{{ post.image ? 'col-md-9' : 'col-md-12' }}">
+            {{ post.contentHtml | raw }}
+            <p class="text-muted">
+                <small>
+                    <em>{{ post.updateDate | date('d.m.Y') ~ ' г.' }}</em>
+                </small>
+            </p>
+        </div>
+        {% if post.image is defined and post.image != '' %}
+            <div class="col-md-3 hidden-sm hidden-xs">
+                <div class="thumbnail">
+                    <img src="{{ asset(post.image) }}" alt="{{ post.name }}">
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
