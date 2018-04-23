@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CategoriesRepository;
 use App\Service\CatalogService;
+use App\Service\ManufactureService;
 use App\Service\ModuleSiteService;
 use App\Service\WandfluhService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -59,11 +60,14 @@ class IndexController extends Controller
 
     /**
      * @Route("/manufacture", name="manufacture_index")
+     * @param ModuleSiteService $moduleSiteService
+     * @return Response
      */
-    public function indexManufacture(): Response
+    public function indexManufacture(ModuleSiteService $moduleSiteService, ManufactureService $manufactureService): Response
     {
         return $this->render('manufacture/index.html.twig', [
-            'controller_name' => 'ManufactureController',
+            'page' => $moduleSiteService->getPageByPath('manufacture'),
+            'sidebarListCategories' => $manufactureService->findByRootCategories(),
         ]);
     }
 }

@@ -19,6 +19,19 @@ class ManufactureCategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, ManufactureCategories::class);
     }
 
+    /**
+     * @return ManufactureCategories[]
+     */
+    public function findByRootCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return ManufactureCategories[] Returns an array of ManufactureCategories objects
 //     */
