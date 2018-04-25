@@ -19,6 +19,20 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    public function searchSqlQuery(string $query): array
+    {
+        return $this->_em->createNativeQuery(
+            "SELECT * FROM products WHERE MATCH (s_name, sku, name, meta_keywords) AGAINST (? IN BOOLEAN MODE)",
+            $this->createResultSetMappingBuilder("p"))
+            ->setParameter(1, "\'+" . $query . "*\'")
+            ->getResult();
+    }
+
 //    /**
 //     * @return Products[] Returns an array of Products objects
 //     */

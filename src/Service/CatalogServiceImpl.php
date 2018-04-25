@@ -11,7 +11,9 @@ namespace App\Service;
 
 
 use App\Entity\Categories;
+use App\Entity\Products;
 use App\Repository\CategoriesRepository;
+use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -23,15 +25,21 @@ class CatalogServiceImpl implements CatalogService
     /**
      * @var CategoriesRepository
      */
-    private $repository;
+    private $categoriesRepository;
+
+    /**
+     * @var ProductsRepository
+     */
+    private $productsRepository;
 
     /**
      * CatalogController constructor.
      * @param CategoriesRepository $categoriesRepository
      */
-    public function __construct(CategoriesRepository $categoriesRepository)
+    public function __construct(CategoriesRepository $categoriesRepository, ProductsRepository $productsRepository)
     {
-        $this->repository = $categoriesRepository;
+        $this->categoriesRepository = $categoriesRepository;
+        $this->productsRepository = $productsRepository;
     }
 
     /**
@@ -75,7 +83,7 @@ class CatalogServiceImpl implements CatalogService
      */
     public function findByChildren(Categories $category): array
     {
-        return $this->repository->findByChildren($category);
+        return $this->categoriesRepository->findByChildren($category);
     }
 
     /**
@@ -85,11 +93,26 @@ class CatalogServiceImpl implements CatalogService
      */
     public function findByFullPath(string $fullPath): ?Categories
     {
-        return $this->repository->findByFullPath($fullPath);
+        return $this->categoriesRepository->findByFullPath($fullPath);
     }
 
+    /**
+     * @return Categories[]
+     */
     public function findByRootCategories(): array
     {
-        return $this->repository->findByRootCategories();
+        return $this->categoriesRepository->findByRootCategories();
+    }
+
+    /**
+     * @param string $query
+     * @return Products[]
+     */
+    public function findProductBySearchQuery(string $query): array
+    {
+        $query = str_replace(array('.',',',' ','-','_','/','\\','*','+','&','^','%','#','@','!','(',')','~','<','>',':',';','"',"'","|"), '', $query);
+
+        return $this->productsRepository->searchSqlQuery($query);
+
     }
 }

@@ -7,7 +7,7 @@
                 <div class="col-sm-3">
                     <div class="thumbnail product-images">
                         <a href="{{ path('catalog_product_view', {'fullPathCategory': category.fullPath, 'path': product.path}) }}">
-                            <img src="{{ product.uploadPath }}{{ product.image }}"
+                            <img src="{{ asset(product.uploadPath ~ product.image) }}"
                                  alt="{{ product.name }}">
                         </a>
                     </div>

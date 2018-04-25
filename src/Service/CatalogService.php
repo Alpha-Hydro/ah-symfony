@@ -44,4 +44,6 @@ interface CatalogService
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findByFullPath(string $fullPath): ?Categories;
+
+    public function findProductBySearchQuery(string $query): array;
 }
