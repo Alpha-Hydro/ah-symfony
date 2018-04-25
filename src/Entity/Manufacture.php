@@ -12,6 +12,11 @@ class Manufacture extends BaseEntity
     use PageContentTrait;
 
     /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $path;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ManufactureCategories", inversedBy="products")
      */
     private $category;

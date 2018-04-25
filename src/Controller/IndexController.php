@@ -61,6 +61,7 @@ class IndexController extends Controller
     /**
      * @Route("/manufacture", name="manufacture_index")
      * @param ModuleSiteService $moduleSiteService
+     * @param ManufactureService $manufactureService
      * @return Response
      */
     public function indexManufacture(ModuleSiteService $moduleSiteService, ManufactureService $manufactureService): Response

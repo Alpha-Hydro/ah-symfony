@@ -1,0 +1,18 @@
+<div class="row manufacture-list">
+    <div class="flex-box">
+        {% for product in category.products %}
+            <div class="col-md-4 flex-box-auto">
+                <div class="thumbnail manufacture-item z-depth-1">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <div class="caption">
+                        <h4 class="manufacture-title">{{ product.name }}</h4>
+                        <p class="manufacture-description">{{ product.description }}</p>
+                        <p class="text-right manufacture-link">
+                            <a href="{{ path('manufacture_product_view', {'pathCategory':category.path, 'path': product.path}) }}" class="btn btn-alpha default" title="{{ product.name }}">Подробнее</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

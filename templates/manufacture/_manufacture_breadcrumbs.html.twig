@@ -1,0 +1,13 @@
+<div class="row hidden-xs">
+    <div class="col-md-12">
+        <ul class="breadcrumb mb1">
+            <li><a href="{{ path('index') }}">Главная</a></li>
+            <li><a href="{{ path('manufacture_index') }}">Наше производство</a></li>
+            {% if product is not defined %}
+                <li class="active"><span>{{ category.name }}</span></li>
+            {% else %}
+                <li><a href="{{ path('manufacture_list', {'fullPath':category.fullPath}) }}">{{ category.name }}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

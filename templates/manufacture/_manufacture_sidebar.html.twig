@@ -1,0 +1,23 @@
+{% extends 'components/_sidebar.html.twig' %}
+
+{% set rootCategoryName = 'Производство' %}
+
+{% block sidebarList %}
+    <ul class="list-group crop-bottom-shadow">
+        <li class="list-group-item sidebar-heading">
+            <span class="span">{{ rootCategoryName }}</span>
+        </li>
+
+        {% for item in sidebarListCategories %}
+            {% if category is defined and item.id == category.id %}
+                <li class="list-group-item sidebar-item sidebar-item-current">
+                    <span>{{ item.name }}</span>
+                </li>
+            {% else %}
+                <li class="list-group-item sidebar-item">
+                    <a href="{{ path('manufacture_list', {'fullPath': item.fullPath}) }}">{{ item.name }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
