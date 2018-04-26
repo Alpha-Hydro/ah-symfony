@@ -20,10 +20,16 @@ class SearchController extends Controller
     {
         $data = [
             'categories' => $catalogService->getSidebarListCategories(),
+            'searchQuery' => ''
         ];
 
-        if ($query = $request->get("query"))
+        if ($query = $request->get("query")){
+            $data['searchQuery'] = $query;
             $data['productList'] = $catalogService->findProductBySearchQuery($query);
+            //die(var_dump($data['productList']));
+        }
+
+
 
         return $this->render('search/index.html.twig', $data);
     }

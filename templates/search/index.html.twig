@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if productList is defined and productList is not null %}
+    {% if productList is defined and productList is not empty %}
         {{ include('search/_search_list_item.html.twig') }}
     {% elseif searchQuery != '' %}
         <p class="ah-info-block ah-info-block-danger">По Вашему запросу <kbd>{{ searchQuery }}</kbd> ничего не

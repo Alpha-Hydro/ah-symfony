@@ -47,12 +47,12 @@ class Products extends BaseEntity
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="products", fetch="EAGER")
      */
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProductParams", mappedBy="product", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductParams", mappedBy="product")
      * @ORM\OrderBy({"sorting" = "ASC"})
      */
     private $params;

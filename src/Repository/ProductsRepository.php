@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Categories;
+use App\Entity\ProductParams;
 use App\Entity\Products;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -26,9 +30,12 @@ class ProductsRepository extends ServiceEntityRepository
      */
     public function searchSqlQuery(string $query): array
     {
-        return $this->_em->createNativeQuery(
-            "SELECT * FROM products WHERE MATCH (s_name, sku, name, meta_keywords) AGAINST (? IN BOOLEAN MODE)",
-            $this->createResultSetMappingBuilder("p"))
+        $rsm = new ResultSetMappingBuilder($this->_em);
+        $rsm->addRootEntityFromClassMetadata(Products::class, 'p');
+
+        $sql = "SELECT * FROM products WHERE MATCH (s_name, sku, name, meta_keywords) AGAINST (? IN BOOLEAN MODE)";
+
+        return $this->_em->createNativeQuery($sql, $rsm)
             ->setParameter(1, "\'+" . $query . "*\'")
             ->getResult();
     }
@@ -36,7 +43,7 @@ class ProductsRepository extends ServiceEntityRepository
 //    /**
 //     * @return Products[] Returns an array of Products objects
 //     */
-    /*
+    /*Categories
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('p')
