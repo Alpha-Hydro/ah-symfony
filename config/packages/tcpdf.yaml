@@ -1,0 +1,9 @@
+tcpdf:
+    construct:
+        orientation: 'L'
+        unit: 'mm'
+        format: 'A5'
+        unicode: true
+        encoding: 'UTF-8'
+        diskcache: false
+        pdfa: false
