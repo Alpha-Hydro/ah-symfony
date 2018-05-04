@@ -22,7 +22,7 @@ class PdfController extends Controller
         $pdf = $this->container->get('tcpdf');
 
         // @Todo set fonts
-        $pdf->SetFont('dejavusanscondensed', '', 12, '', false);
+        //$pdf->SetFont('dejavusanscondensed', '', 12, '', false);
         $pdf->AddPage();
         $pdf->writeHTML($html, true, false, true, false, '');
 

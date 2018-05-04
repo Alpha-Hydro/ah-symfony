@@ -1,9 +1,17 @@
 tcpdf:
-    construct:
-        orientation: 'L'
-        unit: 'mm'
-        format: 'A5'
-        unicode: true
-        encoding: 'UTF-8'
-        diskcache: false
-        pdfa: false
+    config:
+        k_path_fonts: '%kernel.root_dir%/../public/fonts/tcpdf/'
+        k_path_images: '%kernel.root_dir%/../public/files/pdf/'
+        pdf_header_logo: 'alfa-hydro.png'
+        pdf_header_logo_width: 50
+        pdf_creator: 'Alpha-Hydro'
+        pdf_author: 'Alpha-Hydro'
+        pdf_header_title: 'Паспорт № '
+
+        pdf_margin_bottom: 5
+        pdf_margin_right: 10
+
+        pdf_font_name_main: 'arialnarrow'
+        pdf_font_name_data: 'arialnarrow'
+        pdf_font_size_data: 10
+        pdf_font_monospaced: 'arialnarrow'
