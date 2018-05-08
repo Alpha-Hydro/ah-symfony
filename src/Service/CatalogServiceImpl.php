@@ -35,6 +35,7 @@ class CatalogServiceImpl implements CatalogService
     /**
      * CatalogController constructor.
      * @param CategoriesRepository $categoriesRepository
+     * @param ProductsRepository $productsRepository
      */
     public function __construct(CategoriesRepository $categoriesRepository, ProductsRepository $productsRepository)
     {

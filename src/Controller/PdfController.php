@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PdfController extends Controller
 {
@@ -21,14 +20,12 @@ class PdfController extends Controller
 
         $pdf = $this->container->get('tcpdf');
 
-        // @Todo set fonts
-        //$pdf->SetFont('dejavusanscondensed', '', 12, '', false);
         $pdf->AddPage();
         $pdf->writeHTML($html, true, false, true, false, '');
 
         return new Response($pdf->Output(), 200, [
-            'Content-Type'          => 'application/pdf',
-            'Content-Disposition'   => 'inline; filename="new.pdf"'
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="new.pdf"'
         ]);
     }
 }

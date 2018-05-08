@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\WfCategory;
 use App\Service\WandfluhService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/wandfluh")
  * @Cache(expires="tomorrow", public=true)
  */
-
-class WandfluhController extends AbstractController
+class WandfluhController extends Controller
 {
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="wf_category_list", methods="GET")
@@ -35,7 +34,7 @@ class WandfluhController extends AbstractController
 
         $childrenCategories = $wandfluhService->findByChildren($category);
 
-        if(empty($childrenCategories)){
+        if (empty($childrenCategories)) {
             $data['productList'] = $wandfluhService->groupProductsByControl($category);
             return $this->render('wandfluh/product_list.html.twig', $data);
         }

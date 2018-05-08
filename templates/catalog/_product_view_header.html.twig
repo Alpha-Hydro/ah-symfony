@@ -5,7 +5,7 @@
             <small>{{ product.name }}</small>
         </h1>
         <div class="print hidden-xs">
-            <a href="#print" class="alpha-icon-print">
+            <a href="{{ path('catalog_product_pdf', {'fullPathCategory': category.fullPath, 'path': product.path})}}" class="alpha-icon-print" target="_blank">
                 <span class="">Печать</span>
             </a>
         </div>

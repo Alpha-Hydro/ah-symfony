@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Entity\Products;
 use App\Service\CatalogService;
+use App\Service\PdfService;
+use App\Util\CatalogPdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/catalog")
  * @Cache(expires="tomorrow", public=true)
  */
-class CatalogController extends AbstractController
+class CatalogController extends Controller
 {
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="catalog_list", methods="GET")
@@ -68,5 +71,34 @@ class CatalogController extends AbstractController
         ];
 
         return $this->render('catalog/product_view.html.twig', $data);
+    }
+
+
+    /**
+     * @Route("/{fullPathCategory}/{path}.pdf",
+     *     requirements={
+     *          "fullPathCategory": "[a-z0-9\-\/]+",
+     *          "path": "[A-Z0-9\-]+"
+     *     },
+     *     name="catalog_product_pdf", methods="GET")
+     * @param Products $products
+     * @param Request $request
+     * @return Response
+     */
+    public function productPdf(Products $products, Request $request): Response
+    {
+        $html = $this->renderView('pdf/index.html.twig', [
+            'controller_name' => 'PdfController',
+        ]);
+
+        $pdf = new CatalogPdf($products, $request);
+
+        $pdf->AddPage();
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        return new Response($pdf->Output(), 200, [
+            'Content-Type'          => 'application/pdf',
+            'Content-Disposition'   => 'inline; filename="new.pdf"'
+        ]);
     }
 }
