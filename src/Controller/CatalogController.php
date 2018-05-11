@@ -7,6 +7,7 @@ use App\Entity\Products;
 use App\Service\CatalogService;
 use App\Service\PdfService;
 use App\Util\CatalogPdf;
+use App\Util\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,7 +92,7 @@ class CatalogController extends Controller
             'controller_name' => 'PdfController',
         ]);
 
-        $pdf = new CatalogPdf($products, $request);
+        $pdf = new Pdf($products, $request);
 
         $pdf->AddPage();
         $pdf->writeHTML($html, true, false, true, false, '');
