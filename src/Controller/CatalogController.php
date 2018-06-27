@@ -88,14 +88,15 @@ class CatalogController extends Controller
      */
     public function productPdf(Products $products, Request $request): Response
     {
-        $html = $this->renderView('pdf/index.html.twig', [
-            'controller_name' => 'PdfController',
-        ]);
-
         $pdf = new Pdf($products, $request);
+        //var_dump(K_PATH_IMAGES);die();
 
         $pdf->AddPage();
-        $pdf->writeHTML($html, true, false, true, false, '');
+
+        $pdf->showImages()
+            ->showParams()
+            ->showDescription()
+        ;
 
         return new Response($pdf->Output(), 200, [
             'Content-Type'          => 'application/pdf',

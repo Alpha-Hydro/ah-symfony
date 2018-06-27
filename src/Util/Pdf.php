@@ -56,4 +56,54 @@ class Pdf extends TcPdfService
         $this->SetFont('', 'B', 10);
         $this->Cell($numberPageWith, 7, $this->getAliasNumPage(), 0, 1, 'C', true, '', 0, false, 'M');
     }
+
+    public function showImages(): self
+    {
+        $imageProduct = $this->product->getUploadPath() . $this->product->getImage();
+        $this->Image($imageProduct, $this->x, $this->y, '', 25, '', '', 'T');
+        $this->SetX($this->getImageRBX() + 5);
+
+        if ($this->product->getDraft() != '' && $this->product->getDraft() != null) {
+            $draftProduct = $this->product->getUploadPathDraft() . $this->product->getDraft();
+            $this->Image($draftProduct, $this->x, $this->y, '', 25, '', '', 'T', true, 190);
+            $this->SetX($this->x + 5);
+        }
+
+        return $this;
+    }
+
+    public function showParams(): self
+    {
+        $x = $this->getImageRBX() + 5;
+        $productParams = $this->product->getParams();
+        if (!empty($productParams)) {
+            $w = array(60, $this->getPageWidth() - $this->original_rMargin - $x - 60);
+            foreach ($productParams as $param) {
+                $this->SetFont('', 'B', 10);
+                $this->MultiCell($w[0], 0, $param->getName(), 0, 'L', false, 0, $x, '', true, 0, false, true, 0);
+                $this->SetFont('', '', 10);
+
+                $this->MultiCell($w[1], 0, $param->getValue(), 0, 'L', false, 0, '', '', true, 0, false, true, 0);
+                $this->Ln();
+            }
+        }
+
+        $this->Ln(5);
+
+        if ($this->y < $this->getImageRBY() + 5) {
+            $this->SetX($x);
+        }
+
+        return $this;
+    }
+
+    public function showDescription(): self
+    {
+        if ($this->product->getDescription() != '' && $this->product->getDescription() != null) {
+            $this->Write('', $this->product->getDescription());
+            $this->Ln(5);
+        }
+
+        return $this;
+    }
 }
