@@ -38,13 +38,19 @@ abstract class TcPdfService extends \TCPDF implements TcPdfServiceInterface
         $this->initHeader();
     }
 
-    abstract function initHeader(): void;
+    function initHeader(): void
+    {
+        parent::Header();
+    }
 
     function Footer()
     {
         $this->initFooter();
     }
 
-    abstract function initFooter(): void;
+    function initFooter(): void
+    {
+        parent::Footer();
+    }
 
 }
