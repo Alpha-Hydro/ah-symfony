@@ -11,10 +11,13 @@ namespace App\Util;
 
 
 use App\Entity\Products;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class Pdf extends TcPdfService
 {
+    use ContainerAwareTrait;
+
     private $product;
     private $request;
 
@@ -104,6 +107,11 @@ class Pdf extends TcPdfService
             $this->Ln(5);
         }
 
+        return $this;
+    }
+
+    public function showModifications(): self
+    {
         return $this;
     }
 }
