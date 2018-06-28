@@ -85,6 +85,9 @@ class CatalogController extends Controller
      * @param Products $products
      * @param Request $request
      * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function productPdf(Products $products, Request $request): Response
     {
@@ -96,6 +99,7 @@ class CatalogController extends Controller
         $pdf->showImages()
             ->showParams()
             ->showDescription()
+            ->showModifications()
         ;
 
         return new Response($pdf->Output(), 200, [

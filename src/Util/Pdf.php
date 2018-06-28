@@ -11,13 +11,10 @@ namespace App\Util;
 
 
 use App\Entity\Products;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 class Pdf extends TcPdfService
 {
-    use ContainerAwareTrait;
-
     private $product;
     private $request;
 
@@ -110,8 +107,54 @@ class Pdf extends TcPdfService
         return $this;
     }
 
+    /**
+     * @return Pdf
+     */
     public function showModifications(): self
     {
+        if ($this->GetY() < $this->getImageRBY()) {
+            $this->SetY($this->getImageRBY() + 5);
+        }
+        $this->SetFont('', 'B');
+        $this->Write(0, 'Модификации и размеры');
+        $this->ln(5);
+
+        $this->SetFont('', '', 8);
+
+
+        $widthWorkspacePage = $this->getPageWidth() - PDF_MARGIN_LEFT - PDF_MARGIN_RIGHT;
+        $widthName = 25;
+        $widthColumn = ($widthWorkspacePage - $widthName) / $this->product->getModificationParams()->count();
+
+
+        $this->setCellPaddings('', 1, '', 1);
+        $this->SetFillColor(0, 148, 218);
+        $this->SetTextColor(255);
+
+        $this->MultiCell($widthName, 17, 'Название', 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
+        foreach ($this->product->getModificationParams() as $modificationParam) {
+            $this->MultiCell($widthColumn, 17, $modificationParam->getName(), 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
+        }
+        $this->ln();
+        $this->SetTextColor(0);
+        foreach ($this->product->getModifications() as $key => $modification){
+            $this->SetFillColor(255, 255, 255);
+            if ($key & 1){
+                $this->SetFillColor(228, 228, 228);
+            }
+
+            $this->Cell($widthName, 0, $modification->getSku(), 0, 0, 'C', true);
+
+            foreach ($this->product->getModificationParams() as $modificationParam){
+                foreach ($modification->getParamValues() as $paramsValues){
+                    if ($paramsValues->getParamId() == $modificationParam->getId()){
+                        $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true);
+                    }
+                }
+            }
+            $this->ln();
+        }
+
         return $this;
     }
 }

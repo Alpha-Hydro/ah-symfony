@@ -2,7 +2,7 @@ tcpdf:
     config:
         k_path_fonts: '%kernel.project_dir%/public/fonts/tcpdf/'
         k_path_images: '%kernel.project_dir%/public/files/pdf/'
-        pdf_header_logo: 'alfa-hydro.png'
+        pdf_header_logo: 'alpha.png'
         pdf_header_logo_width: 50
         pdf_creator: 'Alpha-Hydro'
         pdf_author: 'Alpha-Hydro'
