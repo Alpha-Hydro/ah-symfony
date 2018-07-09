@@ -7,13 +7,13 @@
  *
  */
 
-namespace App\Util;
-
+namespace App\Service;
 
 use App\Entity\Products;
 use Symfony\Component\HttpFoundation\Request;
+use Vladmeh\Bundle\TCPDFBundle\Service\TcPdfService;
 
-class Pdf extends TcPdfService
+class ProductPdf extends TcPdfService implements Pdf
 {
     private $product;
     private $request;
@@ -26,7 +26,7 @@ class Pdf extends TcPdfService
         parent::__construct();
     }
 
-    public function initHeader(): void
+    public function Header(): void
     {
         $this->SetFont('', 'B', 16);
         $this->Write(0, $this->product->getSku());
@@ -39,7 +39,7 @@ class Pdf extends TcPdfService
         $this->Line($this->original_lMargin, $this->y, $this->getPageWidth() - $this->original_rMargin, $this->y, $style);
     }
 
-    public function initFooter(): void
+    public function Footer(): void
     {
         // Position at 15 mm from bottom
         $this->SetY(-15);
@@ -108,7 +108,7 @@ class Pdf extends TcPdfService
     }
 
     /**
-     * @return Pdf
+     * @return ProductPdf
      */
     public function showModifications(): self
     {
@@ -137,17 +137,17 @@ class Pdf extends TcPdfService
         }
         $this->ln();
         $this->SetTextColor(0);
-        foreach ($this->product->getModifications() as $key => $modification){
+        foreach ($this->product->getModifications() as $key => $modification) {
             $this->SetFillColor(255, 255, 255);
-            if ($key & 1){
+            if ($key & 1) {
                 $this->SetFillColor(228, 228, 228);
             }
 
             $this->Cell($widthName, 0, $modification->getSku(), 0, 0, 'C', true);
 
-            foreach ($this->product->getModificationParams() as $modificationParam){
-                foreach ($modification->getParamValues() as $paramsValues){
-                    if ($paramsValues->getParamId() == $modificationParam->getId()){
+            foreach ($this->product->getModificationParams() as $modificationParam) {
+                foreach ($modification->getParamValues() as $paramsValues) {
+                    if ($paramsValues->getParamId() == $modificationParam->getId()) {
                         $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true, '', 1);
                     }
                 }
@@ -161,7 +161,7 @@ class Pdf extends TcPdfService
     public function showNote(): self
     {
         $note = $this->product->getNote();
-        if ($note != "" && $note != null){
+        if ($note != "" && $note != null) {
             $this->Write(0, '*' . $note);
         }
         $this->ln();

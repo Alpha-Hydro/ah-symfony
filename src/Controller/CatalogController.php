@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Entity\Products;
 use App\Service\CatalogService;
-use App\Util\Pdf;
+use App\Service\ProductPdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,7 +86,7 @@ class CatalogController extends Controller
      */
     public function productPdf(Products $products, Request $request): Response
     {
-        $pdf = new Pdf($products, $request);
+        $pdf = new ProductPdf($products, $request);
         //var_dump(K_PATH_IMAGES);die();
 
         $pdf->AddPage();
