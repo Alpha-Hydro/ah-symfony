@@ -148,12 +148,23 @@ class Pdf extends TcPdfService
             foreach ($this->product->getModificationParams() as $modificationParam){
                 foreach ($modification->getParamValues() as $paramsValues){
                     if ($paramsValues->getParamId() == $modificationParam->getId()){
-                        $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true);
+                        $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true, '', 1);
                     }
                 }
             }
             $this->ln();
         }
+
+        return $this;
+    }
+
+    public function showNote(): self
+    {
+        $note = $this->product->getNote();
+        if ($note != "" && $note != null){
+            $this->Write(0, '*' . $note);
+        }
+        $this->ln();
 
         return $this;
     }

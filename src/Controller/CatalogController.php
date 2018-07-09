@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Entity\Products;
 use App\Service\CatalogService;
-use App\Service\PdfService;
-use App\Util\CatalogPdf;
 use App\Util\Pdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +37,7 @@ class CatalogController extends Controller
         ];
 
         $childrenCategories = $catalogService->findByChildren($category);
-        if(empty($childrenCategories))
+        if (empty($childrenCategories))
             return $this->render('catalog/product_list.html.twig', $data);
 
         $data['categories'] = $childrenCategories;
@@ -63,7 +61,7 @@ class CatalogController extends Controller
         $category = $product->getCategory();
         $parentCategory = $category->getParent();
 
-        $data= [
+        $data = [
             'product' => $product,
             'category' => $category,
             'parentCategory' => $parentCategory,
@@ -85,9 +83,6 @@ class CatalogController extends Controller
      * @param Products $products
      * @param Request $request
      * @return Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function productPdf(Products $products, Request $request): Response
     {
@@ -100,11 +95,11 @@ class CatalogController extends Controller
             ->showParams()
             ->showDescription()
             ->showModifications()
-        ;
+            ->showNote();;
 
         return new Response($pdf->Output(), 200, [
-            'Content-Type'          => 'application/pdf',
-            'Content-Disposition'   => 'inline; filename="new.pdf"'
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="new.pdf"'
         ]);
     }
 }

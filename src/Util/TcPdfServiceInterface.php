@@ -17,4 +17,6 @@ interface TcPdfServiceInterface
 
     public function initFooter();
 
+    public function initClose();
+
 }
