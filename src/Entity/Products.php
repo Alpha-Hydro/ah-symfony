@@ -40,6 +40,12 @@ class Products extends BaseEntity
      */
     private $uploadPathDraft;
 
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $note;
+
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
@@ -123,6 +129,26 @@ class Products extends BaseEntity
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     * @return Products
+     */
+    public function setNote($note): self
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
 
     public function getCategory(): ?Categories
     {
