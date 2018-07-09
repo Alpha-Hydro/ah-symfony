@@ -12,17 +12,19 @@ namespace App\Service;
 interface Pdf
 {
 
-    public function Header();
+    function Header();
 
-    public function Footer();
+    function Footer();
 
-    public function showImages();
+    function showName();
 
-    public function showParams();
+    function showImages();
 
-    public function showDescription();
+    function showParams();
 
-    public function showModifications();
+    function showDescription();
 
-    public function showNote();
+    function showModifications();
+
+    function showNote();
 }

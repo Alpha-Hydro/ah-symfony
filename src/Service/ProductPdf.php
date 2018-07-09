@@ -28,11 +28,7 @@ class ProductPdf extends TcPdfService implements Pdf
 
     public function Header(): void
     {
-        $this->SetFont('', 'B', 16);
-        $this->Write(0, $this->product->getSku());
-        $this->Ln();
-        $this->SetFontSize(12);
-        $this->Write(0, $this->product->getName());
+        $this->showName();
 
         $style = array('width' => 0.1, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color);
         $this->SetY(20);
@@ -55,6 +51,17 @@ class ProductPdf extends TcPdfService implements Pdf
         $this->SetTextColor(255);
         $this->SetFont('', 'B', 10);
         $this->Cell($numberPageWith, 7, $this->getAliasNumPage(), 0, 1, 'C', true, '', 0, false, 'M');
+    }
+
+    public function showName(): self
+    {
+        $this->SetFont('', 'B', 16);
+        $this->Write(0, $this->product->getSku());
+        $this->Ln();
+        $this->SetFontSize(12);
+        $this->Write(0, $this->product->getName());
+
+        return $this;
     }
 
     public function showImages(): self
