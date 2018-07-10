@@ -60,18 +60,19 @@ class PassportPdf extends TcPdfService implements Pdf
         }
     }
 
-    function showName()
+    function showName(): self
     {
         $this->SetY(20);
-        $this->SetFont('', '', 16);
+        $this->SetFont('', '', 14);
         $this->Write(0, $this->product->getName());
-        $this->Ln(5);
+        $this->Ln(10);
 
         return $this;
     }
 
-    public function showImages()
+    public function showImages(): self
     {
+        $this->SetY($this->y + 5);
         $imageProduct = $this->product->getUploadPath() . $this->product->getImage();
         $this->Image($imageProduct, $this->x, $this->y,'', 45);
         $this->SetX($this->x + 50);
@@ -84,26 +85,119 @@ class PassportPdf extends TcPdfService implements Pdf
 
         $this->SetY($this->getImageRBY());
         $this->ln(5);
+
+        return $this;
     }
 
-    public function showParams()
+    public function showParams(): self
     {
-        // TODO: Implement showParams() method.
+        $productParams = $this->product->getParams();
+        if (!empty($productParams)) {
+            $this->SetFont('','B',11);
+            $this->Write(0, 'Свойства');
+            $this->Ln(8);
+
+            $w = array(60, $this->getPageWidth() - $this->original_lMargin - $this->original_rMargin - 60);
+            foreach ($productParams as $param) {
+                $this->SetFont('', 'B', 10);
+                $this->MultiCell($w[0], 0, $param->getName(), 0, 'L', false, 0, '', '', true, 0, false, true, 0);
+                $this->SetFont('', '', 10);
+
+                $this->MultiCell($w[1], 0, $param->getValue(), 0, 'L', false, 0, '', '', true, 0, false, true, 0);
+                $this->Ln();
+            }
+        }
+
+        $this->Ln(10);
+
+        return $this;
     }
 
-    public function showDescription()
+    public function showDescription(): self
     {
-        // TODO: Implement showDescription() method.
+        $this->SetFont('','B',12);
+        $modifications = $this->product->getModifications();
+
+        if (!empty($modifications)){
+            $total = count($modifications);
+            $counter = 1;
+            foreach($modifications as $modification){
+                $comma = ($counter != $total)?', ':'';
+                $this->Write(0, $modification->getSku().$comma);
+                $counter++;
+            }
+        }
+        else{
+            $this->Write(0, $this->product->getSku());
+        }
+
+        $this->Ln(10);
+
+        return $this;
     }
 
-    public function showModifications()
+    public function showModifications(): self
     {
-        // TODO: Implement showModifications() method.
+        $this->SetFont('', '', 8);
+
+
+        $widthWorkspacePage = $this->getPageWidth() - PDF_MARGIN_LEFT - PDF_MARGIN_RIGHT;
+        $widthName = 25;
+        $widthColumn = ($widthWorkspacePage - $widthName) / $this->product->getModificationParams()->count();
+
+
+        $this->setCellPaddings('', 1, '', 1);
+        $this->SetFillColor(0, 148, 218);
+        $this->SetTextColor(255);
+
+        //table head
+        $this->MultiCell($widthName, 17, 'Название', 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
+        foreach ($this->product->getModificationParams() as $modificationParam) {
+            $this->MultiCell($widthColumn, 17, $modificationParam->getName(), 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
+        }
+        $this->ln();
+        //table body
+        $this->SetTextColor(0);
+        foreach ($this->product->getModifications() as $key => $modification) {
+            //start row
+            $this->SetFillColor(255, 255, 255);
+            if ($key & 1) {
+                $this->SetFillColor(228, 228, 228);
+            }
+
+            //first column (название)
+            $this->SetFont('', 'B');
+            $this->Cell($widthName, 0, $modification->getSku(), 0, 0, 'L', true, '', 1);
+
+            //other columns (values)
+            $this->SetFont('', '');
+            foreach ($this->product->getModificationParams() as $modificationParam) {
+                foreach ($modification->getParamValues() as $paramsValues) {
+                    if ($paramsValues->getParamId() == $modificationParam->getId()) {
+                        $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true, '', 1);
+                    }
+                }
+            }
+            //end row
+            $this->ln();
+        }
+
+        $this->Ln(10);
+
+        return $this;
     }
 
-    public function showNote()
+    public function showNote($title = '', $text = ''): self
     {
-        // TODO: Implement showNote() method.
+        $this->SetFont('','B',10);
+        $this->Write(0, $title);
+        $this->Ln(10);
+
+        $this->SetFont('','',10);
+        $this->Write(0, $text);
+        $this->Ln(10);
+
+        return $this;
     }
 
     private function showSignature(){
