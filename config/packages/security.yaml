@@ -1,13 +1,19 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_MANAGER]
+        ROLE_MANAGER: [ROLE_USER]
     providers:
         in_memory:
           memory:
             users:
-              user@yandex.ru:
+              user:
                 password: user
                 roles: 'ROLE_USER'
-              admin@gmail.com:
+              manager:
+                password: manager
+                roles: 'ROLE_MANAGER'
+              admin:
                 password: admin
                 roles: 'ROLE_ADMIN'
     firewalls:
@@ -32,12 +38,13 @@ security:
                 path:   /logout
                 target: /
 
+            access_denied_handler: App\Security\AccessDeniedHandler
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/pdf, roles: ROLE_USER }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
