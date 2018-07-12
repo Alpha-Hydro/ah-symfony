@@ -2,7 +2,9 @@
 
 namespace DoctrineMigrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Migrations\AbortMigrationException;
+use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -10,6 +12,11 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20180329074649 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     * @throws DBALException
+     * @throws AbortMigrationException
+     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
