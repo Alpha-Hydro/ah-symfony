@@ -14,37 +14,37 @@ abstract class BaseEntity
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $create_date;
+    protected $create_date;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $update_date;
+    protected $update_date;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : true})
      */
-    private $active;
+    protected $active;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : false})
      */
-    private $deleted;
+    protected $deleted;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default" : 0})
      */
-    private $sorting;
+    protected $sorting;
 
     public function getId()
     {
@@ -70,7 +70,7 @@ abstract class BaseEntity
 
     public function setCreateDate(\DateTimeInterface $create_date): self
     {
-        $this->create_date = $create_date;
+        $this->create_date = $create_date ?? new \DateTime("now");
 
         return $this;
     }
@@ -82,12 +82,12 @@ abstract class BaseEntity
 
     public function setUpdateDate(\DateTimeInterface $update_date): self
     {
-        $this->update_date = $update_date;
+        $this->update_date = $update_date ?? new \DateTime("now");
 
         return $this;
     }
 
-    public function getActive(): ?bool
+    public function isActive(): ?bool
     {
         return $this->active;
     }
@@ -99,7 +99,7 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function getDeleted(): ?bool
+    public function isDeleted(): ?bool
     {
         return $this->deleted;
     }
