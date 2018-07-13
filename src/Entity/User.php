@@ -5,21 +5,26 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
  */
 class User extends BaseEntity implements UserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
 
@@ -29,9 +34,15 @@ class User extends BaseEntity implements UserInterface, \Serializable
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=64)
      */
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\UserRoles", mappedBy="users")
@@ -146,21 +157,40 @@ class User extends BaseEntity implements UserInterface, \Serializable
     {
         $roles = [];
         foreach ($this->getUserRoles() as $role){
-            $roles = array_merge($roles, $role->getRole());
+            $roles[] = $role->getRole();
         }
         return $roles;
     }
 
     public function getSalt()
     {
+        return null;
     }
 
     public function getUsername()
     {
-        return $this->getEmail();
+        return $this->email;
     }
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
     }
 }
