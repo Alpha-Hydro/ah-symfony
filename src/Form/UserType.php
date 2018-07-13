@@ -1,20 +1,13 @@
 <?php
-/**
- * Created by Alpha-Hydro.
- * @link http://www.alpha-hydro.com
- * @author Vladimir Mikhaylov <admin@alpha-hydro.com>
- * @copyright Copyright (c) 2018, Alpha-Hydro
- *
- */
 
 namespace App\Form;
 
-
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,19 +18,29 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
+            ->add('phone', TextType::class)
+            ->add('address', TextType::class)
+            //->add('password')
             ->add('name', TextType::class)
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))
+            ->add('create_date', DateType::class)
+            ->add('update_date', DateType::class)
+            ->add('active')
+            ->add('deleted')
+            ->add('sorting')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'ROLE_USER' => null,
+                    'ROLE_MANAGER' => null,
+                    'ROLE_ADMIN' => null
+                ]
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => User::class,
-        ));
+        ]);
     }
 }

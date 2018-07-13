@@ -11,7 +11,7 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserRegisterType;
 use App\Repository\UserRolesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +39,7 @@ class RegistrationController extends Controller
         $user->addUserRole($rolesRepository->findOneBy(['role' => 'ROLE_USER']));
 
         // 1) build the form
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserRegisterType::class, $user);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
