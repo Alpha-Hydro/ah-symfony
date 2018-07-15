@@ -18,18 +18,13 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
-### Example user template template
-### Example user template
 
 # IntelliJ project files
 .idea
-*.iml
 out
 gen
 /.sass-cache/
 *.lock
 *-lock.json
 
-###> phpunit/phpunit ###
-/phpunit.xml
-###< phpunit/phpunit ###
+/composer.phar
