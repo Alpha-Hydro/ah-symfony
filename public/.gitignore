@@ -3,3 +3,4 @@ fonts/
 upload/
 files/
 #build/
+.protect
