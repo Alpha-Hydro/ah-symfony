@@ -10,21 +10,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="app_users")
+ * @ORM\Table(name="users_app")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  */
 class User extends BaseEntity implements UserInterface, \Serializable
 {
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=42, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $phone;
 
