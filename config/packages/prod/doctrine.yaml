@@ -1,4 +1,8 @@
 doctrine:
+    dbal:
+        charset: utf8
+        options:
+            1002: SET NAMES utf8
     orm:
         metadata_cache_driver:
             type: service
