@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = 'Результаты поиска' %}
+
+{% set productions = [
+    {'name':'Гидростанции, гидравлические стенды и модули', 'link': path('index', {'full_path': 'gidrostancii'}), 'img': 'upload/manufacture/categories/0/12042018.png'},
+] %}
+
+{% set partners = [
+    {'name':'Гидроаппаратура Wandfluh', 'link': path('wandfluh_index'), 'img': 'upload/wandfluh/img/wf_12042018.png'},
+] %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block pageHeader %}
+    {{ include('base/components/_page_header.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ include('base/index/_home_page_sidebar.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {% if productList is defined and productList is not empty %}
+        {{ include('base/search/_search_list_item.html.twig') }}
+    {% elseif searchQuery != '' %}
+        <p class="ah-info-block ah-info-block-danger">По Вашему запросу <kbd>{{ searchQuery }}</kbd> ничего не
+            найдено... Попробуйте повотрить поиск.</p>
+    {% else %}
+        <p class="ah-info-block ah-info-block-info">Введите поисковый запрос.</p>
+    {% endif %}
+{% endblock %}

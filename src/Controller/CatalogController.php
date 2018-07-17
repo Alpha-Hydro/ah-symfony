@@ -39,11 +39,11 @@ class CatalogController extends Controller
 
         $childrenCategories = $catalogService->findByChildren($category);
         if (empty($childrenCategories))
-            return $this->render('catalog/product_list.html.twig', $data);
+            return $this->render('base/catalog/product_list.html.twig', $data);
 
         $data['categories'] = $childrenCategories;
 
-        return $this->render('catalog/categories_list.html.twig', $data);
+        return $this->render('base/catalog/categories_list.html.twig', $data);
     }
 
     /**
@@ -70,7 +70,7 @@ class CatalogController extends Controller
             'breadcrumbs' => $catalogService->getBreadcrumbs($category)
         ];
 
-        return $this->render('catalog/product_view.html.twig', $data);
+        return $this->render('base/catalog/product_view.html.twig', $data);
     }
 
 

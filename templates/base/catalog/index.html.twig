@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = (category is defined) ? category.name : 'Каталог продукции' %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block pageHeader %}
+    {{ include('base/components/_page_header.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ include('base/catalog/_catalog_sidebar.html.twig') }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {{ include('base/catalog/_catalog_breadcrumb.html.twig') }}
+{% endblock %}

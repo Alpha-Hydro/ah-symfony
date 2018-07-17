@@ -32,7 +32,7 @@ class MediaController extends Controller
             'posts' => $mediaService->findByPostsCriteria($category),
         ];
 
-        return $this->render('media/categories_list.html.twig', $data);
+        return $this->render('base/media/categories_list.html.twig', $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class MediaController extends Controller
             'sidebarListCategories' => $mediaService->findByRootCategories(),
         ];
 
-        return $this->render('media/post_view.html.twig', $data);
+        return $this->render('base/media/post_view.html.twig', $data);
     }
 
 }

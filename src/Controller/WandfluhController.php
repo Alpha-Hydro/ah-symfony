@@ -36,12 +36,12 @@ class WandfluhController extends Controller
 
         if (empty($childrenCategories)) {
             $data['productList'] = $wandfluhService->groupProductsByControl($category);
-            return $this->render('wandfluh/product_list.html.twig', $data);
+            return $this->render('base/wandfluh/product_list.html.twig', $data);
         }
 
 
         $data['categories'] = $childrenCategories;
 
-        return $this->render('wandfluh/categories_list.html.twig', $data);
+        return $this->render('base/wandfluh/categories_list.html.twig', $data);
     }
 }

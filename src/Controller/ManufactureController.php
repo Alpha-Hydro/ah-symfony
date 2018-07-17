@@ -29,7 +29,7 @@ class ManufactureController extends Controller
             'sidebarListCategories' => $manufactureService->findByRootCategories()
         ];
 
-        return $this->render('manufacture/manufacture_list.html.twig', $data);
+        return $this->render('base/manufacture/manufacture_list.html.twig', $data);
     }
 
 
@@ -51,6 +51,6 @@ class ManufactureController extends Controller
             'sidebarListCategories' => $manufactureService->findByRootCategories()
         ];
 
-        return $this->render('manufacture/product_view.html.twig', $data);
+        return $this->render('base/manufacture/product_view.html.twig', $data);
     }
 }

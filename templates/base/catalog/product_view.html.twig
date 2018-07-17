@@ -1,0 +1,45 @@
+{% extends 'base/catalog/index.html.twig' %}
+
+{% block title %}
+    {{ product.sku }}. {{ product.name }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .page-header {
+            position: relative;
+            margin: 0;
+        }
+        .print{
+            font-size: 12pt;
+            position: absolute;
+            right: 0;
+            top: calc(21pt);
+        }
+    </style>
+{% endblock %}
+
+{% block pageHeader %}
+    {{ include('base/catalog/_product_view_header.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <div class="row product-item">
+        <div class="col-sm-3">
+            {{ include('base/catalog/_product_images.html.twig') }}
+        </div>
+        <div class="col-sm-9">
+            {{ include('base/catalog/_product_params.html.twig') }}
+            {% if product.description != '' %}
+                {{ include('base/catalog/_product_description.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row product-modifications">
+        <div class="col-md-12">
+            <h4>Модификации и размеры</h4>
+            {{ include('base/catalog/_product_modifications.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

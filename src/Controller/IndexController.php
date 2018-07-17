@@ -24,7 +24,7 @@ class IndexController extends Controller
      */
     public function index(CatalogService $catalogService): Response
     {
-        return $this->render('index/index.html.twig', [
+        return $this->render('base/index/index.html.twig', [
             'categories' => $catalogService->findByRootCategories(),
         ]);
     }
@@ -38,7 +38,7 @@ class IndexController extends Controller
     {
         $categories = $catalogService->findByRootCategories();
 
-        return $this->render('catalog/categories_list.html.twig', [
+        return $this->render('base/catalog/categories_list.html.twig', [
             'categories' => $categories,
             'sidebarListCategories' => $categories,
         ]);
@@ -52,7 +52,7 @@ class IndexController extends Controller
      */
     public function indexWandfluh(ModuleSiteService $moduleSiteService, WandfluhService $wandfluhService): Response
     {
-        return $this->render('wandfluh/index.html.twig', [
+        return $this->render('base/wandfluh/index.html.twig', [
             'page' => $moduleSiteService->getPageByPath('wandfluh'),
             'sidebarListCategories' => $wandfluhService->findByRootCategories(),
         ]);
@@ -66,7 +66,7 @@ class IndexController extends Controller
      */
     public function indexManufacture(ModuleSiteService $moduleSiteService, ManufactureService $manufactureService): Response
     {
-        return $this->render('manufacture/index.html.twig', [
+        return $this->render('base/manufacture/index.html.twig', [
             'page' => $moduleSiteService->getPageByPath('manufacture'),
             'sidebarListCategories' => $manufactureService->findByRootCategories(),
         ]);

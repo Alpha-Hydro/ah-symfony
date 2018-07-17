@@ -2,6 +2,7 @@
 fonts/
 upload/
 files/
+images/
 #build/
 .protect
 .htaccess

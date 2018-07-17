@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = product.name %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block pageHeader %}
+    {{ include('base/components/_page_header.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ include('base/manufacture/_manufacture_sidebar.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ include('base/manufacture/_manufacture_breadcrumbs.html.twig') }}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="thumbnail z-depth-1">
+                <img src="{{ product.image }}" alt="{{ product.name }}">
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <p class="lead product-description">{{ product.description }}</p>
+            <div class="product-content-html">
+                {{ product.contentHtml|default('')|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

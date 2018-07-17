@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = 'Контакты' %}
+
+{% block title %}
+    {{ pageTitle }}
+{% endblock %}
+
+{% block pageHeader %}
+    {{ include('base/components/_page_header.html.twig') }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="col-md-3">
+        <div class="sidebar">
+            {{ include('base/components/_contact_sidebar.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-5 text-muted"><strong>Координаты:</strong> 59.944774, 30.595592</div>
+            <div class="col-md-7 text-muted"><strong>Ориентиры:</strong> КАД 96 км. внешн., 45 км. внутр, съезд на Колтуши, Колтушское шоссе, въезд напротив заправки "Лукойл".</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt1">
+                <div id="map">
+                    <div id="yandexMap" class="yandexMap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab87a0fcca7702167f43a35bf25382579aecfc316e760b4893254a7d5e2259d56&amp;lang=ru_RU&amp;scroll=false&amp;id=yandexMap"></script>
+{% endblock %}
