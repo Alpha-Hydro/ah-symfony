@@ -4,3 +4,4 @@ upload/
 files/
 #build/
 .protect
+.htaccess
