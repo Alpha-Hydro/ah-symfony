@@ -20,18 +20,15 @@
 
 {% block body %}
     <div class="col-md-9">
-        <ul class="nav nav-pills contact" role="tablist">
-            <li role="presentation" class="pill-item active"><a href="#scheme" class="btn-alpha default" aria-controls="scheme" role="tab" data-toggle="tab">Схема проезда</a></li>
-            <li role="presentation" class="pill-item"><a href="#map" class="btn-alpha default" aria-controls="map" role="tab" data-toggle="tab">Карта Яндекс</a></li>
-            <li role="presentation" class="pill-item hidden-xs"><a href="{{ asset('files/pdf/alpha_hydro_map.pdf') }}" class="btn-alpha default" target="_blank">Печать (pdf)</a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="scheme">
-                <img src="{{ asset('files/images/map-access.png') }}" alt="Схема проезда">
-            </div>
-            <div role="tabpanel" class="tab-pane" id="map">
-                <div id="yandexMap" class="yandexMap"></div>
+        <div class="row">
+            <div class="col-md-5 text-muted"><strong>Координаты:</strong> 59.944774, 30.595592</div>
+            <div class="col-md-7 text-muted"><strong>Ориентиры:</strong> КАД 96 км. внешн., 45 км. внутр, съезд на Колтуши, Колтушское шоссе, въезд напротив заправки "Лукойл".</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt1">
+                <div id="map">
+                    <div id="yandexMap" class="yandexMap"></div>
+                </div>
             </div>
         </div>
     </div>
