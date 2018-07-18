@@ -2,10 +2,25 @@
 
 {% block title %}{{ category.name }}{% endblock %}
 
-{% block pageHeader %}<h1 class="display-4">{{ category.name }}</h1>{% endblock %}
+{% block pageHeader %}<h1 class="display-4 mb-4">{{ category.name }}</h1>{% endblock %}
 
 {% block body %}
     {% set categories = category.children %}
-    <a class="btn btn-success mb-2" href="{{ path('categories_add') }}">Create new</a>
+    <div class="btn-group mb-2 d-flex justify-content-start" role="group" aria-label="Basic example">
+        <a href="{% if category.parent is not null %}{{  path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" class="btn btn-secondary">
+            <svg class="feather feather-corner-left-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14 9 9 4 4 9"></polyline><path d="M20 20h-7a4 4 0 0 1-4-4V4"></path></svg>
+        </a>
+
+        <a href="{{ path('catalog_list', {'fullPath': category.fullPath}) }}" class="btn btn-secondary">
+            <svg class="feather feather-external-link" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-secondary">
+            <svg class="feather feather-edit-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+        </a>
+        <a href="{{ path('categories_delete', {'id': category.id}) }}" class="btn btn-secondary">
+            <svg class="feather feather-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+        </a>
+    </div>
     {{ include('admin/categories/_categories_table.html.twig') }}
+    <a class="btn btn-success" href="{{ path('categories_add') }}">Новая категория</a>
 {% endblock %}

@@ -6,8 +6,8 @@ use App\Entity\Categories;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,20 +26,20 @@ class CategoriesType extends AbstractType
             ->add('description', TextareaType::class, ['label' => 'Описание'])
 //            ->add('contentHtml', TextareaType::class)
 //            ->add('path', TextType::class)
-            ->add('fullPath', TextType::class)
+//            ->add('fullPath', TextType::class)
             ->add('metaTitle', TextType::class)
             ->add('metaKeywords', TextType::class)
             ->add('metaDescription', TextareaType::class)
-            ->add('active', CheckboxType::class)
-            ->add('deleted', CheckboxType::class)
-            ->add('sorting', TextType::class)
+            ->add('active', CheckboxType::class, ['data' => true])
+            ->add('deleted', CheckboxType::class, ['data' => false, 'value' => 0, 'required' => false])
+            ->add('sorting', NumberType::class, ['data' => 0])
             ->add('parent', EntityType::class, [
+                'required' => false,
+                'empty_data' => null,
+                'placeholder' => 'Каталог',
                 'class' => Categories::class,
-                'choice_label' => function(Categories $categories = null) {
-                    return $categories->getParent() ? $categories->getName() : 'Каталог';
-                }
-            ])
-        ;
+                'choice_label' => 'name'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -5,7 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Categories;
 use App\Form\CategoriesType;
 use App\Repository\CategoriesRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,20 +40,24 @@ class CategoriesController extends Controller
     /**
      * @Route("/add", name="categories_add", methods="GET|POST")
      * @param Request $request
-     * @return Response
+     * @return Response|JsonResponse
      */
     public function add(Request $request): Response
     {
         $category = new Categories();
+        $category->setCreateDate(new DateTime('now'));
+        $category->setUpdateDate(new DateTime('now'));
+
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            /*$em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('categories_index');
+            return $this->redirectToRoute('categories_index');*/
+            return $this->json($category);
         }
 
         return $this->render('admin/categories/add.html.twig', [
@@ -101,7 +107,7 @@ class CategoriesController extends Controller
      */
     public function delete(Request $request, Categories $category): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getid(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getid(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($category);
             $em->flush();
