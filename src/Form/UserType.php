@@ -3,11 +3,15 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\UserRoles;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,17 +26,14 @@ class UserType extends AbstractType
             ->add('address', TextType::class)
             //->add('password')
             ->add('name', TextType::class)
-            ->add('create_date', DateType::class)
-            ->add('update_date', DateType::class)
-            ->add('active')
-            ->add('deleted')
-            ->add('sorting')
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'ROLE_USER' => null,
-                    'ROLE_MANAGER' => null,
-                    'ROLE_ADMIN' => null
-                ]
+            /*->add('create_date', HiddenType::class)
+            ->add('update_date', HiddenType::class)*/
+            ->add('active', CheckboxType::class)
+            ->add('deleted', CheckboxType::class)
+            ->add('sorting', TextType::class)
+            ->add('roles', EntityType::class, [
+                'class' => UserRoles::class,
+                'choice_label' => 'name'
             ])
         ;
     }

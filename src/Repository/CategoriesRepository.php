@@ -25,6 +25,16 @@ class CategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Categories::class);
     }
 
+    public function findByActive(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = true')
+            ->andWhere('c.deleted = false')
+            ->orderBy('c.sorting', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return Categories[] Returns an array of Categories objects
      */

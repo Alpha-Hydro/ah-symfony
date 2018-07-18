@@ -16,21 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoriesController extends Controller
 {
     /**
-     * @Route("/", name="categories_admin_index", methods="GET")
+     * @Route("/", name="categories_index", methods="GET")
      * @param CategoriesRepository $categoriesRepository
      * @return Response
      */
     public function index(CategoriesRepository $categoriesRepository): Response
     {
-        return $this->render('categories/index.html.twig', ['categories' => $categoriesRepository->findAll()]);
+        return $this->render('admin/categories/index.html.twig', ['categories' => $categoriesRepository->findByActive()]);
     }
 
     /**
-     * @Route("/new", name="categories_new", methods="GET|POST")
+     * @Route("/add", name="categories_add", methods="GET|POST")
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request): Response
+    public function add(Request $request): Response
     {
         $category = new Categories();
         $form = $this->createForm(CategoriesType::class, $category);
@@ -44,20 +44,20 @@ class CategoriesController extends Controller
             return $this->redirectToRoute('categories_index');
         }
 
-        return $this->render('categories/new.html.twig', [
+        return $this->render('admin/categories/add.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="categories_admin_show", methods="GET")
+     * @Route("/{id}", name="categories_view", methods="GET")
      * @param Categories $category
      * @return Response
      */
-    public function show(Categories $category): Response
+    public function view(Categories $category): Response
     {
-        return $this->render('categories/show.html.twig', ['category' => $category]);
+        return $this->render('admin/categories/view.html.twig', ['category' => $category]);
     }
 
     /**
@@ -77,7 +77,7 @@ class CategoriesController extends Controller
             return $this->redirectToRoute('categories_edit', ['id' => $category->getId()]);
         }
 
-        return $this->render('categories/edit.html.twig', [
+        return $this->render('admin/categories/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);

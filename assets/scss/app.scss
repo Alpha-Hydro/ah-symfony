@@ -1,2 +1,14 @@
 @import "custom-bootstrap";
 @import "~bootstrap/scss/bootstrap";
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.app-content {
+  flex: 1;
+}
+.app-footer {
+  padding-bottom: 1em;
+}

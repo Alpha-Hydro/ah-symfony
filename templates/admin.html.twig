@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>{% block title %}{% endblock %} - Альфа-Гидро</title>
+    <title>{% block title %}Dashboard{% endblock %} - Альфа-Гидро</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('build/css/dashboard.css') }}"/>
     {% endblock %}
 </head>
 <body class="app">
@@ -16,10 +17,15 @@
 </header>
 
 <div class="app-content">
-    <main class="container">
-        {% block body %}
-        {% endblock %}
-    </main>
+    <div class="container-fluid">
+        <div class="row">
+            {{ include('admin/components/_sidebar.html.twig') }}
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                {% block body %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
 </div>
 
 <footer class="app-footer">
