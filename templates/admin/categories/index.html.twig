@@ -2,62 +2,9 @@
 
 {% block title %}Categories index{% endblock %}
 
+{% block pageHeader %}<h1 class="display-4">Каталог</h1>{% endblock %}
+
 {% block body %}
-    <h1>Categories index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                {#<th>Create_date</th>
-                <th>Update_date</th>
-                <th>Active</th>
-                <th>Deleted</th>#}
-                <th>Sorting</th>
-                {#<th>Image</th>
-                <th>UploadPath</th>
-                <th>Description</th>
-                <th>ContentHtml</th>
-                <th>Path</th>
-                <th>FullPath</th>
-                <th>MetaTitle</th>
-                <th>MetaKeywords</th>
-                <th>MetaDescription</th>#}
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                {#<td>{{ category.createDate ? category.createDate|date('Y-m-d') : '' }}</td>
-                <td>{{ category.updateDate ? category.updateDate|date('Y-m-d') : '' }}</td>
-                <td>{{ category.active ? 'Yes' : 'No' }}</td>
-                <td>{{ category.deleted ? 'Yes' : 'No' }}</td>#}
-                <td>{{ category.sorting }}</td>
-                {#<td>{{ category.image }}</td>
-                <td>{{ category.uploadPath }}</td>
-                <td>{{ category.description }}</td>
-                <td>{{ category.contentHtml }}</td>
-                <td>{{ category.path }}</td>
-                <td>{{ category.fullPath }}</td>
-                <td>{{ category.metaTitle }}</td>
-                <td>{{ category.metaKeywords }}</td>
-                <td>{{ category.metaDescription }}</td>#}
-                <td>
-                    <a href="{{ path('categories_view', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('categories_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="17">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('categories_add') }}">Create new</a>
+    <a class="btn btn-success mb-2" href="{{ path('categories_add') }}">Новая категория</a>
+    {{ include('admin/categories/_categories_table.html.twig') }}
 {% endblock %}

@@ -1,82 +1,11 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Categories{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block pageHeader %}<h1 class="display-4">{{ category.name }}</h1>{% endblock %}
 
 {% block body %}
-    <h1>Categories</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ category.name }}</td>
-            </tr>
-            <tr>
-                <th>Create_date</th>
-                <td>{{ category.createDate ? category.createDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Update_date</th>
-                <td>{{ category.updateDate ? category.updateDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Active</th>
-                <td>{{ category.active ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Deleted</th>
-                <td>{{ category.deleted ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Sorting</th>
-                <td>{{ category.sorting }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ category.image }}</td>
-            </tr>
-            <tr>
-                <th>UploadPath</th>
-                <td>{{ category.uploadPath }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ category.description }}</td>
-            </tr>
-            <tr>
-                <th>ContentHtml</th>
-                <td>{{ category.contentHtml }}</td>
-            </tr>
-            <tr>
-                <th>Path</th>
-                <td>{{ category.path }}</td>
-            </tr>
-            <tr>
-                <th>FullPath</th>
-                <td>{{ category.fullPath }}</td>
-            </tr>
-            <tr>
-                <th>MetaTitle</th>
-                <td>{{ category.metaTitle }}</td>
-            </tr>
-            <tr>
-                <th>MetaKeywords</th>
-                <td>{{ category.metaKeywords }}</td>
-            </tr>
-            <tr>
-                <th>MetaDescription</th>
-                <td>{{ category.metaDescription }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('categories_index') }}">back to list</a>
-
-    <a href="{{ path('categories_edit', {'id': category.id}) }}">edit</a>
-
-    {{ include('admin/categories/_delete_form.html.twig') }}
+    {% set categories = category.children %}
+    <a class="btn btn-success mb-2" href="{{ path('categories_add') }}">Create new</a>
+    {{ include('admin/categories/_categories_table.html.twig') }}
 {% endblock %}

@@ -22,7 +22,17 @@ class CategoriesController extends Controller
      */
     public function index(CategoriesRepository $categoriesRepository): Response
     {
-        return $this->render('admin/categories/index.html.twig', ['categories' => $categoriesRepository->findByActive()]);
+        return $this->render('admin/categories/index.html.twig', ['categories' => $categoriesRepository->findByRootCategories()]);
+    }
+
+    /**
+     * @Route("/list", name="categories_list", methods="GET")
+     * @param CategoriesRepository $categoriesRepository
+     * @return Response
+     */
+    public function list(CategoriesRepository $categoriesRepository): Response
+    {
+        return $this->render('admin/categories/list.html.twig', ['categories' => $categoriesRepository->findByActive()]);
     }
 
     /**

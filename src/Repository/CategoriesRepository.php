@@ -30,7 +30,6 @@ class CategoriesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.active = true')
             ->andWhere('c.deleted = false')
-            ->orderBy('c.sorting', 'ASC')
             ->getQuery()
             ->getResult();
     }
