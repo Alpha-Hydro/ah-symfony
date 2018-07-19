@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CatalogController extends Controller
 {
     /**
-     * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="catalog_list", methods="GET")
+     * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\_\/]+"}, name="catalog_list", methods="GET")
      * @param Categories $category
      * @param CategoriesService $catalogService
      * @return Response
@@ -49,7 +49,7 @@ class CatalogController extends Controller
     /**
      * @Route("/{fullPathCategory}/{path}",
      *     requirements={
-     *          "fullPathCategory": "[a-z0-9\-\/]+",
+     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
      *          "path": "[A-Z0-9\-]+"
      *     },
      *     name="catalog_product_view", methods="GET")
@@ -77,7 +77,7 @@ class CatalogController extends Controller
     /**
      * @Route("/{fullPathCategory}/{path}.pdf",
      *     requirements={
-     *          "fullPathCategory": "[a-z0-9\-\/]+",
+     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
      *          "path": "[A-Z0-9\-]+"
      *     },
      *     name="catalog_product_pdf", methods="GET")
@@ -106,7 +106,7 @@ class CatalogController extends Controller
     /**
      * @Route("/{fullPathCategory}/{path}/passport.pdf",
      *     requirements={
-     *          "fullPathCategory": "[a-z0-9\-\/]+",
+     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
      *          "path": "[A-Z0-9\-]+"
      *     },
      *     name="passport_product_pdf", methods="GET")
