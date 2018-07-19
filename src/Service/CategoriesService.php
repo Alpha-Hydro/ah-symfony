@@ -13,7 +13,7 @@ namespace App\Service;
 use App\Entity\Categories;
 use Doctrine\Common\Collections\Collection;
 
-interface CatalogService
+interface CategoriesService
 {
     /**
      * @return Categories[]
@@ -25,6 +25,13 @@ interface CatalogService
      * @return array|null
      */
     public function getBreadcrumbs(Categories $category = null): ?array;
+
+    /**
+     * @param Categories|null $category
+     * @return string|null
+     */
+    public function createFullPath(Categories $category = null): ?string;
+
 
     /**
      * @param Categories|null $parentCategory
@@ -44,6 +51,4 @@ interface CatalogService
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findByFullPath(string $fullPath): ?Categories;
-
-    public function findProductBySearchQuery(string $query): array;
 }

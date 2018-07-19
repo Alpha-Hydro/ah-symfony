@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategoriesRepository;
-use App\Service\CatalogService;
+use App\Service\CategoriesService;
 use App\Service\ManufactureService;
 use App\Service\ModuleSiteService;
 use App\Service\WandfluhService;
@@ -19,10 +19,10 @@ class IndexController extends Controller
 {
     /**
      * @Route("/", name="index")
-     * @param CatalogService $catalogService
+     * @param CategoriesService $catalogService
      * @return Response
      */
-    public function index(CatalogService $catalogService): Response
+    public function index(CategoriesService $catalogService): Response
     {
         return $this->render('base/index/index.html.twig', [
             'categories' => $catalogService->findByRootCategories(),
@@ -31,10 +31,10 @@ class IndexController extends Controller
 
     /**
      * @Route("/catalog", name="catalog_index")
-     * @param CatalogService $catalogService
+     * @param CategoriesService $catalogService
      * @return Response
      */
-    public function indexCatalog(CatalogService $catalogService): Response
+    public function indexCatalog(CategoriesService $catalogService): Response
     {
         $categories = $catalogService->findByRootCategories();
 

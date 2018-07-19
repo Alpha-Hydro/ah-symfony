@@ -14,13 +14,14 @@ use App\Entity\Categories;
 use App\Entity\Products;
 use App\Repository\CategoriesRepository;
 use App\Repository\ProductsRepository;
+use Cocur\Slugify\SlugifyInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Class CatalogServiceImpl
+ * Class CategoriesServiceImpl
  * @package App\Service
  */
-class CatalogServiceImpl implements CatalogService
+class CategoriesServiceImpl implements CategoriesService
 {
     /**
      * @var CategoriesRepository
@@ -28,19 +29,12 @@ class CatalogServiceImpl implements CatalogService
     private $categoriesRepository;
 
     /**
-     * @var ProductsRepository
-     */
-    private $productsRepository;
-
-    /**
      * CatalogController constructor.
      * @param CategoriesRepository $categoriesRepository
-     * @param ProductsRepository $productsRepository
      */
-    public function __construct(CategoriesRepository $categoriesRepository, ProductsRepository $productsRepository)
+    public function __construct(CategoriesRepository $categoriesRepository)
     {
         $this->categoriesRepository = $categoriesRepository;
-        $this->productsRepository = $productsRepository;
     }
 
     /**
@@ -62,6 +56,24 @@ class CatalogServiceImpl implements CatalogService
             $result = array_reverse($result);
 
         return $result;
+    }
+
+    /**
+     * @param Categories|null $category
+     * @return string|null
+     */
+    public function createFullPath(Categories $category = null): ?string
+    {
+        if ($category == null)
+            return null;
+
+        $result = [];
+        $array = $this->getBreadcrumbs($category);
+        foreach ($array as $item){
+            $result[] = $item->getPath();
+        }
+
+        return trim(implode('/',$result));
     }
 
     /**
@@ -103,17 +115,5 @@ class CatalogServiceImpl implements CatalogService
     public function findByRootCategories(): array
     {
         return $this->categoriesRepository->findByRootCategories();
-    }
-
-    /**
-     * @param string $query
-     * @return Products[]
-     */
-    public function findProductBySearchQuery(string $query): array
-    {
-        $query = str_replace(array('.',',',' ','-','_','/','\\','*','+','&','^','%','#','@','!','(',')','~','<','>',':',';','"',"'","|"), '', $query);
-
-        return $this->productsRepository->searchSqlQuery($query);
-
     }
 }

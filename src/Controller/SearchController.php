@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\CatalogService;
+use App\Service\CategoriesService;
+use App\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +14,11 @@ class SearchController extends Controller
     /**
      * @Route("/search", name="search")
      * @param Request $request
-     * @param CatalogService $catalogService
+     * @param CategoriesService $catalogService
+     * @param ProductService $productService
      * @return Response
      */
-    public function index(Request $request, CatalogService $catalogService): Response
+    public function index(Request $request, CategoriesService $catalogService, ProductService $productService): Response
     {
         $data = [
             'categories' => $catalogService->getSidebarListCategories(),
@@ -25,7 +27,7 @@ class SearchController extends Controller
 
         if ($query = $request->get("query")){
             $data['searchQuery'] = $query;
-            $data['productList'] = $catalogService->findProductBySearchQuery($query);
+            $data['productList'] = $productService->findProductBySearchQuery($query);
             //die(var_dump($data['productList']));
         }
 

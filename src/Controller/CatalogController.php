@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Products;
-use App\Service\CatalogService;
+use App\Service\CategoriesService;
 use App\Service\PassportPdf;
 use App\Service\ProductPdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -23,10 +23,10 @@ class CatalogController extends Controller
     /**
      * @Route("/{fullPath}", requirements={"fullPath": "[a-z0-9\-\/]+"}, name="catalog_list", methods="GET")
      * @param Categories $category
-     * @param CatalogService $catalogService
+     * @param CategoriesService $catalogService
      * @return Response
      */
-    public function listCategories(Categories $category, CatalogService $catalogService): Response
+    public function listCategories(Categories $category, CategoriesService $catalogService): Response
     {
         $parentCategory = $category->getParent();
 
@@ -54,10 +54,10 @@ class CatalogController extends Controller
      *     },
      *     name="catalog_product_view", methods="GET")
      * @param Products $product
-     * @param CatalogService $catalogService
+     * @param CategoriesService $catalogService
      * @return Response
      */
-    public function productView(Products $product, CatalogService $catalogService): Response
+    public function productView(Products $product, CategoriesService $catalogService): Response
     {
         $category = $product->getCategory();
         $parentCategory = $category->getParent();

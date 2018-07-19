@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Categories;
 use App\Form\CategoriesType;
 use App\Repository\CategoriesRepository;
+use App\Service\CategoriesService;
+use Cocur\Slugify\SlugifyInterface;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoriesController extends Controller
 {
+    const UPLOAD_PATH = '/upload/categories/';
+
     /**
      * @Route("/", name="categories_index", methods="GET")
      * @param CategoriesRepository $categoriesRepository
@@ -40,24 +44,35 @@ class CategoriesController extends Controller
     /**
      * @Route("/add", name="categories_add", methods="GET|POST")
      * @param Request $request
+     * @param SlugifyInterface $slug
+     * @param CategoriesService $categoriesService
      * @return Response|JsonResponse
      */
-    public function add(Request $request): Response
+    public function add(Request $request, SlugifyInterface $slug, CategoriesService $categoriesService): Response
     {
         $category = new Categories();
         $category->setCreateDate(new DateTime('now'));
         $category->setUpdateDate(new DateTime('now'));
+        // @ToDo setUploadPath
+        // @ToDo setImage
 
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /*$em = $this->getDoctrine()->getManager();
+            $category->setPath($slug->slugify($category->getName()));
+            $category->setFullPath($categoriesService->createFullPath($category));
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('categories_index');*/
-            return $this->json($category);
+            $category->setUploadPath(self::UPLOAD_PATH . $category->getId());
+            /*$em->persist($category);
+            $em->flush();*/
+
+            return $this->redirectToRoute('categories_index');
+
         }
 
         return $this->render('admin/categories/add.html.twig', [
