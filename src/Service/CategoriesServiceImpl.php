@@ -11,10 +11,7 @@ namespace App\Service;
 
 
 use App\Entity\Categories;
-use App\Entity\Products;
 use App\Repository\CategoriesRepository;
-use App\Repository\ProductsRepository;
-use Cocur\Slugify\SlugifyInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -46,16 +43,16 @@ class CategoriesServiceImpl implements CategoriesService
         if ($category == null)
             return null;
 
-        $result = [];
+        $fullPath = $category->getFullPath();
+        $array = [$fullPath];
+        $path_array = explode('/', $fullPath);
+
         do {
-            $result[] = $category;
-            $category = $category->getParent();
-        } while ($category != null);
+            array_pop($path_array);
+            $array[] = implode('/', $path_array);
+        } while (count($path_array) > 1);
 
-        if (!empty($result))
-            $result = array_reverse($result);
-
-        return $result;
+        return $this->categoriesRepository->findByArray($array);
     }
 
     /**
@@ -68,12 +65,14 @@ class CategoriesServiceImpl implements CategoriesService
             return null;
 
         $result = [];
-        $array = $this->getBreadcrumbs($category);
-        foreach ($array as $item){
-            $result[] = $item->getPath();
-        }
+        do {
+            $result[] = $category->getPath();
+            $category = $category->getParent();
+        } while ($category != null);
 
-        return trim(implode('/',$result));
+        if (!empty($result)) $result = array_reverse($result);
+
+        return trim(implode('/', $result));
     }
 
     /**

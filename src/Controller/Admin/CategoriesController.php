@@ -84,11 +84,18 @@ class CategoriesController extends Controller
     /**
      * @Route("/{id}", name="categories_view", methods="GET")
      * @param Categories $category
+     * @param CategoriesRepository $categoriesRepository
      * @return Response
      */
-    public function view(Categories $category): Response
+    public function view(Categories $category, CategoriesRepository $categoriesRepository): Response
     {
-        return $this->render('admin/categories/view.html.twig', ['category' => $category]);
+
+        $data = [
+            'category' => $category,
+            'categories' => $categoriesRepository->findByChildren($category)
+        ];
+
+        return $this->render('admin/categories/view.html.twig', $data);
     }
 
     /**

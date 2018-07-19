@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Categories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -25,6 +23,9 @@ class CategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Categories::class);
     }
 
+    /**
+     * @return Categories[]
+     */
     public function findByActive(): array
     {
         return $this->createQueryBuilder('c')
@@ -75,8 +76,21 @@ class CategoriesRepository extends ServiceEntityRepository
             ->andWhere('c.fullPath = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param $array
+     * @return Categories[]|null
+     */
+    public function findByArray($array): ?array
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        return $qb->add('where', $qb->expr()->in('c.fullPath', '?1'))
+            ->setParameter(1, $array)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

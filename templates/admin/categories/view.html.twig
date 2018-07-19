@@ -5,7 +5,6 @@
 {% block pageHeader %}<h1 class="display-4 mb-4">{{ category.name }}</h1>{% endblock %}
 
 {% block body %}
-    {% set categories = category.children %}
     <div class="btn-group mb-2 d-flex justify-content-start" role="group" aria-label="Basic example">
         <a href="{% if category.parent is not null %}{{  path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" class="btn btn-secondary">
             <svg class="feather feather-corner-left-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14 9 9 4 4 9"></polyline><path d="M20 20h-7a4 4 0 0 1-4-4V4"></path></svg>
