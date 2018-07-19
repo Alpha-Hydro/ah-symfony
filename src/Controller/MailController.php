@@ -16,13 +16,11 @@ class MailController extends Controller
     public function index(Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('mvl@alpha-hydro.com')
-            ->setTo('admin@alpha-hydro.com')
+            ->setTo('mvl@alpha-hydro.com')
             ->setBody(
                 $this->renderView(
                 // templates/emails/registration.html.twig
-                    'mail/index.html.twig',
-                    ['controller_name' => 'MailController']
+                    'mail/test.html.twig'
                 ),
                 'text/html'
             )
