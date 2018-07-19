@@ -4,7 +4,12 @@
             <div class="flex-box-item card hover">
                 <a href="{{ path('catalog_product_view', {'fullPathCategory' : product.category.fullPath, 'path': product.path}) }}">
                     <div class="card-image">
-                        <img src="{{ asset(product.uploadPath ~ product.image) }}" alt="{{ product.name }}"/>
+                        {#<img src="{{ asset(product.uploadPath ~ product.image) }}" alt="{{ product.name }}"/>#}
+                        {% if product.draft is not null and product.draft != '' %}
+                            <img src="{{ asset(product.uploadPathDraft ~ product.draft) }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}">
+                        {% endif %}
                     </div>
                     <div class="card-title bottom text-center">
                         {{ product.sku }}

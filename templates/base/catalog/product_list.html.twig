@@ -7,7 +7,7 @@
                 <div class="col-sm-3">
                     <div class="thumbnail product-images">
                         <a href="{{ path('catalog_product_view', {'fullPathCategory': category.fullPath, 'path': product.path}) }}">
-                            {% if product.draft is null and product.draft != '' %}
+                            {% if product.draft is not null and product.draft != '' %}
                                 <img src="{{ asset(product.uploadPathDraft ~ product.draft) }}" alt="{{ product.name }}">
                             {% else %}
                                 <img src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}">
