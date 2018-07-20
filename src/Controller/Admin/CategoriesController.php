@@ -63,6 +63,8 @@ class CategoriesController extends Controller
             $category->setPath($slug->slugify($category->getName()));
             $category->setFullPath($categoriesService->createFullPath($category));
 
+            if (null === $category->getMetaTitle()) $category->setMetaTitle($category->getName());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
@@ -77,6 +79,7 @@ class CategoriesController extends Controller
 
         return $this->render('admin/categories/add.html.twig', [
             'category' => $category,
+            'categories' => $categoriesService->findByRootCategories(),
             'form' => $form->createView(),
         ]);
     }
@@ -104,7 +107,7 @@ class CategoriesController extends Controller
      * @param Categories $category
      * @return Response
      */
-    public function edit(Request $request, Categories $category): Response
+    public function edit(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
     {
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
@@ -117,6 +120,7 @@ class CategoriesController extends Controller
 
         return $this->render('admin/categories/edit.html.twig', [
             'category' => $category,
+            'categories' => $categoriesRepository->findBy(['parent' => $category->getParent()]),
             'form' => $form->createView(),
         ]);
     }
