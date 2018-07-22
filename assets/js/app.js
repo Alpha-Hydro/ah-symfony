@@ -6,11 +6,6 @@ const $ = require("jquery");
 // no need to set this to a variable, just require it
 require("bootstrap");
 
-let greet = require("./greet");
-$('body').prepend('<h1>'+greet('john')+'</h1>');
-
-//helpers.help();
-
 feather.replace();
 
 (function () {
@@ -18,5 +13,11 @@ feather.replace();
 	
 	selectButton.click(function () {
 		selectCategory.select();
+	});
+	
+	let replaceButton = $(".replace-category");
+	
+	replaceButton.click(function () {
+		selectCategory.replace(this);
 	});
 })();

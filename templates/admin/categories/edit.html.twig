@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit Categories</h1>
 
-    {{ include('admin/categories/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/categories/_form.html.twig', {'button_label': 'Update', 'current': category}) }}
 
     <a href="{{ path('categories_index') }}">back to list</a>
 

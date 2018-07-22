@@ -92,7 +92,6 @@ class CategoriesController extends Controller
      */
     public function view(Categories $category, CategoriesRepository $categoriesRepository): Response
     {
-
         $data = [
             'category' => $category,
             'categories' => $categoriesRepository->findByChildren($category)
@@ -105,6 +104,7 @@ class CategoriesController extends Controller
      * @Route("/{id}/edit", name="categories_edit", methods="GET|POST")
      * @param Request $request
      * @param Categories $category
+     * @param CategoriesRepository $categoriesRepository
      * @return Response
      */
     public function edit(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
@@ -118,9 +118,16 @@ class CategoriesController extends Controller
             return $this->redirectToRoute('categories_edit', ['id' => $category->getId()]);
         }
 
+        $parentCategory = $category->getParent();
+
         return $this->render('admin/categories/edit.html.twig', [
             'category' => $category,
-            'categories' => $categoriesRepository->findBy(['parent' => $category->getParent()]),
+            'parent' => $parentCategory->getParent(),
+            'categories' => $categoriesRepository->findBy([
+                'parent' => $parentCategory,
+                'active' => true,
+                'deleted' => false
+            ]),
             'form' => $form->createView(),
         ]);
     }
