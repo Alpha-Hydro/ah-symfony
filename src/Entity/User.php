@@ -44,7 +44,7 @@ class User extends BaseEntity implements UserInterface, \Serializable
     private $plainPassword;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\UserRoles", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\UserRoles", mappedBy="users", fetch="EAGER")
      */
     private $userRoles;
 
