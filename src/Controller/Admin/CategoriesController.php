@@ -122,7 +122,7 @@ class CategoriesController extends Controller
 
         return $this->render('admin/categories/edit.html.twig', [
             'category' => $category,
-            'parent' => $parentCategory->getParent(),
+            'parent' => null != $parentCategory ? $parentCategory->getParent() : null,
             'categories' => $categoriesRepository->findBy([
                 'parent' => $parentCategory,
                 'active' => true,

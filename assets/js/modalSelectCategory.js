@@ -20,9 +20,11 @@ let selectCategory = {
 	
 	replace: function (el) {
 		let id = el.dataset.replaceCategory;
-		console.log(id);
+		let currentId = document.getElementById('parentCategoryName').dataset.current;
+
+		// console.log(currentId);
 		modal.modal('hide');
-		jsonUtils.getCategoriesChildren(id)
+		jsonUtils.getCategoriesChildren(id, currentId)
 			.then(
 				(data) => {
 					listGroup.html(data.content);

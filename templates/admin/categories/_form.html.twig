@@ -8,7 +8,7 @@
     <div class="form-group">
         <label class="form-control-label">Родительская категория</label>
         <div class="input-group mb-3">
-            <input id="parentCategoryName" type="text" class="form-control" placeholder="{{ category.parent.name | default('Каталог') }}" aria-label="Родительская категория" readonly>
+            <input id="parentCategoryName" type="text" class="form-control" placeholder="{{ category.parent.name | default('Каталог') }}" aria-label="Родительская категория" readonly data-current="{{ category.id | default('') }}">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#categoriesList">
                     <i data-feather="refresh-ccw">&nbsp;</i>

@@ -13,6 +13,7 @@ use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -25,16 +26,17 @@ class CategoriesController extends Controller
      * @Route("/{id}", methods="GET")
      * @param Categories $category
      * @param CategoriesRepository $categoriesRepository
+     * @param Request $request
      * @return JsonResponse
      */
-    public function listChildren(Categories $category, CategoriesRepository $categoriesRepository): JsonResponse
+    public function listChildren(Categories $category, CategoriesRepository $categoriesRepository, Request $request): JsonResponse
     {
 
         $data = [
             'category' => $category,
+            'currentId' =>  $request->query->get('current'),
             'parent' => $category->getParent(),
             'categories' => $categoriesRepository->findByChildren($category)
-
         ];
 
         $html = $this->render('api/categories/categories_list.html.twig', $data);
@@ -45,11 +47,13 @@ class CategoriesController extends Controller
     /**
      * @Route(methods="GET")
      * @param CategoriesRepository $categoriesRepository
+     * @param Request $request
      * @return JsonResponse
      */
-    public function listRootCategories(CategoriesRepository $categoriesRepository): JsonResponse
+    public function listRootCategories(CategoriesRepository $categoriesRepository, Request $request): JsonResponse
     {
         $data = [
+            'currentId' =>  $request->query->get('current'),
             'categories' => $categoriesRepository->findByRootCategories()
         ];
 
