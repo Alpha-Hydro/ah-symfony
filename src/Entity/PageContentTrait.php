@@ -3,14 +3,20 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait PageContentTrait
 {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      */
     private $image;
+
+    /**
+     * @Assert\File(mimeTypes={ "image/jpeg","image/jpg","image/png","application/pdf" })
+     */
+    private $imageUpload;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -157,6 +163,24 @@ trait PageContentTrait
     {
         $this->metaDescription = $metaDescription;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageUpload()
+    {
+        return $this->imageUpload;
+    }
+
+    /**
+     * @param mixed $imageUpload
+     * @return PageContentTrait
+     */
+    public function setImageUpload($imageUpload)
+    {
+        $this->imageUpload = $imageUpload;
         return $this;
     }
 }

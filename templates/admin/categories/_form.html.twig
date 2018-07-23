@@ -1,17 +1,13 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{% set uploadPath =  'upload/categories/'~category.id~'/' %}
+{% set uploadPath =  'upload/categories/' %}
 
 {{ form_start(form) }}
 
 <div class="row">
     <div class="col-md-3">
-        {{ form_row(form.image) }}
-        <div class="text-center mb-3">
-            <img src="{{ asset(category.uploadPath ~ category.image) }}" alt="{{ category.name }}" class="img-thumbnail" />
-        </div>
         <div class="card">
-            {% if category.uploadPath == '/' ~ uploadPath %}
+            {% if category.uploadPath is null %}
                 <img id="categoryImgView" src="{{ asset(uploadPath ~ category.image) }}" alt="{{ category.name }}" class="card-img-top p-2" />
             {% else %}
                 <img id="categoryImgView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ category.name }}" class="card-img-top p-2" />
@@ -23,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <input type="file" id="fileInput" class="invisible" multiple accept="image/*" name="fileLoad">
+        {{ form_widget(form.imageUpload,  { 'attr': {'class': 'invisible null','assept' : 'image/*'} }) }}
     </div>
     <div class="col-md-9">
         {{ form_row(form.name) }}

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,7 +41,9 @@ class CategoriesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', HiddenType::class)
+            ->add('imageUpload', FileType::class, [
+                'required' => false,
+            ])
             ->add('name', TextType::class, ['label' => 'Наименование категории'])
 //            ->add('create_date', HiddenType::class)
 //            ->add('update_date', HiddenType::class)

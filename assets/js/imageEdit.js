@@ -1,15 +1,14 @@
 let imageEdit = {
-	imageUpload: function (inputFile, imageElement, imageText) {
+	imageUpload: function (inputFile, imageOutput) {
 		inputFile.click();
-
-		inputFile.addEventListener('change',function (event) {
+		
+		inputFile.addEventListener('change', function (event) {
 			let input = event.target;
-
+			
 			let reader = new FileReader();
 			reader.onload = function () {
-				imageElement.src = reader.result;
+				imageOutput.src = reader.result;
 			};
-			imageText.value = input.files[0].name;
 			reader.readAsDataURL(input.files[0]);
 		})
 	}

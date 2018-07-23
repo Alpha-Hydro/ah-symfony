@@ -23,14 +23,19 @@ feather.replace();
 	});
 
 	let btnCategoryImg = $(".btn-category-img");
-	let fileInput = document.getElementById("fileInput");
-	let categoryImg = document.getElementById("categories_image");
+	let fileInput = document.getElementById("categories_imageUpload");
 	let categoryImgView = document.getElementById("categoryImgView");
 
 	btnCategoryImg.click(function () {
 		let imgEvent = this.dataset.imgEvent;
 		if(imgEvent === 'download'){
-			imageEdit.imageUpload(fileInput, categoryImgView, categoryImg);
+			imageEdit.imageUpload(fileInput, categoryImgView);
 		}
+	});
+	
+	$('*[data-toggle="tooltip"]').tooltip({
+		animated: 'fade',
+		placement: 'left',
+		html: true
 	});
 })();
