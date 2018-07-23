@@ -1,35 +1,56 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
+{% set uploadPath =  'upload/categories/'~category.id~'/' %}
+
 {{ form_start(form) }}
-<fieldset>
-    {{ form_row(form.image) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.parent) }}
-    <div class="form-group">
-        <label class="form-control-label">Родительская категория</label>
-        <div class="input-group mb-3">
-            <input id="parentCategoryName" type="text" class="form-control" placeholder="{{ category.parent.name | default('Каталог') }}" aria-label="Родительская категория" readonly data-current="{{ category.id | default('') }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#categoriesList">
-                    <i data-feather="refresh-ccw">&nbsp;</i>
-                </button>
+
+<div class="row">
+    <div class="col-md-3">
+        {{ form_row(form.image) }}
+        <div class="text-center mb-3">
+            <img src="{{ asset(category.uploadPath ~ category.image) }}" alt="{{ category.name }}" class="img-thumbnail" />
+        </div>
+        <div class="card">
+            {% if category.uploadPath == '/' ~ uploadPath %}
+                <img id="categoryImgView" src="{{ asset(uploadPath ~ category.image) }}" alt="{{ category.name }}" class="card-img-top p-2" />
+            {% else %}
+                <img id="categoryImgView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ category.name }}" class="card-img-top p-2" />
+            {% endif %}
+            <div class="card-body text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success btn-category-img" data-img-event="download"><i data-feather="download"></i></button>
+                    <button type="button" class="btn btn-danger btn-category-img" data-img-event="delete"><i data-feather="trash-2"></i></button>
+                </div>
             </div>
         </div>
+        <input type="file" id="fileInput" class="invisible" multiple accept="image/*" name="fileLoad">
     </div>
-    {{ form_row(form.description) }}
-</fieldset>
-<fieldset>
-    <legend>SEO</legend>
-    {{ form_row(form.metaTitle) }}
-    {{ form_row(form.metaKeywords) }}
-    {{ form_row(form.metaDescription) }}
-</fieldset>
-<fieldset>
-    <legend>Активность, сортировка</legend>
-    {{ form_row(form.active) }}
-    {{ form_row(form.sorting) }}
-</fieldset>
-<button class="btn btn-success">{{ button_label|default('Сохранить') }}</button>
+    <div class="col-md-9">
+        {{ form_row(form.name) }}
+        {{ form_row(form.parent) }}
+        <div class="form-group">
+            <label class="form-control-label">Родительская категория</label>
+            <div class="input-group mb-3">
+                <input id="parentCategoryName" type="text" class="form-control" placeholder="{{ category.parent.name | default('Каталог') }}" aria-label="Родительская категория" readonly data-current="{{ category.id | default('') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#categoriesList">
+                        <i data-feather="refresh-ccw">&nbsp;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{ form_row(form.description) }}
+        {{ form_row(form.metaTitle) }}
+        {{ form_row(form.metaKeywords) }}
+        {{ form_row(form.metaDescription) }}
+        {{ form_row(form.active) }}
+        {{ form_row(form.sorting) }}
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <a href="{% if category.parent %}}{{ path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" type="button" class="btn btn-light mx-3">Отмена</a>
+    <button type="submit" class="btn btn-success">{{ button_label|default('Сохранить') }}</button>
+</div>
 {{ form_end(form) }}
 
 {{ include('admin/categories/_modal_categories_choice_list.html.twig') }}

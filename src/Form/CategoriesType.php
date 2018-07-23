@@ -41,7 +41,7 @@ class CategoriesType extends AbstractType
     {
         $builder
             ->add('image', HiddenType::class)
-            ->add('name', TextType::class, ['label' => 'Наименование'])
+            ->add('name', TextType::class, ['label' => 'Наименование категории'])
 //            ->add('create_date', HiddenType::class)
 //            ->add('update_date', HiddenType::class)
 //            ->add('uploadPath', TextType::class)
@@ -55,9 +55,9 @@ class CategoriesType extends AbstractType
             ->add('metaTitle', TextType::class, ['required' => false])
             ->add('metaKeywords', TextType::class, ['required' => false])
             ->add('metaDescription', TextareaType::class, ['required' => false])
-            ->add('active', CheckboxType::class, ['data' => true])
+            ->add('active', CheckboxType::class, ['label' => 'Активность', 'data' => true])
             ->add('deleted', HiddenType::class, ['data' => 0])
-            ->add('sorting', NumberType::class, ['data' => 0])
+            ->add('sorting', NumberType::class, ['label' => 'Сортировка', 'data' => 0])
             /*->add('parent', EntityType::class, [
                 'label' => 'Родительская категория',
                 'required' => false,

@@ -112,8 +112,10 @@ class CategoriesController extends Controller
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
 
+        var_dump($form->get('fileLoad'));
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('categories_edit', ['id' => $category->getId()]);
         }
