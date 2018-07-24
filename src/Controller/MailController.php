@@ -16,6 +16,7 @@ class MailController extends Controller
     public function index(Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
+            ->setFrom($this->getParameter('swiftmailer.sender_address'))
             ->setTo('mvl@alpha-hydro.com')
             ->setBody(
                 $this->renderView(
