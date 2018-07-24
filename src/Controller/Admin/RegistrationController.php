@@ -11,7 +11,7 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\User;
-use App\Form\UserRegisterType;
+use App\Form\User\UserRegisterType;
 use App\Repository\UserRolesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

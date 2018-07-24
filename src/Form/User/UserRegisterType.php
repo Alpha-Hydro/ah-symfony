@@ -7,7 +7,7 @@
  *
  */
 
-namespace App\Form;
+namespace App\Form\User;
 
 
 use App\Entity\User;
