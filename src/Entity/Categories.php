@@ -38,6 +38,11 @@ class Categories extends BaseEntity
      */
     private $products;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CategoryImages", inversedBy="categories", cascade={"persist", "remove"})
+     */
+    private $oldImages;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -120,6 +125,18 @@ class Categories extends BaseEntity
                 $product->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOldImages(): ?CategoryImages
+    {
+        return $this->oldImages;
+    }
+
+    public function setOldImages(?CategoryImages $oldImages): self
+    {
+        $this->oldImages = $oldImages;
 
         return $this;
     }
