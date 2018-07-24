@@ -5,7 +5,7 @@
         <th scope="col"><i data-feather="bar-chart">&nbsp;</i></th>
         <th scope="col">Наименование</th>
         <th scope="col">Url на сайт</th>
-        <th colspan="3" class="text-center">&nbsp;</th>
+        <th colspan="2" class="text-center">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
                 </a>
             </td>
             <td>
-                <a data-toggle="tooltip" data-placement="top" title="<img src='{{ asset('upload/categories/'~category.image)}}' />">
+                <a href="#" data-toggle="tooltip" data-placement="top" title="<img src='{{ asset('upload/categories/'~category.image)}}' />">
                     <i data-feather="image">&nbsp;</i>
                 </a>
             </td>
@@ -33,15 +33,10 @@
                     <i data-feather="edit">&nbsp;</i>
                 </a>
             </td>
-            <td>
-                <a href="{{ path('categories_delete', {'id': category.id}) }}" class="text-danger">
-                    <i data-feather="trash-2">&nbsp;</i>
-                </a>
-            </td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="7">no records found</td>
+            <td colspan="6">no records found</td>
         </tr>
     {% endfor %}
     </tbody>

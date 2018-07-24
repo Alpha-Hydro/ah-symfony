@@ -37,7 +37,7 @@ class User extends BaseEntity implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\Length(max=4096)
+     * @Assert\Length(min="5", max=4096)
      */
     private $plainPassword;
 
@@ -120,7 +120,7 @@ class User extends BaseEntity implements UserInterface, \Serializable
 
     public function getRoles(): array
     {
-        return [$this->getUserRoles()];
+        return [$this->getUserRoles()->getRole()];
     }
 
     /**

@@ -25,13 +25,12 @@ class UserType extends AbstractType
             /*->add('create_date', HiddenType::class)
             ->add('update_date', HiddenType::class)*/
             ->add('active', CheckboxType::class)
-            ->add('deleted', CheckboxType::class)
-            ->add('sorting', TextType::class)
+            //->add('deleted', CheckboxType::class)
+            //->add('sorting', TextType::class)
             ->add('userRoles', EntityType::class, [
                 'class' => UserRoles::class,
                 'choice_label' => 'name'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

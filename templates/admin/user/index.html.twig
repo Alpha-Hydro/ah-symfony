@@ -2,19 +2,20 @@
 
 {% block title %}User index{% endblock %}
 
+{% block pageHeader %}<h1 class="display-4">Пользователи</h1>{% endblock %}
+
 {% block body %}
-    <h1>User index</h1>
-    <a href="{{ path('user_new') }}">Create new</a>
+    <a class="btn btn-success mb-2" href="{{ path('user_new') }}">Новый пользователь</a>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Имя, Фамилия</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Roles</th>
-                <th>actions</th>
+                <th>Телефон</th>
+                <th>Адресс</th>
+                <th>Роль</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +32,7 @@
                 {#<td>{{ user.active ? 'Yes' : 'No' }}</td>
                 <td>{{ user.deleted ? 'Yes' : 'No' }}</td>#}
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="text-success"><i data-feather="edit">&nbsp;</i></a>
                 </td>
             </tr>
         {% else %}

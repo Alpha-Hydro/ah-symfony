@@ -1,13 +1,19 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{{ user.name }} - Edit User{% endblock %}
+
+{% block pageHeader %}<h1 class="display-4 mb-4">{{ user.name }}</h1>{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
+        <div class="btn-group mb-3" role="group" aria-label="Basic example">
+            <a href="{{  path('user_index')}}" class="btn btn-secondary">
+                <i data-feather="arrow-left">&nbsp;</i>
+            </a>
+        </div>
+        {{ include('admin/user/_delete_form.html.twig') }}
+    </div>
 
-    {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/user/_form.html.twig', {'button_label': 'Сохранить'}) }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    {{ include('admin/user/_delete_form.html.twig') }}
 {% endblock %}
