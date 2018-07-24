@@ -25,7 +25,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.address }}</td>
-                <td>{{ user.roles|join(', ') }}</td>
+                <td>{{ user.userRoles.name }}</td>
                 {#<td>{{ user.createDate ? user.createDate|date('Y-m-d') : '' }}</td>#}
                 {#<td>{{ user.updateDate ? user.updateDate|date('d-m-Y') : '' }}</td>#}
                 {#<td>{{ user.active ? 'Yes' : 'No' }}</td>

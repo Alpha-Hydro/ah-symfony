@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users_app")
@@ -44,14 +42,9 @@ class User extends BaseEntity implements UserInterface, \Serializable
     private $plainPassword;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\UserRoles", mappedBy="users", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserRoles", inversedBy="users", fetch="EAGER")
      */
     private $userRoles;
-
-    public function __construct()
-    {
-        $this->userRoles = new ArrayCollection();
-    }
 
 
     public function getEmail(): ?string
@@ -102,33 +95,6 @@ class User extends BaseEntity implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return Collection|UserRoles[]
-     */
-    public function getUserRoles(): Collection
-    {
-        return $this->userRoles;
-    }
-
-    public function addUserRole(UserRoles $userRole): self
-    {
-        if (!$this->userRoles->contains($userRole)) {
-            $this->userRoles[] = $userRole;
-            $userRole->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserRole(UserRoles $userRole): self
-    {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            $userRole->removeUser($this);
-        }
-
-        return $this;
-    }
 
     public function serialize()
     {
@@ -152,13 +118,27 @@ class User extends BaseEntity implements UserInterface, \Serializable
             ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
-        $roles = [];
-        foreach ($this->getUserRoles() as $role){
-            $roles[] = $role->getRole();
-        }
-        return $roles;
+        return [$this->getUserRoles()];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRoles()
+    {
+        return $this->userRoles;
+    }
+
+    /**
+     * @param mixed $userRoles
+     * @return User
+     */
+    public function setUserRoles($userRoles)
+    {
+        $this->userRoles = $userRoles;
+        return $this;
     }
 
     public function getSalt()

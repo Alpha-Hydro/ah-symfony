@@ -29,7 +29,7 @@ class UserRoles
     private $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="userRoles")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="userRoles")
      */
     private $users;
 
