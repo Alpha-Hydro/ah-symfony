@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,10 +37,6 @@ class Categories extends BaseEntity
      */
     private $products;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CategoryImages", inversedBy="categories", cascade={"persist", "remove"})
-     */
-    private $oldImages;
 
     public function __construct()
     {
@@ -125,18 +120,6 @@ class Categories extends BaseEntity
                 $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getOldImages(): ?CategoryImages
-    {
-        return $this->oldImages;
-    }
-
-    public function setOldImages(?CategoryImages $oldImages): self
-    {
-        $this->oldImages = $oldImages;
 
         return $this;
     }
