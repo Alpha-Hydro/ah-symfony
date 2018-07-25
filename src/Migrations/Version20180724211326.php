@@ -22,6 +22,8 @@ final class Version20180724211326 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('DROP TABLE categories_xref');
+        $this->addSql('DROP TABLE categoryindex');
         $this->addSql('DROP TABLE productindex');
     }
 
@@ -35,6 +37,8 @@ final class Version20180724211326 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('CREATE TABLE categories_xref (product_id BIGINT NOT NULL, category_id BIGINT NOT NULL, PRIMARY KEY(product_id, category_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE categoryindex (id BIGINT AUTO_INCREMENT NOT NULL, category_id BIGINT NOT NULL, page BIGINT NOT NULL, depth TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE productindex (id BIGINT AUTO_INCREMENT NOT NULL, product_id BIGINT NOT NULL, page INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     }
 }

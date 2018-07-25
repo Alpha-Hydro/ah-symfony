@@ -37,6 +37,11 @@ class Categories extends BaseEntity
      */
     private $products;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CategoryImages", cascade={"persist", "remove"})
+     */
+    private $fileImage;
+
 
     public function __construct()
     {
@@ -120,6 +125,18 @@ class Categories extends BaseEntity
                 $product->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFileImage(): ?CategoryImages
+    {
+        return $this->fileImage;
+    }
+
+    public function setFileImage(?CategoryImages $fileImage): self
+    {
+        $this->fileImage = $fileImage;
 
         return $this;
     }

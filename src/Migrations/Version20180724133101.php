@@ -21,7 +21,6 @@ final class Version20180724133101 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE category_images (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, image VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, upload_path VARCHAR(255) DEFAULT NULL COLLATE utf8_general_ci, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('DROP TABLE user_roles_user');
         $this->addSql('ALTER TABLE users_app ADD user_roles_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE users_app ADD CONSTRAINT FK_FAB5E7F9D84AB5C4 FOREIGN KEY (user_roles_id) REFERENCES user_roles (id)');
@@ -43,6 +42,5 @@ final class Version20180724133101 extends AbstractMigration
         $this->addSql('ALTER TABLE users_app DROP FOREIGN KEY FK_FAB5E7F9D84AB5C4');
         $this->addSql('DROP INDEX IDX_FAB5E7F9D84AB5C4 ON users_app');
         $this->addSql('ALTER TABLE users_app DROP user_roles_id');
-        $this->addSql('DROP TABLE category_images');
     }
 }

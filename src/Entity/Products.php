@@ -75,6 +75,16 @@ class Products extends BaseEntity
      */
     private $modificationParams;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ProductImages", cascade={"persist", "remove"})
+     */
+    private $fileImage;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ProductDraft", cascade={"persist", "remove"})
+     */
+    private $fileDraft;
+
     public function __construct()
     {
         $this->params = new ArrayCollection();
@@ -251,6 +261,30 @@ class Products extends BaseEntity
                 $modificationParam->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFileImage(): ?ProductImages
+    {
+        return $this->fileImage;
+    }
+
+    public function setFileImage(?ProductImages $fileImage): self
+    {
+        $this->fileImage = $fileImage;
+
+        return $this;
+    }
+
+    public function getFileDraft(): ?ProductDraft
+    {
+        return $this->fileDraft;
+    }
+
+    public function setFileDraft(?ProductDraft $fileDraft): self
+    {
+        $this->fileDraft = $fileDraft;
 
         return $this;
     }
