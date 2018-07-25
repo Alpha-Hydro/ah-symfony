@@ -16,8 +16,11 @@
         <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-secondary">
             <i data-feather="edit-3">&nbsp;</i>
         </a>
-        <a href="{{ path('categories_delete', {'id': category.id}) }}" class="btn btn-secondary">
-            <i data-feather="trash-2">&nbsp;</i>
+        <a href="{{ path('categories_check_active', {'id': category.id}) }}" class="btn btn-secondary">
+            <i data-feather="{{category.active ? 'eye-off' : 'eye'}}">&nbsp;</i>
+        </a>
+        <a href="{{ path('categories_check_archive', {'id': category.id}) }}" class="btn btn-secondary">
+            <i data-feather="{{category.deleted ? 'upload' : 'archive'}}">&nbsp;</i>
         </a>
     </div>
     {{ include('admin/categories/_categories_table.html.twig') }}

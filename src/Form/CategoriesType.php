@@ -58,7 +58,7 @@ class CategoriesType extends AbstractType
             ->add('metaTitle', TextType::class, ['required' => false])
             ->add('metaKeywords', TextType::class, ['required' => false])
             ->add('metaDescription', TextareaType::class, ['required' => false])
-            ->add('active', CheckboxType::class, ['label' => 'Активность', 'data' => true])
+            ->add('active', HiddenType::class, ['data' => 1])
             ->add('deleted', HiddenType::class, ['data' => 0])
             ->add('sorting', NumberType::class, ['label' => 'Сортировка', 'data' => 0])
             /*->add('parent', EntityType::class, [

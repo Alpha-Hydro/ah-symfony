@@ -7,8 +7,8 @@
 <div class="row">
     <div class="col-md-3">
         <div class="card">
-            {% if category.uploadPath is null %}
-                <img id="categoryImgView" src="{{ asset(uploadPath ~ category.image) }}" alt="{{ category.name }}" class="card-img-top p-2" />
+            {% if category.fileImage is not null %}
+                <img id="categoryImgView" src="{{ asset(uploadPath ~ category.fileImage.fileName) }}" alt="{{ category.name }}" class="card-img-top p-2" />
             {% else %}
                 <img id="categoryImgView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ category.name }}" class="card-img-top p-2" />
             {% endif %}
@@ -39,7 +39,6 @@
         {{ form_row(form.metaTitle) }}
         {{ form_row(form.metaKeywords) }}
         {{ form_row(form.metaDescription) }}
-        {{ form_row(form.active) }}
         {{ form_row(form.sorting) }}
     </div>
 </div>

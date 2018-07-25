@@ -2,7 +2,9 @@
 
 {% block title %}Categories index{% endblock %}
 
-{% block pageHeader %}<h1 class="display-4">Каталог</h1>{% endblock %}
+{% block pageHeader %}
+    <h1 class="display-4">{{ pageTitle | default('Каталог')}}</h1>
+{% endblock %}
 
 {% block body %}
     {{ include('admin/categories/_categories_table.html.twig') }}

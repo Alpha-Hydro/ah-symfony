@@ -36,9 +36,20 @@ class CategoriesRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Categories[] Returns an array of Categories objects
+     * @return Categories[]|null
      */
-    public function findByRootCategories(): array
+    public function findByIsDeleted(): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.deleted = true')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Categories[]|null Returns an array of Categories objects
+     */
+    public function findByRootCategories(): ?array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.active = true')
@@ -51,9 +62,9 @@ class CategoriesRepository extends ServiceEntityRepository
 
     /**
      * @param Categories $category
-     * @return Categories[]
+     * @return Categories[]|null
      */
-    public function findByChildren(Categories $category): array
+    public function findByChildren(Categories $category): ?array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.active = true')
@@ -89,6 +100,18 @@ class CategoriesRepository extends ServiceEntityRepository
 
         return $qb->add('where', $qb->expr()->in('c.fullPath', '?1'))
             ->setParameter(1, $array)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Categories[]|null
+     */
+    public function findByIsDisabled(): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.active = false')
+            ->andWhere('c.deleted = false')
             ->getQuery()
             ->getResult();
     }
