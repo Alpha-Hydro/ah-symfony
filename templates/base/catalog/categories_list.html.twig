@@ -8,7 +8,7 @@
                     <a href="{{ path('catalog_list', {'fullPath' : category.fullPath}) }}">
                         {% if category.fileImage is not null %}
                             <div class="card-image">
-                                <img src="{{ 'upload/categories/' ~ category.fileImage.fileName }}" alt="{{ category.name }}"/>
+                                <img src="{{ asset('upload/categories/' ~ category.fileImage.fileName) }}" alt="{{ category.name }}"/>
                             </div>
                         {% endif %}
                         <div class="card-title bottom text-center">
