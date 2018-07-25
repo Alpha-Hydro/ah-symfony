@@ -1,0 +1,33 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.email) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.plainPassword.first) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.plainPassword.second) }}
+        </div>
+    </div>
+    {{ form_row(form.userRoles) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.phone) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.address) }}
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <a href="{{ path('user_index') }}" type="button" class="btn btn-light mx-3">Отмена</a>
+        <button type="submit" class="btn btn-success">{{ button_label|default('Сохранить') }}</button>
+    </div>
+{{ form_end(form) }}

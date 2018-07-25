@@ -13,8 +13,11 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\User\UserRegisterType;
 use App\Repository\UserRolesRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -22,10 +25,11 @@ class RegistrationController extends Controller
 {
     /**
      * @Route("/register", name="user_registration")
+     *
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserRolesRepository $rolesRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRolesRepository $rolesRepository)
     {
@@ -36,7 +40,7 @@ class RegistrationController extends Controller
         $user->setDeleted(false);
         $user->setSorting(0);
 
-        $user->addUserRole($rolesRepository->findOneBy(['role' => 'ROLE_USER']));
+        $user->setUserRoles($rolesRepository->findOneBy(['role' => 'ROLE_USER']));
 
         // 1) build the form
         $form = $this->createForm(UserRegisterType::class, $user);
@@ -60,7 +64,7 @@ class RegistrationController extends Controller
         }
 
         return $this->render(
-            'registration/register.html.twig',
+            'admin/registration/register.html.twig',
             array('form' => $form->createView())
         );
     }
