@@ -5,6 +5,9 @@
             <small>{{ product.name }}</small>
         </h1>
         <div class="print hidden-xs">
+            {% if is_granted('ROLE_MANAGER') %}
+            <a href="{{ path('passport_product_pdf', {'fullPathCategory': category.fullPath, 'path': product.path}) }}" class="alpha-icon-print mr2" target="_blank"><span class="">Паспорт</span></a>
+            {% endif %}
             <a href="{{ path('catalog_product_pdf', {'fullPathCategory': category.fullPath, 'path': product.path})}}" class="alpha-icon-print" target="_blank">
                 <span class="">Печать</span>
             </a>

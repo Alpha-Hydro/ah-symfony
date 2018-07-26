@@ -9,8 +9,8 @@
 
 namespace App\Service;
 
-
 use App\Entity\Products;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Vladmeh\Bundle\TCPDFBundle\Service\TcPdfService;
 
@@ -19,12 +19,14 @@ class PassportPdf extends TcPdfService implements Pdf
 
     private $product;
     private $request;
+    private $modifications;
     private $_last_page_flag = false;
 
-    public function __construct(Products $product, Request $request)
+    public function __construct(Products $product, Request $request, Collection $modifications = null)
     {
         $this->product = $product;
         $this->request = $request;
+        $this->modifications = $modifications;
 
         parent::__construct();
     }
@@ -116,10 +118,10 @@ class PassportPdf extends TcPdfService implements Pdf
     public function showDescription(): self
     {
         $this->SetFont('','B',12);
-        $modifications = $this->product->getModifications();
+        $modifications = $this->modifications ?? $this->product->getModifications();
 
-        if (!empty($modifications)){
-            $total = count($modifications);
+        if ($modifications->count() != 0){
+            $total = $modifications->count();
             $counter = 1;
             foreach($modifications as $modification){
                 $comma = ($counter != $total)?', ':'';
@@ -138,51 +140,54 @@ class PassportPdf extends TcPdfService implements Pdf
 
     public function showModifications(): self
     {
-        $this->SetFont('', '', 8);
+        $modifications = $this->modifications ?? $this->product->getModifications();
+
+        if ($modifications->count() > 0){
+            $this->SetFont('', '', 8);
+
+            $widthWorkspacePage = $this->getPageWidth() - PDF_MARGIN_LEFT - PDF_MARGIN_RIGHT;
+            $widthName = 25;
+            $widthColumn = ($widthWorkspacePage - $widthName) / $this->product->getModificationParams()->count();
 
 
-        $widthWorkspacePage = $this->getPageWidth() - PDF_MARGIN_LEFT - PDF_MARGIN_RIGHT;
-        $widthName = 25;
-        $widthColumn = ($widthWorkspacePage - $widthName) / $this->product->getModificationParams()->count();
+            $this->setCellPaddings('', 1, '', 1);
+            $this->SetFillColor(0, 148, 218);
+            $this->SetTextColor(255);
 
-
-        $this->setCellPaddings('', 1, '', 1);
-        $this->SetFillColor(0, 148, 218);
-        $this->SetTextColor(255);
-
-        //table head
-        $this->MultiCell($widthName, 17, 'Название', 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
-        foreach ($this->product->getModificationParams() as $modificationParam) {
-            $this->MultiCell($widthColumn, 17, $modificationParam->getName(), 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
-        }
-        $this->ln();
-        //table body
-        $this->SetTextColor(0);
-        foreach ($this->product->getModifications() as $key => $modification) {
-            //start row
-            $this->SetFillColor(255, 255, 255);
-            if ($key & 1) {
-                $this->SetFillColor(228, 228, 228);
-            }
-
-            //first column (название)
-            $this->SetFont('', 'B');
-            $this->Cell($widthName, 0, $modification->getSku(), 0, 0, 'L', true, '', 1);
-
-            //other columns (values)
-            $this->SetFont('', '');
+            //table head
+            $this->MultiCell($widthName, 17, 'Название', 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
             foreach ($this->product->getModificationParams() as $modificationParam) {
-                foreach ($modification->getParamValues() as $paramsValues) {
-                    if ($paramsValues->getParamId() == $modificationParam->getId()) {
-                        $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true, '', 1);
+                $this->MultiCell($widthColumn, 17, $modificationParam->getName(), 0, 'C', true, 0, '', '', true, 0, false, true, 0, 'M', true);
+            }
+            $this->ln();
+            //table body
+            $this->SetTextColor(0);
+            foreach ($modifications as $key => $modification) {
+                //start row
+                $this->SetFillColor(255, 255, 255);
+                if ($key & 1) {
+                    $this->SetFillColor(228, 228, 228);
+                }
+
+                //first column (название)
+                $this->SetFont('', 'B');
+                $this->Cell($widthName, 0, $modification->getSku(), 0, 0, 'L', true, '', 1);
+
+                //other columns (values)
+                $this->SetFont('', '');
+                foreach ($this->product->getModificationParams() as $modificationParam) {
+                    foreach ($modification->getParamValues() as $paramsValues) {
+                        if ($paramsValues->getParamId() == $modificationParam->getId()) {
+                            $this->Cell($widthColumn, 0, $paramsValues->getValue(), 0, 0, 'C', true, '', 1);
+                        }
                     }
                 }
+                //end row
+                $this->ln();
             }
-            //end row
-            $this->ln();
-        }
 
-        $this->Ln(10);
+            $this->Ln(10);
+        }
 
         return $this;
     }

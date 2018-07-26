@@ -19,6 +19,20 @@ class ModificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Modification::class);
     }
 
+    /**
+     * @param $array
+     * @return Modification[]|null
+     */
+    public function findByArrayId($array): ?array
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        return $qb->add('where', $qb->expr()->in('m.id', '?1'))
+            ->setParameter(1, $array)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Modification[] Returns an array of Modification objects
 //     */

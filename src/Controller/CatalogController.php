@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\Entity\Modification;
 use App\Entity\Products;
 use App\Service\CategoriesService;
 use App\Service\PassportPdf;
@@ -116,9 +117,17 @@ class CatalogController extends Controller
      */
     public function passportPdf(Products $products, Request $request): Response
     {
-        $pdf = new PassportPdf($products, $request);
+        $array = [13926,13927,13928,13929,13930,13931,13932];
+        $modifications = $products->getModifications()->filter(
+            function (Modification $entry) use ($array) {
+                return in_array($entry->getId(), $array);
+            }
+        );
+
+        $pdf = new PassportPdf($products, $request, $modifications);
 
         $pdf->AddPage();
+
 
         $pdf->showName()
             ->showDescription()
