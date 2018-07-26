@@ -2,54 +2,89 @@
 
 namespace App\Controller;
 
+use App\Entity\Modification;
+use App\Entity\Products;
+use App\Service\PassportPdf;
+use App\Service\ProductPdf;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/catalog")
+ * @Cache(expires="tomorrow", public=true)
+ */
 class PdfController extends Controller
 {
     /**
-     * @Route("/pdf", name="pdf")
-     * @Security("is_granted('ROLE_USER')")
+     * @Route("/{fullPathCategory}/{path}.pdf",
+     *     requirements={
+     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
+     *          "path": "[A-Z0-9\-]+"
+     *     },
+     *     name="catalog_product_pdf", methods="GET")
+     * @param Products $products
+     * @param Request $request
      * @return Response
      */
-    public function view(): Response
+    public function productPdf(Products $products, Request $request): Response
     {
-        $html = $this->renderView('pdf/index.html.twig', [
-            'controller_name' => 'PdfController',
-        ]);
-
-        $pdf = $this->container->get('tcpdf');
+        $pdf = new ProductPdf($products, $request);
 
         $pdf->AddPage();
-        $pdf->writeHTML($html, true, false, true, false, '');
+
+        $pdf->showImages()
+            ->showParams()
+            ->showDescription()
+            ->showModifications()
+            ->showNote();
 
         return new Response($pdf->Output(), 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="new.pdf"'
+            'Content-Disposition' => 'inline; filename="product.pdf"'
         ]);
     }
 
     /**
-     * @Route("/pdf/create", name="pdf-create")
-     * @Security("has_role('ROLE_MANAGER')")
-     * @return Response
-     */
-    public function create(): Response
-    {
-        return new Response('<html><body>Create PDF page! </body></html>');
-    }
-
-    /**
-     * @Route("/pdf/delete", name="pdf-delete")
+     * @Route("/{fullPathCategory}/{path}/passport.pdf",
+     *     requirements={
+     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
+     *          "path": "[A-Z0-9\-]+"
+     *     },
+     *     name="passport_product_pdf", methods="GET")
      * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param Products $products
+     * @param Request $request
      * @return Response
      */
-    public function delete(): Response
+    public function passportPdf(Products $products, Request $request): Response
     {
-        return new Response('<html><body>Delete PDF page! </body></html>');
+        $array = [13926, 13927, 13928, 13929, 13930, 13931, 13932];
+        $modifications = $products->getModifications()->filter(
+            function (Modification $entry) use ($array) {
+                return in_array($entry->getId(), $array);
+            }
+        );
+
+        $pdf = new PassportPdf($products, $request, $modifications);
+
+        $pdf->AddPage();
+
+
+        $pdf->showName()
+            ->showDescription()
+            ->showImages()
+            ->showParams()
+            ->showModifications()
+            ->showNote('ГАРАНТИЙНЫЕ ОБЯЗАТЕЛЬСТВА', 'Компания гарантирует работоспособность указанных изделий в течение 1 (года) с момента изготовления. При обнаружении скрытого дефекта в период гарантийного срока фирма обязуется безвозмездно заменить изделие. Организация не несет ответственности за убытки, причиненные неисправностью установленного изделия. Гарантия не распространяется на изделия неправильно установленные или поврежденные механическими и химическими воздействиями, а так же, эксплуатируемыми в условиях не соответствующих указанным в настоящем паспорте.');
+
+        return new Response($pdf->Output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="passport.pdf"'
+        ]);
     }
-
-
 }

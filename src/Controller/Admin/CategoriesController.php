@@ -9,6 +9,7 @@ use App\Repository\CategoriesRepository;
 use App\Service\CategoriesService;
 use Cocur\Slugify\SlugifyInterface;
 use DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -239,6 +240,8 @@ class CategoriesController extends Controller
 
     /**
      * @Route("/{id}", name="categories_delete", methods="DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     *
      * @param Request $request
      * @param Categories $category
      * @return Response

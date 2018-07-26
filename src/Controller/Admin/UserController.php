@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin/user")
- * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends Controller
 {
