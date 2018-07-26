@@ -1,0 +1,26 @@
+<form enctype="application/x-www-form-urlencoded" class="form-horizontal" action="{{ path('login') }}" method="post">
+    <div class="form-group">
+        <label for="username" class="col-md-2 control-label optional">Логин</label>
+        <div class="col-md-10">
+            <div class="input-group ">
+                <span class="input-group-addon">@</span>
+                <input type="text" id="username" name="_username" value="{{ last_username | default('') }}" placeholder="usr@alpha-hydro.com" class="form-control" required/>
+            </div>
+        </div>
+    </div>
+    <div class=" form-group ">
+        <label for="password" class="col-md-2 control-label optional">Пароль</label>
+        <div class="col-md-10">
+            <div class="input-group ">
+                <span class="input-group-addon">🔒</span>
+                <input type="password" id="password" name="_password" placeholder="Пароль" class="form-control" required/>
+            </div>
+        </div>
+    </div>
+    <div class=" form-group ">
+        <div class="col-md-offset-2 col-md-10 text-right">
+            <button type="submit" class="btn btn-default btn-success">Вход</button>
+            <button type="reset" class="btn btn-default">Отмена</button>
+        </div>
+    </div>
+</form>

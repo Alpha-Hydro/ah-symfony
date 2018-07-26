@@ -1,52 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    <div class="container">
+        <div class="page-header text-center mb5">
+            <img src="{{ asset('ah-bs3/img/logo/alpha-hydro-logo-ru.svg') }}" alt="Alpha-Hydro">
+        </div>
+    </div>
+{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             {% if error %}
-                <div class="alert alert-danger"
-                     role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
-            <form enctype="application/x-www-form-urlencoded" class="form-horizontal well well-lg mb0"
-                  action="{{ path('login') }}" method="post">
-                <fieldset>
-                    <legend>Вход</legend>
-                    <div class="form-group">
-                        <label for="username" class="col-md-2 control-label optional">Логин</label>
-                        <div class="col-md-10">
-                            <div class="input-group ">
-                                <span class="input-group-addon">@</span>
-                                <input type="text" id="username" name="_username" value="{{ last_username }}"
-                                       placeholder="E-mail" class="form-control" required/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" form-group ">
-                        <label for="password" class="col-md-2 control-label optional">Пароль</label>
-                        <div class="col-md-10">
-                            <div class="input-group ">
-                                <span class="input-group-addon">🔒</span>
-                                <input type="password" id="password" name="_password" placeholder="Пароль"
-                                       class="form-control" required/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" form-group ">
-                        <div class="col-md-offset-2 col-md-10 text-right">
-                            <button type="submit" class="btn btn-default btn-success">Вход</button>
-                            <button type="reset" class="btn btn-default">Отмена</button>
-                        </div>
-                    </div>
-                </fieldset>
-                {#
-                    If you want to control the URL the user
-                    is redirected to on success (more details below)
-                    <input type="hidden" name="_target_path" value="/account" />
-                #}
-            </form>
-            <div class="col-md-12"><a class="btn btn-link" href="{{ path('user_registration') }}">Регистрация</a><a
-                        class="btn btn-link" href="#">Забыли пароль</a></div>
+            {{ include('admin/registration/_login_form.html.twig') }}
+            <div class="col-md-12">
+                {#<a class="btn btn-link" href="{{ path('user_registration') }}">Регистрация</a>#}
+                <a class="btn btn-link" href="#">Забыли пароль</a>
+            </div>
         </div>
     </div>
 {% endblock %}

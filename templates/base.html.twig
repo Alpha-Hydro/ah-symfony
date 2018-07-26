@@ -36,12 +36,24 @@
     <div class="container">
         <hr/>
         {% block footer %}
-            <p class="text-center">
-                &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
-            </p>
+            <div>
+                <p class="pull-left">
+                    &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
+                </p>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class="btn btn-default pull-right"  href="{{ path('logout') }}" title="{{ app.user.username }}">Выход&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                {% else %}
+                    <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target=".login-modal">Вход&nbsp;<i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                {% endif %}
+            </div>
         {% endblock %}
     </div>
 </footer>
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+{{ include('admin/registration/_login_modal.html.twig') }}
+{% endif %}
+
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="{{ asset('ah-bs3/js/bundle.js') }}"></script>
