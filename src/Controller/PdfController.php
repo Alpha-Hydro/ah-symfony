@@ -53,7 +53,7 @@ class PdfController extends Controller
      */
     public function passportPdf(Products $products, Request $request): Response
     {
-        $array = [13926, 13927, 13928, 13929, 13930, 13931, 13932];
+        $array = $request->request->get('modifications');
         $modifications = $products->getModifications()->filter(
             function (Modification $entry) use ($array) {
                 return in_array($entry->getId(), $array);
@@ -61,9 +61,7 @@ class PdfController extends Controller
         );
 
         $pdf = new PassportPdf($products, $request, $modifications);
-
         $pdf->AddPage();
-
 
         $pdf->showName()
             ->showDescription()

@@ -17,6 +17,8 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/app.js')
+    .addEntry('js/passportPdf', './assets/js/passportPdf.js')
+	
     .addStyleEntry('css/app', './assets/scss/app.scss')
     .addStyleEntry('css/dashboard', './assets/scss/dashboard.scss')
 

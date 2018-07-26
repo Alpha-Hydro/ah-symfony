@@ -7,16 +7,18 @@
                 <h4 class="modal-title" id="myModalLabel">{{ product.name ~ ', ' ~ product.sku }}</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ path('passport_product_pdf', {'id': product.id}) }}">
-                    <table class="table table-striped modifications">
+                <form id="printPassport" name="checkModifications" action="{{ path('passport_product_pdf', {'id': product.id}) }}" method="post" enctype="multipart/form-data" target="_blank" rel="noopener">
+                    <table class="text-size-small text-center table table-bordered table-striped table-hover">
                         <thead>
-                        <tr>
-                            <td>Модификация</td>
-                        </tr>
+                            <tr>
+                                <th class="text-center"><input type="checkbox" id="checkAll" value="on" data-modification="all"/></th>
+                                <th class="text-center">Модификация</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {% for modification in product.modifications %}
                             <tr>
+                                <td><input type="checkbox" name="modifications[]" value="{{ modification.id }}" data-modification="{{ modification.id }}"/></td>
                                 <td>{{ modification.sku }}</td>
                             </tr>
                         {% endfor %}
@@ -25,8 +27,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="submit" form="printPassport" class="btn btn-success">Создать паспорт</button>
             </div>
         </div>
     </div>
