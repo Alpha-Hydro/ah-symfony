@@ -14,18 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/catalog")
+ * @Route("/pdf")
  * @Cache(expires="tomorrow", public=true)
  */
 class PdfController extends Controller
 {
     /**
-     * @Route("/{fullPathCategory}/{path}.pdf",
-     *     requirements={
-     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
-     *          "path": "[A-Z0-9\-]+"
-     *     },
-     *     name="catalog_product_pdf", methods="GET")
+     * @Route("/product/{id}.pdf", name="catalog_product_pdf", methods="GET")
      * @param Products $products
      * @param Request $request
      * @return Response
@@ -49,13 +44,8 @@ class PdfController extends Controller
     }
 
     /**
-     * @Route("/{fullPathCategory}/{path}/passport.pdf",
-     *     requirements={
-     *          "fullPathCategory": "[a-z0-9\-\_\/]+",
-     *          "path": "[A-Z0-9\-]+"
-     *     },
-     *     name="passport_product_pdf", methods="GET")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/passport/{id}.pdf", name="passport_product_pdf", methods="GET|POST")
+     * @Security("has_role('ROLE_MANAGER')")
      *
      * @param Products $products
      * @param Request $request
