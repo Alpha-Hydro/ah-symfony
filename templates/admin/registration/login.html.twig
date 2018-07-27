@@ -11,10 +11,10 @@
                 <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
             {{ include('admin/registration/_login_form.html.twig') }}
-            <div class="col-md-12">
-                {#<a class="btn btn-link" href="{{ path('user_registration') }}">Регистрация</a>#}
+            {#<div class="col-md-12">
+                #}{#<a class="btn btn-link" href="{{ path('user_registration') }}">Регистрация</a>#}{#
                 <a class="btn btn-link" href="{{ path('recovery_password') }}">Забыли пароль</a>
-            </div>
+            </div>#}
         </div>
     </div>
 {% endblock %}

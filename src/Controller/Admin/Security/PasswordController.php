@@ -10,6 +10,7 @@ namespace App\Controller\Admin\Security;
 
 
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -28,6 +29,8 @@ class PasswordController extends Controller
 
     /**
      * @Route("/recovery", name="recovery_password", methods="GET|POST")
+     * @Security("has_role('ROLE_ADMIN')")
+     *
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserRepository $userRepository
@@ -38,7 +41,7 @@ class PasswordController extends Controller
     public function recoveryPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, Swift_Mailer $mailer): Response
     {
         $form = $this->createFormBuilder()
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, ['empty_data' => 'you@email.com'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -73,7 +76,7 @@ class PasswordController extends Controller
                 $mailer->send($message);
 
                 $this->addFlash('success', "На указанный Вами email выслан новый пароль!");
-                //return $this->redirectToRoute('password_actions_success');
+                return $this->redirectToRoute('password_actions_success');
             }
 
         }
