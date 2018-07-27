@@ -7,7 +7,7 @@
  *
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Security;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

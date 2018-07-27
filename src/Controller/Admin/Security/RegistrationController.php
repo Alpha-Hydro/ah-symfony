@@ -7,13 +7,12 @@
  *
  */
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Security;
 
 
 use App\Entity\User;
 use App\Form\User\UserRegisterType;
 use App\Repository\UserRolesRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
