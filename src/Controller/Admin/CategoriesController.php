@@ -135,14 +135,18 @@ class CategoriesController extends Controller
      * @param Request $request
      * @param Categories $category
      * @param CategoriesRepository $categoriesRepository
+     * @param SlugifyInterface $slug
+     * @param CategoriesService $categoriesService
      * @return Response
      */
-    public function edit(Request $request, Categories $category, CategoriesRepository $categoriesRepository): Response
+    public function edit(Request $request, Categories $category, CategoriesRepository $categoriesRepository, SlugifyInterface $slug, CategoriesService $categoriesService): Response
     {
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setPath($slug->slugify($category->getName()));
+            $category->setFullPath($categoriesService->createFullPath($category));
 
             /** @var UploadedFile $file */
             $file = $category->getImageUpload();
@@ -200,7 +204,7 @@ class CategoriesController extends Controller
 
         $category->setDeleted(!$isDeleted);
 
-        if ($isDeleted == true){
+        if ($isDeleted == true) {
             $category->setActive(false);
         }
 

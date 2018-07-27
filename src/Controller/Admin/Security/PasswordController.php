@@ -10,6 +10,7 @@ namespace App\Controller\Admin\Security;
 
 
 use App\Repository\UserRepository;
+use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,23 +31,66 @@ class PasswordController extends Controller
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserRepository $userRepository
+     * @param Swift_Mailer $mailer
      * @return Response
+     * @throws \Exception
      */
-    public function recoveryPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository): Response
+    public function recoveryPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, Swift_Mailer $mailer): Response
     {
-        /*$userLogin = $request->request->get('email');
-        $user = $userRepository->findOneBy(['email' => $userLogin]);*/
-
         $form = $this->createFormBuilder()
             ->add('email', EmailType::class)
             ->getForm();
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+
+            $user = $userRepository->findOneBy(['email' => $data['email']]);
+
+            if (!$user) {
+                $this->addFlash('danger', 'Пользователя с таким e-mail не существует');
+            } else {
+                $bytes = random_bytes(4);
+                $password = $passwordEncoder->encodePassword($user, bin2hex($bytes));
+                $user->setPassword($password);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+
+                $message = (new \Swift_Message('Recovery Password'))
+                    ->setFrom($this->getParameter('swiftmailer.sender_address'))
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'mail/recovery_password.html.twig',
+                            ['user' => $user, 'new_password' => bin2hex($bytes)]
+                        ),
+                        'text/html'
+                    );
+
+                $mailer->send($message);
+
+                $this->addFlash('success', "На указанный Вами email выслан новый пароль!");
+                //return $this->redirectToRoute('password_actions_success');
+            }
+
+        }
 
         return $this->render(
             'admin/registration/recovery.html.twig',
             ['form' => $form->createView()]
         );
 
+    }
+
+    /**
+     * @Route("/success", name="password_actions_success")
+     */
+    public function recoverySuccess()
+    {
+        return $this->render('admin/registration/recovery_success.html.twig');
     }
 
 }
