@@ -9,11 +9,14 @@
 namespace App\Controller\Admin\Security;
 
 
+use App\Form\User\ChangeUserPassword;
+use App\Form\User\ChangeUserPasswordType;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,7 +51,6 @@ class PasswordController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-
 
             $user = $userRepository->findOneBy(['email' => $data['email']]);
 
@@ -88,12 +90,38 @@ class PasswordController extends Controller
 
     }
 
+
+    /**
+     * @Route("/recovery", name="recovery_password", methods="GET|POST")
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function changePassword(Request $request): Response
+    {
+        $changePasswordModel = new ChangeUserPassword();
+        $form = $this->createForm(new ChangeUserPasswordType(), $changePasswordModel);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // perform some action,
+            // such as encoding with MessageDigestPasswordEncoder and persist
+            return $this->redirect($this->generateUrl('password_actions_success'));
+        }
+
+        return $this->render('admin/registration/change.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/success", name="password_actions_success")
      */
     public function recoverySuccess()
     {
-        return $this->render('admin/registration/recovery_success.html.twig');
+        return $this->render('admin/registration/password_success.html.twig');
     }
 
 }
