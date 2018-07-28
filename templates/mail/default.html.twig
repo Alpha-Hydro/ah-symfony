@@ -5,9 +5,18 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} - Alpha-Hydro</title>
 </head>
 <body>
+<h4>Здравствуйте {{ user.name }}</h4>
 {% block body %}{% endblock %}
+<p>С Уважением Администрация сайта <a href="https://alpha-hydro.com">Alpha-Hydro</a></p>
+<hr/>
+<strong>OOO "Альфа Гидро трейд"</strong><br>
+<p>188689, Ленинградская область, Всеволожский муниципальный район,<br>
+    Заневское городское поселение, Производственная зона Янино-1,<br>
+    Восточный проезд, здание №4.</p>
+<abbr title="Phone">Тел:</abbr> + 7(812) 44-949-44<br>
+<abbr title="Email">Email:</abbr> <a href="mailto:admin@alpha-hydro.com">admin@alpha-hydro.com</a>
 </body>
 </html>

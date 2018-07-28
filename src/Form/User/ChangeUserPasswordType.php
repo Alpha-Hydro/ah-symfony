@@ -9,6 +9,7 @@
 namespace App\Form\User;
 
 
+use App\Entity\ChangeUserPassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -19,13 +20,13 @@ class ChangeUserPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('oldPassword', PasswordType::class);
+        $builder->add('oldPassword', PasswordType::class, ['label' => 'Текущий пароль']);
         $builder->add('newPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'invalid_message' => 'The password fields must match.',
+            'invalid_message' => 'Новый и старый пароли должный совпадать',
             'required' => true,
-            'first_options'  => ['label' => 'Password'],
-            'second_options' => ['label' => 'Repeat Password'],
+            'first_options' => ['label' => 'Новый пароль'],
+            'second_options' => ['label' => 'Повторите новый пароль'],
         ]);
     }
 
@@ -34,10 +35,5 @@ class ChangeUserPasswordType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ChangeUserPassword::class,
         ]);
-    }
-
-    public function getName()
-    {
-        return 'change_password';
     }
 }

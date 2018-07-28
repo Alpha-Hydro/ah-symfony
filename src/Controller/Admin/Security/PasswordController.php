@@ -9,11 +9,12 @@
 namespace App\Controller\Admin\Security;
 
 
-use App\Form\User\ChangeUserPassword;
+use App\Entity\ChangeUserPassword;
 use App\Form\User\ChangeUserPasswordType;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,20 +58,20 @@ class PasswordController extends Controller
             if (!$user) {
                 $this->addFlash('danger', 'Пользователя с таким e-mail не существует');
             } else {
-                $bytes = random_bytes(4);
-                $password = $passwordEncoder->encodePassword($user, bin2hex($bytes));
+                $newPassword = $this->randomPassword();
+                $password = $passwordEncoder->encodePassword($user, $newPassword);
                 $user->setPassword($password);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
 
-                $message = (new \Swift_Message('Recovery Password'))
+                $message = (new Swift_Message('Recovery Password'))
                     ->setFrom($this->getParameter('swiftmailer.sender_address'))
                     ->setTo($user->getEmail())
                     ->setBody(
                         $this->renderView(
                             'mail/recovery_password.html.twig',
-                            ['user' => $user, 'new_password' => bin2hex($bytes)]
+                            ['user' => $user, 'new_password' => $newPassword]
                         ),
                         'text/html'
                     );
@@ -84,34 +85,57 @@ class PasswordController extends Controller
         }
 
         return $this->render(
-            'admin/registration/recovery.html.twig',
-            ['form' => $form->createView()]
+            'admin/registration/change_recovery_password.html.twig',
+            ['form' => $form->createView(), 'label_button' => 'Запросить новый пароль']
         );
 
     }
 
 
     /**
-     * @Route("/recovery", name="recovery_password", methods="GET|POST")
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
+     * @Route("/change", name="change_password", methods="GET|POST")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param Swift_Mailer $mailer
      * @return RedirectResponse|Response
      */
-    public function changePassword(Request $request): Response
+    public function changePassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, Swift_Mailer $mailer): Response
     {
         $changePasswordModel = new ChangeUserPassword();
-        $form = $this->createForm(new ChangeUserPasswordType(), $changePasswordModel);
+        $form = $this->createForm(ChangeUserPasswordType::class, $changePasswordModel);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // perform some action,
-            // such as encoding with MessageDigestPasswordEncoder and persist
-            return $this->redirect($this->generateUrl('password_actions_success'));
+            $user = $this->getUser();
+            $newPassword = $changePasswordModel->getNewPassword();
+
+            $password = $passwordEncoder->encodePassword($user, $newPassword);
+            $user->setPassword($password);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            $message = (new Swift_Message('Смена пароля.'))
+                ->setFrom($this->getParameter('swiftmailer.sender_address'))
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'mail/change_password.html.twig',
+                        ['user' => $user, 'new_password' => $newPassword]
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            $this->addFlash('success', "На Ваш email выслан новый пароль!");
+            return $this->redirectToRoute('password_actions_success');
         }
 
-        return $this->render('admin/registration/change.html.twig', [
+        return $this->render('admin/registration/change_recovery_password.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -122,6 +146,17 @@ class PasswordController extends Controller
     public function recoverySuccess()
     {
         return $this->render('admin/registration/password_success.html.twig');
+    }
+
+
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    private function randomPassword(): string
+    {
+        $bytes = random_bytes(4);
+        return bin2hex($bytes);
     }
 
 }
