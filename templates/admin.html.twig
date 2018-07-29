@@ -31,12 +31,14 @@
 
 <footer class="app-footer">
     <div class="container">
-        <hr/>
-        {% block footer %}
-            <p class="text-center">
-                &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
-            </p>
-        {% endblock %}
+        <div class="col-md-10 offset-2">
+            <hr/>
+            {% block footer %}
+                <p class="text-center">
+                    &copy; 2009 - {{ "now"|date("Y") }} Альфа-Гидро. Гидравлические системы и компоненты.
+                </p>
+            {% endblock %}
+        </div>
     </div>
 </footer>
 {% block javascripts %}

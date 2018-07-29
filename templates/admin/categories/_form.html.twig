@@ -14,12 +14,14 @@
             {% endif %}
             <div class="card-body text-center">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success btn-category-img" data-img-event="download"><i data-feather="download"></i></button>
-                    <button type="button" class="btn btn-danger btn-category-img" data-img-event="delete"><i data-feather="trash-2"></i></button>
+                    <button type="button" class="btn btn-success btn-category-img" data-img-event="download"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-category-img" data-img-event="delete"><i data-feather="trash-2">&nbsp;</i></button>
                 </div>
             </div>
         </div>
-        {{ form_widget(form.imageUpload,  { 'attr': {'class': 'invisible null','assept' : 'image/*'} }) }}
+        <div class="invisible">
+            {{ form_widget(form.imageUpload,  { 'attr': {'assept' : 'image/*'} }) }}
+        </div>
     </div>
     <div class="col-md-9">
         {{ form_row(form.name) }}

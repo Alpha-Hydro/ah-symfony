@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
         <div class="btn-group mb-3" role="group" aria-label="Action Categories">
-            <a href="{{  path('categories_index')}}" class="btn btn-secondary">
+            <a href="{% if category.parent is not null %}{{  path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" class="btn btn-secondary">
                 <i data-feather="arrow-left">&nbsp;</i>
             </a>
             <a href="{{ path('catalog_list', {'fullPath': category.fullPath}) }}" class="btn btn-secondary" target="_blank">
