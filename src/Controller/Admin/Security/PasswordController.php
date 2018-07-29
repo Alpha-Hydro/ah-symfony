@@ -131,7 +131,7 @@ class PasswordController extends Controller
 
             $mailer->send($message);
 
-            $this->addFlash('success', "На Ваш email выслан новый пароль!");
+            $this->addFlash('success', "Пароль успешно изменен! На Ваш email выслан новый пароль!");
             return $this->redirectToRoute('password_actions_success');
         }
 

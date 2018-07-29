@@ -4,9 +4,10 @@
 
 {% block body %}
     <p>Вы зарегистрированы на сайте <a href="https://alpha-hydro.com">alpha-hydro.com</a></p>
-    <p>Для входа используйте:</p>
+    <p>Для авторизации на сайте используйте:</p>
     <ul>
         <li>логин: <strong>{{ user.email }}</strong></li>
         <li>пароль: <strong>{{ password }}</strong></li>
     </ul>
+    <p>Изменить пароль можно на странице <a href="{{ path('change_password') }}">смены пароля</a> после авторизации. Либо обратившись к администратору сайта.</p>
 {% endblock %}
