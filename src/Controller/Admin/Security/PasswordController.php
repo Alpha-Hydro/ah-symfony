@@ -71,7 +71,7 @@ class PasswordController extends Controller
                     ->setBody(
                         $this->renderView(
                             'mail/recovery_password.html.twig',
-                            ['user' => $user, 'new_password' => $newPassword]
+                            ['user' => $user, 'password' => $newPassword]
                         ),
                         'text/html'
                     );
@@ -124,7 +124,7 @@ class PasswordController extends Controller
                 ->setBody(
                     $this->renderView(
                         'mail/change_password.html.twig',
-                        ['user' => $user, 'new_password' => $newPassword]
+                        ['user' => $user, 'password' => $newPassword]
                     ),
                     'text/html'
                 );

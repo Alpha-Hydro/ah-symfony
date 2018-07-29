@@ -23,7 +23,7 @@ class ChangeUserPasswordType extends AbstractType
         $builder->add('oldPassword', PasswordType::class, ['label' => 'Текущий пароль']);
         $builder->add('newPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'invalid_message' => 'Новый и старый пароли должный совпадать',
+            'invalid_message' => 'Повтор введенного пароля не совпадает',
             'required' => true,
             'first_options' => ['label' => 'Новый пароль'],
             'second_options' => ['label' => 'Повторите новый пароль'],

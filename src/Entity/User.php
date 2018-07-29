@@ -37,7 +37,7 @@ class User extends BaseEntity implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\Length(min="5", max=4096)
+     * @Assert\Length(min="6", max=4096, minMessage = "Новый пароль должен быть не менее 6-ти символов")
      */
     private $plainPassword;
 
