@@ -1,4 +1,4 @@
-
+/.ssh
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
