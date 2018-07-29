@@ -1,3 +1,4 @@
+{% if app.request.get('_route') != 'login' %}
 <div class="modal fade login-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -7,8 +8,9 @@
                 </button> <h4 class="modal-title" id="mySmallModalLabel">Вход</h4>
             </div>
             <div class="modal-body">
-                {{ include('admin/registration/_login_form.html.twig') }}
+                {{ include('admin/registration/_login_form.html.twig', {'modal': true}) }}
             </div>
         </div>
     </div>
 </div>
+{% endif %}
