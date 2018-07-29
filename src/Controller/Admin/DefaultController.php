@@ -17,12 +17,9 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/admin", name="admin_dashboard")
-     * @throws \Exception
      */
     public function admin()
     {
-        $bytes = random_bytes(4);
-
-        return $this->render('admin/default_page.html.twig', ['password' => bin2hex($bytes)]);
+        return $this->render('admin/default_page.html.twig');
     }
 }
