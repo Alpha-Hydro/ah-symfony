@@ -1,0 +1,63 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Update_date</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Sorting</th>
+        <th scope="col">Active</th>
+        <th scope="col">Deleted</th>
+        {#<th>Path</th>#}
+        {#<th>SContent</th>#}
+        {#<th>Thumb</th>#}
+        {#<th>SectionSiteId</th>#}
+        {#<th>Create_date</th>#}
+        {#<th>Image</th>#}
+        {#<th>UploadPath</th>#}
+        {#<th>Description</th>#}
+        {#<th>ContentHtml</th>#}
+        {#<th>FullPath</th>#}
+        {#<th>MetaTitle</th>#}
+        {#<th>MetaKeywords</th>#}
+        {#<th>MetaDescription</th>#}
+        <th colspan="2">actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for medium in media %}
+        <tr>
+            <td>{{ medium.id }}</td>
+            <td>{{ medium.name }}</td>
+            <td>{{ medium.updateDate ? medium.updateDate|date('Y-m-d') : '' }}</td>
+            <td>{{ medium.autor }}</td>
+            <td>{{ medium.sorting }}</td>
+            <td>{{ medium.active ? 'Yes' : 'No' }}</td>
+            <td>{{ medium.deleted ? 'Yes' : 'No' }}</td>
+            {#<td>{{ medium.path }}</td>#}
+            {#<td>{{ medium.sContent }}</td>#}
+            {#<td>{{ medium.thumb }}</td>#}
+            {#<td>{{ medium.sectionSiteId }}</td>#}
+            {#<td>{{ medium.createDate ? medium.createDate|date('Y-m-d') : '' }}</td>#}
+            {#<td>{{ medium.image }}</td>#}
+            {#<td>{{ medium.uploadPath }}</td>#}
+            {#<td>{{ medium.description }}</td>#}
+            {#<td>{{ medium.contentHtml }}</td>#}
+            {#<td>{{ medium.fullPath }}</td>#}
+            {#<td>{{ medium.metaTitle }}</td>#}
+            {#<td>{{ medium.metaKeywords }}</td>#}
+            {#<td>{{ medium.metaDescription }}</td>#}
+            <td>
+                <a href="{{ path('media_show', {'id': medium.id}) }}">show</a>
+            </td>
+            <td>
+                <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="9">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

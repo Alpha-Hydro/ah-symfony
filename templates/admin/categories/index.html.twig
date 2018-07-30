@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block body %}
-    <div class="btn-group mb-2 d-flex justify-content-start" role="group" aria-label="Category list">
+    <div class="mb-2 d-flex justify-content-between" role="group" aria-label="Category list">
+        <a class="btn btn-success" href="{{ path('categories_add') }}">Новая категория</a>
         <a href="{{ path('catalog_index') }}" class="btn btn-secondary" target="_blank">
             <i data-feather="external-link">&nbsp;</i>
         </a>
     </div>
     {{ include('admin/categories/_categories_table.html.twig') }}
-    <a class="btn btn-success mb-2" href="{{ path('categories_add') }}">Новая категория</a>
 {% endblock %}
