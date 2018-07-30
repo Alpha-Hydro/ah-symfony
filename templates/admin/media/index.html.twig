@@ -1,0 +1,17 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Media index{% endblock %}
+
+{% block pageHeader %}
+    <h1 class="display-4">{{ pageTitle | default('Публикации')}}</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="mb-2 d-flex justify-content-between" role="group" aria-label="Media list">
+        <a class="btn btn-success" href="{{ path('media_new') }}">Новая публикация</a>
+        <a href="{{ path('media_category_list', {'path' : 'news'}) }}" class="btn btn-secondary" target="_blank">
+            <i data-feather="external-link">&nbsp;</i>
+        </a>
+    </div>
+    {{ include('admin/media/_media_data_table.html.twig') }}
+{% endblock %}

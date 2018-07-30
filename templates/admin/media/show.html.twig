@@ -1,0 +1,98 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Media{% endblock %}
+
+{% block body %}
+    <h1>Media</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Path</th>
+                <td>{{ medium.path }}</td>
+            </tr>
+            <tr>
+                <th>SContent</th>
+                <td>{{ medium.sContent }}</td>
+            </tr>
+            <tr>
+                <th>Autor</th>
+                <td>{{ medium.autor }}</td>
+            </tr>
+            <tr>
+                <th>Thumb</th>
+                <td>{{ medium.thumb }}</td>
+            </tr>
+            <tr>
+                <th>SectionSiteId</th>
+                <td>{{ medium.sectionSiteId }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ medium.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ medium.name }}</td>
+            </tr>
+            <tr>
+                <th>Create_date</th>
+                <td>{{ medium.createDate ? medium.createDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Update_date</th>
+                <td>{{ medium.updateDate ? medium.updateDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ medium.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{{ medium.deleted ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Sorting</th>
+                <td>{{ medium.sorting }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ medium.image }}</td>
+            </tr>
+            <tr>
+                <th>UploadPath</th>
+                <td>{{ medium.uploadPath }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ medium.description }}</td>
+            </tr>
+            <tr>
+                <th>ContentHtml</th>
+                <td>{{ medium.contentHtml }}</td>
+            </tr>
+            <tr>
+                <th>FullPath</th>
+                <td>{{ medium.fullPath }}</td>
+            </tr>
+            <tr>
+                <th>MetaTitle</th>
+                <td>{{ medium.metaTitle }}</td>
+            </tr>
+            <tr>
+                <th>MetaKeywords</th>
+                <td>{{ medium.metaKeywords }}</td>
+            </tr>
+            <tr>
+                <th>MetaDescription</th>
+                <td>{{ medium.metaDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('media_index') }}">back to list</a>
+
+    <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>
+
+    {{ include('admin/media/_delete_form.html.twig') }}
+{% endblock %}
