@@ -64,7 +64,7 @@ class User extends BaseEntity implements UserInterface, \Serializable
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 

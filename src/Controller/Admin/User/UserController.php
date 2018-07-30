@@ -116,7 +116,7 @@ class UserController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('admin/user/edit.html.twig', [

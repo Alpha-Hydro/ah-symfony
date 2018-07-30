@@ -17,11 +17,11 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('phone', TextType::class)
-            ->add('address', TextType::class)
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('phone', TextType::class, ['label' => 'Телефон', 'required' => false])
+            ->add('address', TextType::class, ['label' => 'Адрес', 'required' => false])
             //->add('password')
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['label' => 'Имя, Фамилия'])
             /*->add('create_date', HiddenType::class)
             ->add('update_date', HiddenType::class)*/
             ->add('active', HiddenType::class, ['data' => 1])
@@ -29,7 +29,8 @@ class UserType extends AbstractType
             ->add('sorting', HiddenType::class, ['data' => 0])
             ->add('userRoles', EntityType::class, [
                 'class' => UserRoles::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'label' => 'Права доступа'
             ]);
     }
 
