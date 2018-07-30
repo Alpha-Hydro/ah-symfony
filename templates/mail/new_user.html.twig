@@ -1,6 +1,6 @@
 {% extends 'mail/default.html.twig' %}
 
-{% block title %}Новый пользователь{% endblock %}
+{% block title %}Сообщение с сайта Alpha-Hydro{% endblock %}
 
 {% block body %}
     <p>Вы зарегистрированы на сайте <a href="https://alpha-hydro.com">alpha-hydro.com</a></p>
@@ -9,5 +9,5 @@
         <li>логин: <strong>{{ user.email }}</strong></li>
         <li>пароль: <strong>{{ password }}</strong></li>
     </ul>
-    <p>Изменить пароль можно на странице <a href="https://alpha-hydro/password/change">https://alpha-hydro/password/change</a>, после авторизации. Либо обратившись к администратору сайта.</p>
+    <p>Изменить пароль можно на странице <a href="https://alpha-hydro.com/password/change">https://alpha-hydro.com/password/change</a>, после авторизации. Либо обратившись к администратору сайта.</p>
 {% endblock %}
