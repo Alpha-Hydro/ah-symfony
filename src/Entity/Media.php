@@ -43,6 +43,11 @@ class Media extends BaseEntity
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     */
+    private $author;
+
 
     public function getSContent(): ?string
     {
@@ -100,6 +105,18 @@ class Media extends BaseEntity
     public function setCategory(?MediaCategories $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
