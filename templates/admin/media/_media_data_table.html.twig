@@ -2,12 +2,11 @@
     <thead class="thead-light">
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Category</th>
-        <th scope="col">Name</th>
-        <th scope="col">Update_date</th>
-        <th scope="col">Author</th>
-        <th scope="col">Active</th>
-        <th scope="col">Deleted</th>
+        <th scope="col">Название</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Автор</th>
+        <th colspan="3">&nbsp;</th>
         {#<th>Path</th>#}
         {#<th>SContent</th>#}
         {#<th>Thumb</th>#}
@@ -21,14 +20,12 @@
         {#<th>MetaTitle</th>#}
         {#<th>MetaKeywords</th>#}
         {#<th>MetaDescription</th>#}
-        <th scope="col">actions</th>
     </tr>
     </thead>
     <tbody>
     {% for medium in media %}
         <tr>
             <td>{{ medium.id }}</td>
-            <td>{{ medium.category.name | default('нет') }}</td>
             <td>
                 {% if medium.category.path is defined and medium.path is defined %}
                 <a href="{{ path('media_post_view', {'pathCategory': medium.category.path, 'path': medium.path}) }}">
@@ -38,10 +35,22 @@
                     {{ medium.name }}
                 {% endif %}
             </td>
-            <td>{{ medium.updateDate ? medium.updateDate|date('Y-m-d') : '' }}</td>
+            <td>{{ medium.category.name | default('нет') }}</td>
+            <td>{{ medium.updateDate ? medium.updateDate|date('d-m-Y') : '' }}</td>
             <td>{{ medium.author.name | default('нет') }}</td>
-            <td>{{ medium.active ? 'Yes' : 'No' }}</td>
-            <td>{{ medium.deleted ? 'Yes' : 'No' }}</td>
+            <td>
+                <a href="{{ path('media_edit', {'id': medium.id}) }}"><i data-feather="edit-3">&nbsp;</i></a>
+            </td>
+            <td>
+                <a href="{{ path('media_check_active', {'id': medium.id}) }}" class="text-{{medium.active ? 'secondary' : 'success'}}">
+                    <i data-feather="{{ medium.active ? 'eye-off' : 'eye' }}">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('media_check_archive', {'id': medium.id}) }}" class="text-{{medium.active ? 'danger' : 'success'}}">
+                    <i data-feather="{{ medium.deleted ? 'upload' : 'archive' }}">&nbsp;</i>
+                </a>
+            </td>
             {#<td>{{ medium.path }}</td>#}
             {#<td>{{ medium.sContent }}</td>#}
             {#<td>{{ medium.thumb }}</td>#}
@@ -55,9 +64,6 @@
             {#<td>{{ medium.metaTitle }}</td>#}
             {#<td>{{ medium.metaKeywords }}</td>#}
             {#<td>{{ medium.metaDescription }}</td>#}
-            <td>
-                <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>
-            </td>
         </tr>
     {% else %}
         <tr>
