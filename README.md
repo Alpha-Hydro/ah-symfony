@@ -10,7 +10,9 @@ http://alpha-hydro.com
 cd webspace/httpdocs/test.alpha-hydro.com
 git clone git@github.com:Alpha-Hydro/ah-symfony.git .
 ```
-т.к. настойки сервера не позволяют создать /.ssh в корне web пространства на сообщение
+> ТОЧКА в конце ОБЯЗАТЕЛЬНА, указывает что мы клонируем репозоторий в текущий каталог.
+
+т.к. настойки сервера не позволяют создать /.ssh в корне web пространства, на сообщение
 ```cmd
 Could not create directory '/.ssh'.
 Enter passphrase for key '.ssh/id_rsa':
@@ -26,6 +28,7 @@ Enter passphrase for key '.ssh/id_rsa':
 > Для работы с кастомными версиями необходимо указывать прямой путь к интерпретатору нужной версии_", т.е. для работы с PHP, версии 7.1,
 > нужно указывать `/opt/alt/php71/usr/bin/php`
 
+Устанавливаем необходимые зависимости и оптимизируем для работы в production
 ```cmd
 /opt/alt/php71/usr/bin/php bin/composer.phar update
 /opt/alt/php71/usr/bin/php bin/composer.phar install --no-dev --optimize-autoloader
