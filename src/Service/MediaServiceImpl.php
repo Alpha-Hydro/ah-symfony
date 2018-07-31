@@ -54,7 +54,7 @@ class MediaServiceImpl implements MediaService
      */
     public function findByPosts(MediaCategories $categories): array
     {
-        return $this->mediaRepository->findByPostsCategory($categories);
+        return $this->mediaRepository->findByCategory($categories);
     }
 
     /**

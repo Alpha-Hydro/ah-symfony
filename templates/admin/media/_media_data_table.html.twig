@@ -2,10 +2,10 @@
     <thead class="thead-light">
     <tr>
         <th scope="col">Id</th>
+        <th scope="col">Category</th>
         <th scope="col">Name</th>
         <th scope="col">Update_date</th>
-        <th scope="col">Autor</th>
-        <th scope="col">Sorting</th>
+        <th scope="col">Author</th>
         <th scope="col">Active</th>
         <th scope="col">Deleted</th>
         {#<th>Path</th>#}
@@ -21,17 +21,25 @@
         {#<th>MetaTitle</th>#}
         {#<th>MetaKeywords</th>#}
         {#<th>MetaDescription</th>#}
-        <th colspan="2">actions</th>
+        <th scope="col">actions</th>
     </tr>
     </thead>
     <tbody>
     {% for medium in media %}
         <tr>
             <td>{{ medium.id }}</td>
-            <td>{{ medium.name }}</td>
+            <td>{{ medium.category.name | default('нет') }}</td>
+            <td>
+                {% if medium.category.path is defined and medium.path is defined %}
+                <a href="{{ path('media_post_view', {'pathCategory': medium.category.path, 'path': medium.path}) }}">
+                    <i data-feather="external-link">&nbsp;</i>&nbsp;{{ medium.name }}
+                </a>
+                {% else %}
+                    {{ medium.name }}
+                {% endif %}
+            </td>
             <td>{{ medium.updateDate ? medium.updateDate|date('Y-m-d') : '' }}</td>
-            <td>{{ medium.autor }}</td>
-            <td>{{ medium.sorting }}</td>
+            <td>{{ medium.author.name | default('нет') }}</td>
             <td>{{ medium.active ? 'Yes' : 'No' }}</td>
             <td>{{ medium.deleted ? 'Yes' : 'No' }}</td>
             {#<td>{{ medium.path }}</td>#}
@@ -48,15 +56,12 @@
             {#<td>{{ medium.metaKeywords }}</td>#}
             {#<td>{{ medium.metaDescription }}</td>#}
             <td>
-                <a href="{{ path('media_show', {'id': medium.id}) }}">show</a>
-            </td>
-            <td>
                 <a href="{{ path('media_edit', {'id': medium.id}) }}">edit</a>
             </td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="9">no records found</td>
+            <td colspan="8">no records found</td>
         </tr>
     {% endfor %}
     </tbody>

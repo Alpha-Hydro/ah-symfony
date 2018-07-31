@@ -24,13 +24,42 @@ class MediaRepository extends ServiceEntityRepository
      * @param MediaCategories $category
      * @return Media[]
      */
-    public function findByPostsCategory(MediaCategories $category): array
+    public function findByCategory(MediaCategories $category): array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.active = true')
             ->andWhere('p.deleted = false')
             ->andWhere('p.category = :category')
             ->setParameter('category', $category)
+            ->orderBy('p.update_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByActive(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.active = true')
+            ->andWhere('p.deleted = false')
+            ->orderBy('p.update_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDisable(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.active = false')
+            ->andWhere('p.deleted = false')
+            ->orderBy('p.update_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByArchive(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.deleted = true')
             ->orderBy('p.update_date', 'DESC')
             ->getQuery()
             ->getResult();

@@ -22,7 +22,8 @@ class MediaController extends Controller
      */
     public function index(MediaRepository $mediaRepository): Response
     {
-        return $this->render('admin/media/index.html.twig', ['media' => $mediaRepository->findAll()]);
+        $posts = $mediaRepository->findByActive();
+        return $this->render('admin/media/index.html.twig', ['media' => $posts]);
     }
 
     /**
