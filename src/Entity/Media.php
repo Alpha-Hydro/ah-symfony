@@ -19,12 +19,12 @@ class Media extends BaseEntity
     private $path;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $sContent;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $autor;
 
@@ -34,7 +34,7 @@ class Media extends BaseEntity
     private $thumb;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", length=11, nullable=true)
      */
     private $sectionSiteId;
 
