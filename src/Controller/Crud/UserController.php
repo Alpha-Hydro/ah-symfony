@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin\User;
+namespace App\Controller\Crud;
 
 use App\Entity\User;
 use App\Form\User\UserNewType;

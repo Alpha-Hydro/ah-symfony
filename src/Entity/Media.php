@@ -39,7 +39,7 @@ class Media extends BaseEntity
     private $sectionSiteId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MediaCategories", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\MediaCategories", inversedBy="posts", fetch="EAGER")
      */
     private $category;
 

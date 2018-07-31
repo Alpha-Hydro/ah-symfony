@@ -6,7 +6,7 @@
  * Time: 15:10
  */
 
-namespace App\Controller\Api;
+namespace App\Controller\Json;
 
 
 use App\Entity\Categories;

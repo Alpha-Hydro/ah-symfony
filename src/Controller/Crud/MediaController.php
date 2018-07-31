@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Crud;
 
 use App\Entity\Media;
 use App\Form\MediaType;
 use App\Repository\MediaRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,7 +86,46 @@ class MediaController extends Controller
     }
 
     /**
+     * @Route("/{id}/active", name="media_check_active", methods="GET")
+     * @param Media $media
+     * @return Response
+     */
+    public function checkActive(Media $media): Response
+    {
+        $isActive = $media->isActive();
+
+        $media->setActive(!$isActive);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('media_index');
+    }
+
+    /**
+     * @Route("/{id}/archive", name="media_check_archive", methods="GET")
+     * @param Media $media
+     * @return Response
+     */
+    public function checkArchive(Media $media): Response
+    {
+        $isDeleted = $media->isDeleted();
+        $media->setDeleted(!$isDeleted);
+
+        if ($isDeleted === true){
+            $media->setActive(false);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('media_index');
+    }
+
+    /**
      * @Route("/{id}", name="media_delete", methods="DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
+     *
      * @param Request $request
      * @param Media $medium
      * @return Response

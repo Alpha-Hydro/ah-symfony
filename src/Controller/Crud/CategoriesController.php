@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Crud;
 
 use App\Entity\Categories;
 use App\Entity\CategoryImages;
@@ -193,18 +193,17 @@ class CategoriesController extends Controller
 
     /**
      * @Route("/{id}/archive", name="categories_check_archive", methods="GET")
-     * @param Request $request
      * @param Categories $category
      * @return Response
      */
-    public function checkArchive(Request $request, Categories $category): Response
+    public function checkArchive(Categories $category): Response
     {
 
         $isDeleted = $category->isDeleted();
 
         $category->setDeleted(!$isDeleted);
 
-        if ($isDeleted == true) {
+        if ($isDeleted === true) {
             $category->setActive(false);
         }
 
@@ -217,6 +216,8 @@ class CategoriesController extends Controller
             }
         }
 
+        // @Todo if $category->getProducts() != null
+
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
@@ -225,11 +226,10 @@ class CategoriesController extends Controller
 
     /**
      * @Route("/{id}/active", name="categories_check_active", methods="GET")
-     * @param Request $request
      * @param Categories $category
      * @return Response
      */
-    public function checkActive(Request $request, Categories $category): Response
+    public function checkActive(Categories $category): Response
     {
 
         $isActive = $category->isActive();
