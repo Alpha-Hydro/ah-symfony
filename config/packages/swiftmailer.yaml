@@ -1,6 +1,6 @@
 swiftmailer:
     url: '%env(MAILER_URL)%'
-    sender_address: admim@alpha-hydro.com
+    sender_address: admin@alpha-hydro.com
     stream_options:
         ssl:
             allow_self_signed: true

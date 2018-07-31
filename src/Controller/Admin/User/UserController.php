@@ -54,7 +54,7 @@ class UserController extends Controller
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $message = (new Swift_Message('Новый пользователь'))
+            $message = (new Swift_Message('Регистрация на сайте Alpha-Hydro'))
                 ->setFrom($this->getParameter('swiftmailer.sender_address'))
                 ->addCc($this->getParameter('swiftmailer.sender_address'))
                 ->setTo($user->getEmail())
