@@ -93,15 +93,13 @@ class CategoriesController extends Controller
             $category->setPath($slug->slugify($category->getName()));
             $category->setFullPath($categoriesService->createFullPath($category));
 
-            if (null === $category->getMetaTitle()) $category->setMetaTitle($category->getName());
+            $category->setMetaTitle($category->getName());
+
+            // @ToDo $category->setImage();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();
-
-            /*$category->setUploadPath(self::UPLOAD_PATH . $category->getId());
-            $em->persist($category);
-            $em->flush();*/
 
             return $this->redirectToRoute('categories_index');
 

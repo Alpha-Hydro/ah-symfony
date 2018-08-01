@@ -39,7 +39,7 @@ class MediaController extends Controller
      * @Route("/{pathCategory}/{path}",
      *     requirements={
      *          "pathCategory": "news|article|action",
-     *          "path": "[a-z0-9\_]+"
+     *          "path": "[a-z0-9\-\_]+"
      *      }, name="media_post_view", methods="GET")
      * @param Media $media
      * @param MediaService $mediaService

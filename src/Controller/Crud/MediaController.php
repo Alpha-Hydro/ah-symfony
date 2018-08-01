@@ -5,6 +5,8 @@ namespace App\Controller\Crud;
 use App\Entity\Media;
 use App\Form\MediaType;
 use App\Repository\MediaRepository;
+use Cocur\Slugify\SlugifyInterface;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +32,31 @@ class MediaController extends Controller
     /**
      * @Route("/new", name="media_new", methods="GET|POST")
      * @param Request $request
+     * @param SlugifyInterface $slug
+     * @param MediaRepository $mediaRepository
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SlugifyInterface $slug, MediaRepository $mediaRepository): Response
     {
         $medium = new Media();
+        $medium->setCreateDate(new DateTime('now'));
+        $medium->setUpdateDate(new DateTime('now'));
+
         $form = $this->createForm(MediaType::class, $medium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $medium->setAuthor($this->getUser());
+
+            $path = $slug->slugify($medium->getName(), '_');
+            if (false === $this->isUniquePath($path)){
+                $path .= '_'. date('Ymd');
+            }
+            $medium->setPath($path);
+
+            $fullPath = (null != $medium->getCategory()->getFullPath()) ? $medium->getCategory()->getFullPath().'/'.$path : $path;
+            $medium->setFullPath($fullPath);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($medium);
             $em->flush();
@@ -166,5 +184,15 @@ class MediaController extends Controller
         }
 
         return $this->redirectToRoute('media_index');
+    }
+
+    private function isUniquePath(string $path): bool
+    {
+        $em = $this->getDoctrine()->getRepository(Media::class);
+
+        if (null != $em->findOneBy(['path' => $path])){
+            return false;
+        }
+        return true;
     }
 }

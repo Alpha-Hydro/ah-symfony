@@ -19,24 +19,9 @@ class Media extends BaseEntity
     private $path;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $sContent;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $autor;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $thumb;
-
-    /**
-     * @ORM\Column(type="integer", length=11, nullable=true)
-     */
-    private $sectionSiteId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\MediaCategories", inversedBy="posts", fetch="EAGER")
@@ -57,42 +42,6 @@ class Media extends BaseEntity
     public function setSContent(?string $sContent): self
     {
         $this->sContent = $sContent;
-
-        return $this;
-    }
-
-    public function getAutor(): ?string
-    {
-        return $this->autor;
-    }
-
-    public function setAutor(string $autor): self
-    {
-        $this->autor = $autor;
-
-        return $this;
-    }
-
-    public function getThumb(): ?string
-    {
-        return $this->thumb;
-    }
-
-    public function setThumb(?string $thumb): self
-    {
-        $this->thumb = $thumb;
-
-        return $this;
-    }
-
-    public function getSectionSiteId(): ?int
-    {
-        return $this->sectionSiteId;
-    }
-
-    public function setSectionSiteId(int $sectionSiteId): self
-    {
-        $this->sectionSiteId = $sectionSiteId;
 
         return $this;
     }
