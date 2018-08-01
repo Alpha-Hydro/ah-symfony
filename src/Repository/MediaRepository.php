@@ -46,7 +46,7 @@ class MediaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDisable(): array
+    public function findByIsDisabled(): array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.active = false')
@@ -56,7 +56,7 @@ class MediaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByArchive(): array
+    public function findByIsDeleted(): array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.deleted = true')

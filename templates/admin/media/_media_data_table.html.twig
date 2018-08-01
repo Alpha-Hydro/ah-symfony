@@ -47,7 +47,7 @@
                 </a>
             </td>
             <td>
-                <a href="{{ path('media_check_archive', {'id': medium.id}) }}" class="text-{{medium.active ? 'danger' : 'success'}}">
+                <a href="{{ path('media_check_archive', {'id': medium.id}) }}" class="text-{{medium.deleted ? 'success' : 'danger'}}">
                     <i data-feather="{{ medium.deleted ? 'upload' : 'archive' }}">&nbsp;</i>
                 </a>
             </td>

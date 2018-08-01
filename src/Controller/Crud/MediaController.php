@@ -53,6 +53,33 @@ class MediaController extends Controller
     }
 
     /**
+     * @Route("/archive", name="media_archive", methods="GET")
+     * @param MediaRepository $mediaRepository
+     * @return Response
+     */
+    public function archive(MediaRepository $mediaRepository): Response
+    {
+        return $this->render('admin/media/index.html.twig', [
+            'media' => $mediaRepository->findByIsDeleted(),
+            'pageTitle' => 'Архив публикаций'
+        ]);
+    }
+
+    /**
+     * @Route("/disabled", name="media_disabled", methods="GET")
+     * @param MediaRepository $mediaRepository
+     * @return Response
+     */
+    public function disabled(MediaRepository $mediaRepository): Response
+    {
+        return $this->render('admin/media/index.html.twig', [
+            'media' => $mediaRepository->findByIsDisabled(),
+            'pageTitle' => 'Скрытые публикации'
+        ]);
+    }
+
+
+    /**
      * @Route("/{id}", name="media_show", methods="GET")
      * @param Media $medium
      * @return Response
@@ -112,7 +139,7 @@ class MediaController extends Controller
         $isDeleted = $media->isDeleted();
         $media->setDeleted(!$isDeleted);
 
-        if ($isDeleted === true){
+        if ($isDeleted === false) {
             $media->setActive(false);
         }
 
@@ -132,7 +159,7 @@ class MediaController extends Controller
      */
     public function delete(Request $request, Media $medium): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$medium->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $medium->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($medium);
             $em->flush();

@@ -51,8 +51,8 @@
                 <i data-feather="plus-circle">&nbsp;</i>
             </a>
         </h6>
-        {% if app.request.get('_route') starts with 'categories_' %}
         <ul class="nav flex-column mb-2">
+            {% if app.request.get('_route') starts with 'categories_' %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('categories_list') }}">
                     <i data-feather="list">&nbsp;</i>
@@ -71,7 +71,20 @@
                     Не активные
                 </a>
             </li>
+            {% elseif app.request.get('_route') starts with 'media_' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('media_archive') }}">
+                        <i data-feather="archive">&nbsp;</i>
+                        Архив
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('media_disabled') }}">
+                        <i data-feather="eye-off">&nbsp;</i>
+                        Не активные
+                    </a>
+                </li>
+            {% endif %}
         </ul>
-        {% endif %}
     </div>
 </nav>
