@@ -1,13 +1,26 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Edit Media{% endblock %}
+{% block title %}{{ medium.name }} - Edit Media {% endblock %}
+
+{% block pageHeader %}<h1 class="display-4 mb-4">{{ medium.name }}</h1>{% endblock %}
 
 {% block body %}
-    <h1>Edit Media</h1>
-
-    {{ include('admin/media/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('media_index') }}">back to list</a>
-
-    {{ include('admin/media/_delete_form.html.twig') }}
+    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
+        <div class="btn-group mb-3" role="group" aria-label="Action Media">
+            <a href="{{ path('media_index') }}" class="btn btn-secondary">
+                <i data-feather="arrow-left">&nbsp;</i>
+            </a>
+            <a href="{{ path('media_post_view', {'pathCategory' : medium.category.path, 'path': medium.path}) }}" class="btn btn-secondary" target="_blank">
+                <i data-feather="external-link">&nbsp;</i>
+            </a>
+            <a href="{{ path('media_check_active', {'id': medium.id}) }}" class="btn btn-secondary">
+                <i data-feather="{{medium.active ? 'eye-off' : 'eye'}}">&nbsp;</i>
+            </a>
+            <a href="{{ path('media_check_archive', {'id': medium.id}) }}" class="btn btn-secondary">
+                <i data-feather="{{medium.deleted ? 'upload' : 'archive'}}">&nbsp;</i>
+            </a>
+        </div>
+        {{ include('admin/media/_delete_form.html.twig') }}
+    </div>
+    {{ include('admin/media/_form.html.twig', {'button_label': 'Сохранить'}) }}
 {% endblock %}

@@ -1,4 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="d-flex justify-content-end">
+    <a href="{{ path('media_index') }}" class="btn btn-light mx-3">Отмена</a>
+    <button type="submit" class="btn btn-success">{{ button_label|default('Сохранить') }}</button>
+</div>
 {{ form_end(form) }}

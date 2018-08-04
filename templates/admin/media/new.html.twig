@@ -2,10 +2,8 @@
 
 {% block title %}New Media{% endblock %}
 
+{% block pageHeader %}<h1 class="display-4 mb-4">Новая Публикация</h1>{% endblock %}
+
 {% block body %}
-    <h1>Create new Media</h1>
-
     {{ include('admin/media/_form.html.twig') }}
-
-    <a href="{{ path('media_index') }}">back to list</a>
 {% endblock %}

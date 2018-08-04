@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="d-flex justify-content-end">
-    <a href="{% if category.parent %}}{{ path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" type="button" class="btn btn-light mx-3">Отмена</a>
+    <a href="{% if category.parent %}}{{ path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" class="btn btn-light mx-3">Отмена</a>
     <button type="submit" class="btn btn-success">{{ button_label|default('Сохранить') }}</button>
 </div>
 {{ form_end(form) }}

@@ -2,10 +2,8 @@
 
 {% block title %}New Categories{% endblock %}
 
+{% block pageHeader %}<h1 class="display-4 mb-4">Новая категория</h1>{% endblock %}
+
 {% block body %}
-    <h1>Create new Categories</h1>
-
     {{ include('admin/categories/_form.html.twig') }}
-
-    <a href="{{ path('categories_index') }}">back to list</a>
 {% endblock %}

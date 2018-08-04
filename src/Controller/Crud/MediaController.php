@@ -40,7 +40,7 @@ class MediaController extends Controller
     {
         $medium = new Media();
         $medium->setCreateDate(new DateTime('now'));
-        $medium->setUpdateDate(new DateTime('now'));
+        //$medium->setUpdateDate(new DateTime('now'));
 
         $form = $this->createForm(MediaType::class, $medium);
         $form->handleRequest($request);
@@ -49,12 +49,12 @@ class MediaController extends Controller
             $medium->setAuthor($this->getUser());
 
             $path = $slug->slugify($medium->getName(), '_');
-            if (false === $this->isUniquePath($path)){
-                $path .= '_'. date('Ymd');
+            if (false === $this->isUniquePath($path)) {
+                $path .= '_' . date('Ymd');
             }
             $medium->setPath($path);
 
-            $fullPath = (null != $medium->getCategory()->getFullPath()) ? $medium->getCategory()->getFullPath().'/'.$path : $path;
+            $fullPath = (null != $medium->getCategory()->getFullPath()) ? $medium->getCategory()->getFullPath() . '/' . $path : $path;
             $medium->setFullPath($fullPath);
 
             $em = $this->getDoctrine()->getManager();
@@ -65,6 +65,41 @@ class MediaController extends Controller
         }
 
         return $this->render('admin/media/new.html.twig', [
+            'medium' => $medium,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="media_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Media $medium
+     * @param SlugifyInterface $slug
+     * @return Response
+     */
+    public function edit(Request $request, Media $medium, SlugifyInterface $slug): Response
+    {
+        $form = $this->createForm(MediaType::class, $medium);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$medium->setUpdateDate(new DateTime('now'));
+            $medium->setAuthor($this->getUser());
+
+            $path = $slug->slugify($medium->getName(), '_');
+            if (false === $this->isUniquePath($path)) {
+                $path .= '_' . date('Ymd');
+            }
+            $medium->setPath($path);
+            $fullPath = (null != $medium->getCategory()->getFullPath()) ? $medium->getCategory()->getFullPath() . '/' . $path : $path;
+            $medium->setFullPath($fullPath);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('media_index');
+        }
+
+        return $this->render('admin/media/edit.html.twig', [
             'medium' => $medium,
             'form' => $form->createView(),
         ]);
@@ -105,29 +140,6 @@ class MediaController extends Controller
     public function show(Media $medium): Response
     {
         return $this->render('admin/media/show.html.twig', ['medium' => $medium]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="media_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Media $medium
-     * @return Response
-     */
-    public function edit(Request $request, Media $medium): Response
-    {
-        $form = $this->createForm(MediaType::class, $medium);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('media_edit', ['id' => $medium->getId()]);
-        }
-
-        return $this->render('admin/media/edit.html.twig', [
-            'medium' => $medium,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -186,11 +198,16 @@ class MediaController extends Controller
         return $this->redirectToRoute('media_index');
     }
 
-    private function isUniquePath(string $path): bool
+    private function isUniquePath(string $path, int $id = null): bool
     {
         $em = $this->getDoctrine()->getRepository(Media::class);
 
-        if (null != $em->findOneBy(['path' => $path])){
+        $media = $em->findOneBy(['path' => $path]);
+
+        if (null != $media) {
+            if ($id != null && $media->getId() == $id) {
+                return true;
+            }
             return false;
         }
         return true;
