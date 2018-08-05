@@ -95,6 +95,9 @@ git pull
 ```cmd
 /opt/alt/php71/usr/bin/php bin/console cache:clear
 ```
+
+> Если во время чистки кеша пошли ошибки или предупреждения: `/opt/alt/php71/usr/bin/php bin/composer.phar install --no-dev --optimize-autoloader`
+
 Проверяем работу тестового сайта, если все ОК
 ```cmd
 cd ../ah-symfony
