@@ -19,7 +19,7 @@
                     <a href="{{ path('media_post_view', {'pathCategory': category.path, 'path': post.path}) }}">{{ post.name }}</a>
                 </h4>
                 <p class="text-muted text-size-small">
-                    <small><em>{{ post.createDate | date('d.m.Y') ~ ' г.' }}</em></small>
+                    <small><em>{{ post.updateDate | date('d.m.Y') ~ ' г.' }}</em></small>
                 </p>
                 {{ post.sContent | raw }}
             </div>

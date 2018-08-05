@@ -175,6 +175,8 @@ class MediaController extends Controller
         $isActive = $media->isActive();
 
         $media->setActive(!$isActive);
+        //$media->setAuthor($this->getUser());
+        //$media->setUpdateDate(new DateTime('now'));
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
@@ -195,6 +197,9 @@ class MediaController extends Controller
         if ($isDeleted === false) {
             $media->setActive(false);
         }
+
+        //$media->setAuthor($this->getUser());
+        //$media->setUpdateDate(new DateTime('now'));
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
