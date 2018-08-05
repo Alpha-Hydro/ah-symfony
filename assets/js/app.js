@@ -22,20 +22,14 @@ feather.replace();
 		selectCategory.replace(this);
 	});
 
-	let btnCategoryImg = $(".btn-category-img");
-	let fileInput = document.getElementById("categories_imageUpload");
-	let categoryImgView = document.getElementById("categoryImgView");
+	let btnCategoryImg = $(".btn-action-img");
+	let fileInput = document.getElementById("imageUpload");
+	let categoryImgView = document.getElementById("imageUploadView");
 
 	btnCategoryImg.click(function () {
 		let imgEvent = this.dataset.imgEvent;
 		if(imgEvent === 'download'){
 			imageEdit.imageUpload(fileInput, categoryImgView);
 		}
-	});
-	
-	$('*[data-toggle="tooltip"]').tooltip({
-		animated: 'fade',
-		placement: 'left',
-		html: true
 	});
 })();

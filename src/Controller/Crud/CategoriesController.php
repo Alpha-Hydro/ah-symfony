@@ -95,7 +95,19 @@ class CategoriesController extends Controller
 
             $category->setMetaTitle($category->getName());
 
-            // @ToDo $category->setImage();
+            /** @var UploadedFile $file */
+            $file = $category->getImageUpload();
+
+            if (null != $file) {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                $file->move(
+                    $this->getParameter('upload_categories'),
+                    $fileName
+                );
+                $image = new CategoryImages();
+                $image->setFileName($fileName);
+                $category->setFileImage($image);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);

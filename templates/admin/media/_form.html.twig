@@ -1,5 +1,35 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% set uploadPath =  'upload/media/items/' %}
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            {% if medium.image is not null %}
+                <img id="imageUploadView" src="{{ asset(uploadPath ~ medium.image) }}" alt="{{ medium.name }}" class="card-img-top p-2" />
+            {% else %}
+                <img id="imageUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ medium.name }}" class="card-img-top p-2" />
+            {% endif %}
+            <div class="card-body text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success btn-action-img" data-img-event="download"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete"><i data-feather="trash-2">&nbsp;</i></button>
+                </div>
+            </div>
+        </div>
+        <div class="invisible">
+            {{ form_widget(form.imageUpload,  {'id': 'imageUpload', 'attr': {'assept' : 'image/*'} }) }}
+        </div>
+    </div>
+    <div class="col-md-9">
+        {{ form_row(form.category) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.sContent) }}
+        {{ form_row(form.contentHtml) }}
+        {{ form_row(form.update_date) }}
+    </div>
+</div>
 <div class="d-flex justify-content-end">
     <a href="{{ path('media_index') }}" class="btn btn-light mx-3">Отмена</a>
     <button type="submit" class="btn btn-success">{{ button_label|default('Сохранить') }}</button>

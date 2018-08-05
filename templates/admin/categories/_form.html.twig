@@ -8,19 +8,19 @@
     <div class="col-md-3">
         <div class="card">
             {% if category.fileImage is not null %}
-                <img id="categoryImgView" src="{{ asset(uploadPath ~ category.fileImage.fileName) }}" alt="{{ category.name }}" class="card-img-top p-2" />
+                <img id="imageUploadView" src="{{ asset(uploadPath ~ category.fileImage.fileName) }}" alt="{{ category.name }}" class="card-img-top p-2" />
             {% else %}
-                <img id="categoryImgView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ category.name }}" class="card-img-top p-2" />
+                <img id="imageUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ category.name }}" class="card-img-top p-2" />
             {% endif %}
             <div class="card-body text-center">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success btn-category-img" data-img-event="download"><i data-feather="download">&nbsp;</i></button>
-                    <button type="button" class="btn btn-danger btn-category-img" data-img-event="delete"><i data-feather="trash-2">&nbsp;</i></button>
+                    <button type="button" class="btn btn-success btn-action-img" data-img-event="download"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete"><i data-feather="trash-2">&nbsp;</i></button>
                 </div>
             </div>
         </div>
         <div class="invisible">
-            {{ form_widget(form.imageUpload,  { 'attr': {'assept' : 'image/*'} }) }}
+            {{ form_widget(form.imageUpload,  {'id': 'imageUpload', 'attr': {'assept' : 'image/*'} }) }}
         </div>
     </div>
     <div class="col-md-9">
