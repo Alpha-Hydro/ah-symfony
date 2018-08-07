@@ -39,17 +39,11 @@ class IndexController extends Controller
 
     /**
      * @Route("/catalog", name="catalog_index")
-     * @param CategoriesService $catalogService
      * @return Response
      */
-    public function indexCatalog(CategoriesService $catalogService): Response
+    public function indexCatalog(): Response
     {
-        $categories = $catalogService->findByRootCategories();
-
-        return $this->render('base/catalog/categories_list.html.twig', [
-            'categories' => $categories,
-            'sidebarListCategories' => $categories,
-        ]);
+        return $this->redirectToRoute('index');
     }
 
     /**
