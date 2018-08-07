@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoriesRepository;
+use App\Repository\MediaRepository;
 use App\Service\CategoriesService;
 use App\Service\ManufactureService;
 use App\Service\ModuleSiteService;
@@ -20,12 +20,20 @@ class IndexController extends Controller
     /**
      * @Route("/", name="index")
      * @param CategoriesService $catalogService
+     * @param MediaRepository $mediaRepository
      * @return Response
      */
-    public function index(CategoriesService $catalogService): Response
+    public function index(CategoriesService $catalogService, MediaRepository $mediaRepository): Response
     {
+        $post = $mediaRepository->findOneBy([
+            'active' => true,
+            'deleted' => false
+        ], ['update_date' => 'DESC']);
+
+
         return $this->render('base/index/index.html.twig', [
             'categories' => $catalogService->findByRootCategories(),
+            'post' => $post
         ]);
     }
 

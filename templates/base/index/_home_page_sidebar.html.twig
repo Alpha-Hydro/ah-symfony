@@ -22,3 +22,17 @@
         {% endfor %}
     </ul>
 {% endblock %}
+
+{% block actionNews %}
+    {% if post is defined %}
+    <div class="panel panel-default crop-bottom-shadow mt5">
+        <div class="panel-heading">
+            <h3 class="panel-title text-uppercase">{{ post.category.name }}</h3>
+        </div>
+        <div class="panel-body">
+            <p>{{ post.sContent | raw }}</p>
+            <p class="text-right"><a href="{{ path('media_post_view', {'pathCategory': post.category.path, 'path': post.path}) }}">подробнее...</a></p>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
