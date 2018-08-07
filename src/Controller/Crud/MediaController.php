@@ -9,7 +9,10 @@ use Cocur\Slugify\SlugifyInterface;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -205,6 +208,35 @@ class MediaController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('media_index');
+    }
+
+
+    /**
+     * @Route("/{id}/delete_image", name="media_delete_image", methods="POST")
+     * @param Media $media
+     * @return JsonResponse
+     */
+    public function deleteImage(Media $media): JsonResponse
+    {
+        $image = $media->getImage();
+
+        if (null != $image) {
+            $fileSystem = new Filesystem();
+            $fileSystemImage = $this->getParameter('upload_media_items') . '/' . $image;
+            if ($fileSystem->exists($fileSystemImage)) {
+                try {
+                    $fileSystem->remove($fileSystemImage);
+                } catch (IOExceptionInterface $exception) {
+                    return $this->json(['error' => $exception->getMessage()], 500);
+                }
+            }
+            $media->setImage(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->json([]);
     }
 
     /**

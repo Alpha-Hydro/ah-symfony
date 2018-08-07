@@ -11,6 +11,8 @@ use Cocur\Slugify\SlugifyInterface;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -250,6 +252,38 @@ class CategoriesController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('categories_index');
+    }
+
+    /**
+     * @Route("/{id}/delete_image", name="category_delete_image", methods="POST")
+     * @param Categories $categories
+     * @return JsonResponse
+     */
+    public function deleteImage(Categories $categories): JsonResponse
+    {
+        $image = $categories->getFileImage();
+
+        if (null != $image) {
+            $fileSystem = new Filesystem();
+            $fileSystemImage = $this->getParameter('upload_categories') . '/' . $image->getFileName();
+            if ($fileSystem->exists($fileSystemImage)) {
+                try {
+                    $fileSystem->remove($fileSystemImage);
+                } catch (IOExceptionInterface $e) {
+                    return $this->json(['error' => $e->getMessage()], 500);
+                }
+            }
+            $categories->setFileImage(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($categories);
+        $em->flush();
+
+        $em->remove($image);
+        $em->flush();
+
+        return $this->json([]);
     }
 
     /**

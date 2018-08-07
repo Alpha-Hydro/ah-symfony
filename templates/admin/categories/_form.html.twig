@@ -15,7 +15,7 @@
             <div class="card-body text-center">
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-success btn-action-img" data-img-event="download"><i data-feather="download">&nbsp;</i></button>
-                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete"><i data-feather="trash-2">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-path-delete="{{ path('category_delete_image', {'id': category.id}) }}"><i data-feather="trash-2">&nbsp;</i></button>
                 </div>
             </div>
         </div>
