@@ -15,7 +15,7 @@
 {% block content %}
     <div class="page-content mt2">
         {% if page.image is defined and page.image is not null and page.image != ''%}
-            <img src="{{ page.image }}" alt="{{ page.name }}" class="pull-right">
+            <img src="{{ page.image }}" alt="{{ page.name }}" class="pull-right img-responsive">
         {% endif %}
         {{ page.contentHtml|default('')|raw }}
     </div>
