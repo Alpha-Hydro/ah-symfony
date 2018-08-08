@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set pageTitle = 'Результаты поиска' %}
+{% set pageTitle = searchQuery ? 'Результаты поиска' : 'Поиск' %}
 
 {% set productions = [
     {'name':'Гидростанции, гидравлические стенды и модули', 'link': path('index', {'full_path': 'gidrostancii'}), 'img': 'upload/manufacture/categories/0/12042018.png'},
@@ -21,6 +21,18 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row mt1">
+        <div class="col-md-12">
+            <form>
+                <div class="input-group">
+                    <input name="query" type="text" class="form-control" placeholder="Поисковый запрос..." style="height: auto" value="{{ searchQuery | default('') }}">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search">&nbsp;</i></button>
+                        </span>
+                </div>
+            </form>
+        </div>
+    </div>
     {% if productList is defined and productList is not empty %}
         {{ include('base/search/_search_list_item.html.twig') }}
     {% elseif searchQuery != '' %}
