@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     role_hierarchy:
-        ROLE_ROOT: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN]
+        ROLE_ROOT: [ROLE_ADMIN]
         ROLE_ADMIN: [ROLE_USER, ROLE_MANAGER, ROLE_REDACTOR]
         ROLE_REDACTOR: [ROLE_USER, ROLE_MANAGER]
         ROLE_MANAGER: [ROLE_USER]
@@ -13,7 +13,7 @@ security:
             memory:
                 users:
                     root@alpha-hydro:
-                        password: $2y$13$AmLUytHEtIP5hPB2YkLI1On9orB9ad51zH5mfzH7nH6xNwJCl2Sfm
+                        password: $2y$12$0S4QyrmegEJMifZAP9.n4eywFJLPZcQ9LI6nbM//8OtrE3JoRhqee
                         roles: 'ROLE_ROOT'
         db_provider:
             entity:

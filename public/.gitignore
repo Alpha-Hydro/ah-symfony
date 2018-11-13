@@ -6,3 +6,4 @@ images/
 #build/
 .protect
 .htaccess
+/check.php
