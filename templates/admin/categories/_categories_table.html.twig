@@ -24,7 +24,7 @@
                 </a>
             </td>
             <td>
-                <img src="{{ asset(category.fileImage ? 'upload/categories/'~category.fileImage.fileName : 'files/images/no-foto.jpg')}}" class="w-25"/>
+                <img src="{{ asset(category.fileImage ? 'upload/categories/'~category.fileImage.fileName : 'files/images/no-foto.jpg')}}" class="img-fluid mh-25"/>
             </td>
             <td>
                 <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-outline-success" title="редактировать">

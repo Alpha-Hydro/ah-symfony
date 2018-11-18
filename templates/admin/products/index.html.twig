@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ pageTitle | default('Продукция') }}{% endblock %}
+
+{% block body %}
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+              <th scope="col">Id</th>
+                <th scope="col">Sorting</th>
+                <th scope="col">Article</th>
+                <th scope="col">Name</th>
+                <th scope="col">Active</th>
+                <th scope="col">Deleted</th>
+                <th scope="col">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.sorting }}</td>
+                <td>{{ product.sku }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.active ? 'Yes' : 'No' }}</td>
+                <td>{{ product.deleted ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('catalog_index') }}/{{ product.fullPath }}">show</a>
+                    <a href="{{ path('products_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('products_new') }}">Create new</a>
+{% endblock %}

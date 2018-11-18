@@ -21,7 +21,9 @@
         <div class="row">
             {{ include('admin/components/_sidebar.html.twig') }}
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                {% block pageHeader %}{% endblock %}
+                {% block pageHeader %}
+                    <h1 class="display-4">{{ pageTitle | default('Alpha-Hydro')}}</h1>
+                {% endblock %}
                 {% block body %}{% endblock %}
             </main>
         </div>

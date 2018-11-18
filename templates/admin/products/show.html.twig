@@ -1,0 +1,102 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+    <h1>Products</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Sku</th>
+                <td>{{ product.sku }}</td>
+            </tr>
+            <tr>
+                <th>SName</th>
+                <td>{{ product.sName }}</td>
+            </tr>
+            <tr>
+                <th>Draft</th>
+                <td>{{ product.draft }}</td>
+            </tr>
+            <tr>
+                <th>UploadPathDraft</th>
+                <td>{{ product.uploadPathDraft }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ product.note }}</td>
+            </tr>
+            <tr>
+                <th>Path</th>
+                <td>{{ product.path }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Create_date</th>
+                <td>{{ product.createDate ? product.createDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Update_date</th>
+                <td>{{ product.updateDate ? product.updateDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ product.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{{ product.deleted ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Sorting</th>
+                <td>{{ product.sorting }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ product.image }}</td>
+            </tr>
+            <tr>
+                <th>UploadPath</th>
+                <td>{{ product.uploadPath }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>ContentHtml</th>
+                <td>{{ product.contentHtml }}</td>
+            </tr>
+            <tr>
+                <th>FullPath</th>
+                <td>{{ product.fullPath }}</td>
+            </tr>
+            <tr>
+                <th>MetaTitle</th>
+                <td>{{ product.metaTitle }}</td>
+            </tr>
+            <tr>
+                <th>MetaKeywords</th>
+                <td>{{ product.metaKeywords }}</td>
+            </tr>
+            <tr>
+                <th>MetaDescription</th>
+                <td>{{ product.metaDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('products_index') }}">back to list</a>
+
+    <a href="{{ path('products_edit', {'id': product.id}) }}">edit</a>
+
+    {{ include('admin/products/_delete_form.html.twig') }}
+{% endblock %}

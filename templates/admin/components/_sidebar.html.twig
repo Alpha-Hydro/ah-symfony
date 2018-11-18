@@ -16,7 +16,7 @@
             <li class="nav-item">
                 <a class="nav-link {% if app.request.get('_route') starts with 'categories_' %}active{% endif %}" href="{{ path('categories_index') }}">
                     <i data-feather="layers">&nbsp;</i>
-                    Категории
+                    Каталог
                 </a>
             </li>
             <li class="nav-item">
@@ -44,47 +44,13 @@
                 </a>
             </li>#}
         </ul>
+        {% if app.request.get('_route') starts with 'categories_' %}
+            {{ include('admin/categories/_sidebar.html.twig') }}
+        {% elseif app.request.get('_route') starts with 'products_' %}
+            {{ include('admin/categories/_sidebar.html.twig') }}
+        {% elseif app.request.get('_route') starts with 'media_' %}
+            {{ include('admin/media/_sidebar.html.twig') }}
+        {% endif %}
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Утилиты</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-                <i data-feather="plus-circle">&nbsp;</i>
-            </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-            {% if app.request.get('_route') starts with 'categories_' %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('categories_list') }}">
-                    <i data-feather="list">&nbsp;</i>
-                    Таблица
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('categories_archive') }}">
-                    <i data-feather="archive">&nbsp;</i>
-                    Архив
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('categories_disabled') }}">
-                    <i data-feather="eye-off">&nbsp;</i>
-                    Не активные
-                </a>
-            </li>
-            {% elseif app.request.get('_route') starts with 'media_' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('media_archive') }}">
-                        <i data-feather="archive">&nbsp;</i>
-                        Архив
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('media_disabled') }}">
-                        <i data-feather="eye-off">&nbsp;</i>
-                        Не активные
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
     </div>
 </nav>
