@@ -1,0 +1,49 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col"><i data-feather="bar-chart">&nbsp;</i></th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Url на сайт</th>
+        <th colspan="4" class="text-center">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in category.products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.sorting }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+                {{ product.fullPath }}
+                {#<a href="{{ path('catalog_list', {'fullPath': product.fullPath}) }}" target="_blank">
+                    <i data-feather="external-link">&nbsp;</i>&nbsp;{{ product.fullPath }}
+                </a>#}
+            </td>
+            <td>
+                <img src="{{ asset(product.fileImage ? 'upload/products/'~product.fileImage.fileName : 'files/images/no-foto.jpg')}}" class="img-fluid mh-25"/>
+            </td>
+            <td>
+                <a href="{{ path('products_edit', {'id': product.id}) }}" class="btn btn-outline-success" title="редактировать">
+                    <i data-feather="edit">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('products_check_active', {'id': product.id}) }}" class="btn btn-outline-secondary" title="деактивировать">
+                    <i data-feather="eye-off">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('products_check_archive', {'id': product.id}) }}" class="btn btn-outline-danger" title="в архив">
+                    <i data-feather="archive">&nbsp;</i>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

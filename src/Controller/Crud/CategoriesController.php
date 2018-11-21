@@ -143,6 +143,21 @@ class CategoriesController extends Controller
     }
 
     /**
+     * @Route("/{id}/products", name="categories_products", methods="GET")
+     * @param Categories $category
+     * @param CategoriesRepository $categoriesRepository
+     * @return Response
+     */
+    public function productList(Categories $category, CategoriesRepository $categoriesRepository): Response
+    {
+        $data = [
+            'category' => $category,
+        ];
+
+        return $this->render('admin/categories/products.html.twig', $data);
+    }
+
+    /**
      * @Route("/{id}/edit", name="categories_edit", methods="GET|POST")
      * @param Request $request
      * @param Categories $category

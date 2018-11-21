@@ -42,6 +42,31 @@ class ProductsController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/archive", name="products_check_archive", methods="GET")
+     * @param Products $products
+     * @param Request $request
+     * @return Response
+     */
+    public function checkArchive(Products $products, Request $request): Response
+    {
+        $isDeleted = $products->isDeleted();
+
+        $products->setDeleted(!$isDeleted);
+
+        if ($isDeleted === true){
+            $products->setActive(false);
+        }
+
+        dd($request->get('_route'));
+
+//        $em = $this->getDoctrine()->getManager();
+//        $em->flush();
+//
+//        return $this->redirectToRoute($request->get('_route'));
+
+    }
+
+    /**
      * @Route("/disabled", name="products_disabled", methods="GET")
      * @param ProductsRepository $productsRepository
      * @return Response
@@ -52,6 +77,27 @@ class ProductsController extends AbstractController
             'products' => $productsRepository->findBy(['active' => false]),
             'pageTitle' => 'Скрытая продукция'
         ]);
+    }
+
+    /**
+     * @Route("/{id}/disabled", name="products_check_active", methods="GET")
+     * @param Products $products
+     * @param Request $request
+     * @return Response
+     */
+    public function checkActive(Products $products, Request $request): Response
+    {
+        $isActive = $products->isActive();
+
+        $products->setActive(!$isActive);
+
+        dd($request->get('_route'));
+
+//        $em = $this->getDoctrine()->getManager();
+//        $em->flush();
+//
+//        return $this->redirectToRoute($request->get('_route'));
+
     }
 
     /**
