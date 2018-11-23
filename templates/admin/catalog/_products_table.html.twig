@@ -1,0 +1,48 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col"><i data-feather="bar-chart">&nbsp;</i></th>
+        <th scope="col">SKU</th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Активность</th>
+        <th scope="col">На сайт</th>
+        <th scope="col" colspan="2" class="text-center">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.sorting }}</td>
+            <td>{{ product.sku }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+                <a href="{{ path('products_check_active', {'id': product.id}) }}" class="btn btn-sm btn-outline-success" title="деактивировать">
+                    <i data-feather="check-circle">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ asset('catalog/' ~ product.fullPath) }}" class="btn btn-sm btn-outline-primary" title="На сайт">
+                    <i data-feather="external-link">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('products_edit', {'id': product.id}) }}" class="btn btn-sm btn-outline-secondary" title="редактировать">
+                    <i data-feather="edit">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('products_check_archive', {'id': product.id}) }}" class="btn btn-sm btn-outline-danger" title="в архив">
+                    <i data-feather="archive">&nbsp;</i>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

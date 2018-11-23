@@ -1,0 +1,13 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block pageHeader %}<h1 class="display-4 mb-4">{{ category.name }}</h1>{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between mb-2">
+        <a class="btn btn-success" href="{{ path('products_new', {'category': category.id}) }}">Добавить новый продукт</a>
+        {{ include('admin/catalog/_category_btn_group.html.twig', {'category': category}) }}
+    </div>
+    {{ include('admin/catalog/_products_table.html.twig', {'products': category.products}) }}
+{% endblock %}

@@ -1,8 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{ user.name }} - Edit User{% endblock %}
-
-{% block pageHeader %}<h1 class="display-4 mb-4">{{ user.name }}</h1>{% endblock %}
+{% set pageTitle = user.name %}
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center border-bottom mb-4">

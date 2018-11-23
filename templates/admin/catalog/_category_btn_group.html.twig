@@ -1,0 +1,17 @@
+<div class="btn-group" role="group" aria-label="Category list">
+    <a href="{% if category.parent is not null %}{{  path('categories_view', {'id': category.parent.id}) }}{% else %}{{ path('categories_index') }}{% endif %}" class="btn btn-secondary">
+        <i data-feather="corner-left-up">&nbsp;</i>
+    </a>
+    <a href="{{ path('catalog_list', {'fullPath': category.fullPath}) }}" class="btn btn-secondary" target="_blank">
+        <i data-feather="external-link">&nbsp;</i>
+    </a>
+    <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-secondary">
+        <i data-feather="edit-3">&nbsp;</i>
+    </a>
+    <a href="{{ path('categories_check_active', {'id': category.id}) }}" class="btn btn-secondary">
+        <i data-feather="{{category.active ? 'eye-off' : 'eye'}}">&nbsp;</i>
+    </a>
+    <a href="{{ path('categories_check_archive', {'id': category.id}) }}" class="btn btn-secondary">
+        <i data-feather="{{category.deleted ? 'upload' : 'archive'}}">&nbsp;</i>
+    </a>
+</div>

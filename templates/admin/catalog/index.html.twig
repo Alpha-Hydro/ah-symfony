@@ -1,10 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Categories index{% endblock %}
-
-{% block pageHeader %}
-    <h1 class="display-4">{{ pageTitle | default('Каталог')}}</h1>
-{% endblock %}
+{% set pageTitle = 'Каталог' %}
 
 {% block body %}
     <div class="mb-2 d-flex justify-content-between" role="group" aria-label="Category list">
@@ -13,5 +9,5 @@
             <i data-feather="external-link">&nbsp;</i>
         </a>
     </div>
-    {{ include('admin/categories/_categories_table.html.twig') }}
+    {{ include('admin/catalog/_categories_table.html.twig', {'categories': categories}) }}
 {% endblock %}

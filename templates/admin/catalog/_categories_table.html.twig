@@ -1,0 +1,51 @@
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col"><i data-feather="bar-chart">&nbsp;</i></th>
+        <th scope="col">Наименование</th>
+        <th scope="col">Url на сайт</th>
+        <th colspan="4" class="text-center">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.sorting }}</td>
+            <td>
+                <a href="{{ path('categories_view', {'id': category.id}) }}" class="text-nowrap">
+                    <i data-feather="folder">&nbsp;</i>&nbsp;{{ category.name }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('catalog_list', {'fullPath': category.fullPath}) }}" target="_blank">
+                    <i data-feather="external-link">&nbsp;</i>&nbsp;{{ category.fullPath }}
+                </a>
+            </td>
+            <td>
+                <img src="{{ asset(category.fileImage ? 'upload/categories/'~category.fileImage.fileName : 'files/images/no-foto.jpg')}}" class="img-fluid mh-25"/>
+            </td>
+            <td>
+                <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-outline-success" title="редактировать">
+                    <i data-feather="edit">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('categories_check_active', {'id': category.id}) }}" class="btn btn-outline-secondary" title="деактивировать">
+                    <i data-feather="eye-off">&nbsp;</i>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('categories_check_archive', {'id': category.id}) }}" class="btn btn-outline-danger" title="в архив">
+                    <i data-feather="archive">&nbsp;</i>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

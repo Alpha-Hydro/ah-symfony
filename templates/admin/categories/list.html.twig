@@ -1,9 +1,7 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Categories List{% endblock %}
-
-{% block pageHeader %}<h1 class="display-4">{{ pageTitle | default('Каталог')}}</h1>{% endblock %}
+{% set pageTitle = 'Категории'%}
 
 {% block body %}
-    {{ include('admin/categories/_categories_table_list.html.twig') }}
+    {{ include('admin/categories/_categories_table.html.twig') }}
 {% endblock %}

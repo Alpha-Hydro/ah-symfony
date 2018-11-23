@@ -1,10 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Media index{% endblock %}
-
-{% block pageHeader %}
-    <h1 class="display-4">{{ pageTitle | default('Публикации')}}</h1>
-{% endblock %}
+{% set pageTitle = 'Публикации' %}
 
 {% block body %}
     <div class="mb-2 d-flex justify-content-between" role="group" aria-label="Media list">
