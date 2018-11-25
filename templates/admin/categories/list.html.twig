@@ -3,5 +3,27 @@
 {% set pageTitle = 'Категории'%}
 
 {% block body %}
-    {{ include('admin/categories/_categories_table.html.twig') }}
+    {#{{ include('admin/categories/_categories_table.html.twig') }}#}
+    <table class="table table-striped" id="datatable">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Сортировка в группе</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Родительская категория</th>
+            <th scope="col">Url на сайт</th>
+            <th scope="col">активность</th>
+            <th scope="col">архив</th>
+        </tr>
+        <tr>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+            <td><input type="text" class="w-100"/></td>
+        </tr>
+        </thead>
+    </table>
 {% endblock %}

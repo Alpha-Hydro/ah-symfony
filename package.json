@@ -18,5 +18,8 @@
         "watch": "./node_modules/.bin/encore dev --watch",
         "build": "./node_modules/.bin/encore production"
     },
-    "dependencies": {}
+    "dependencies": {
+        "datatables.net": "^1.10.19",
+        "datatables.net-bs4": "^1.10.19"
+    }
 }

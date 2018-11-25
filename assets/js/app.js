@@ -9,6 +9,8 @@ require("bootstrap");
 
 feather.replace();
 
+require("./categories.datatable");
+
 (function () {
 	let selectButton = $("#selectCategory");
 	
