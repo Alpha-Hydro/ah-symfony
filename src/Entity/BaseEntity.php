@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\MappedSuperclass()
  */
-abstract class BaseEntity
+abstract class BaseEntity implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -68,9 +70,14 @@ abstract class BaseEntity
         return $this->create_date;
     }
 
+    /**
+     * @param \DateTimeInterface $create_date
+     * @return BaseEntity
+     * @throws \Exception
+     */
     public function setCreateDate(\DateTimeInterface $create_date): self
     {
-        $this->create_date = $create_date ?? new \DateTime("now");
+        $this->create_date = $create_date ?? new DateTime("now");
 
         return $this;
     }
@@ -80,9 +87,14 @@ abstract class BaseEntity
         return $this->update_date;
     }
 
+    /**
+     * @param \DateTimeInterface $update_date
+     * @return BaseEntity
+     * @throws \Exception
+     */
     public function setUpdateDate(\DateTimeInterface $update_date): self
     {
-        $this->update_date = $update_date ?? new \DateTime("now");
+        $this->update_date = $update_date ?? new DateTime("now");
 
         return $this;
     }
@@ -122,4 +134,17 @@ abstract class BaseEntity
 
         return $this;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'active' => $this->isActive(),
+            'deleted' => $this->isDeleted(),
+            'sorting' => $this->getSorting()
+        ];
+    }
+
+
 }

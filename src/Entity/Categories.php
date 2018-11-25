@@ -140,4 +140,13 @@ class Categories extends BaseEntity
 
         return $this;
     }
+
+    public function jsonSerialize(): array
+    {
+        $result = parent::jsonSerialize();
+        $result['fullPath'] = $this->getFullPath();
+        $result['parent_id'] = $this->getParent() ? $this->getParent()->getId() : null;
+
+        return $result;
+    }
 }
