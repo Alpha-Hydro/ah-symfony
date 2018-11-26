@@ -2,18 +2,19 @@ const $ = require("jquery");
 require( "datatables.net" );
 require("datatables.net-bs4");
 
-let ajaxUrl = "/api/categories/all";
+let ajaxUrl = "/api/categories/";
 let datatableApi;
 
 $(function () {
 	datatableApi = $("#datatable").DataTable({
 		"ajax": {
-			"url": ajaxUrl,
+			"url": ajaxUrl + "all",
 			"dataSrc": ""
 		},
+		"dom": 'irt<"row my-3"<"col-6"l><"col-6"p>>',
 		"orderCellsTop": true,
 		"paging": true,
-		"info": false,
+		"info": true,
 		"columns": [
 			{
 				"data": "id"
@@ -25,7 +26,13 @@ $(function () {
 				"data": "name"
 			},
 			{
-				"data": "parent_id"
+				"data": "parent",
+				"render": function (data, type, row) {
+					if (type === "display" && data) {
+						return "<a href='" + data.id + "'>" + data.name + "</a>";
+					}
+					return data;
+				}
 			},
 			{
 				"data": "fullPath"

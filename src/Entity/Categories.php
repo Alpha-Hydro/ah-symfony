@@ -145,7 +145,7 @@ class Categories extends BaseEntity
     {
         $result = parent::jsonSerialize();
         $result['fullPath'] = $this->getFullPath();
-        $result['parent_id'] = $this->getParent() ? $this->getParent()->getId() : null;
+        $result['parent'] = $this->getParent() ? ['id' => $this->getParent()->getId(), 'name' => $this->getParent()->getName()] : null;
 
         return $result;
     }
