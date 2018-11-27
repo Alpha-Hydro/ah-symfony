@@ -150,6 +150,13 @@ class CategoriesController extends Controller
             'categories' => $categoriesRepository->findByChildren($category)
         ];
 
+        $childrenCategories = $categoriesRepository->findByChildren($category);
+
+        if (empty($childrenCategories))
+            return $this->productList($category);
+
+        $data['categories'] = $childrenCategories;
+
         return $this->render('admin/catalog/view.html.twig', $data);
     }
 

@@ -1,3 +1,5 @@
+import * as feather from "feather-icons";
+
 const $ = require("jquery");
 require( "datatables.net" );
 require("datatables.net-bs4");
@@ -23,25 +25,53 @@ $(function () {
 				"data": "sorting"
 			},
 			{
-				"data": "name"
-			},
-			{
-				"data": "parent",
+				"data": "name",
 				"render": function (data, type, row) {
-					if (type === "display" && data) {
-						return "<a href='" + data.id + "'>" + data.name + "</a>";
+					if (type === "display") {
+						return "<a href=" + row.id + ">" + data + "</a>";
 					}
 					return data;
 				}
 			},
 			{
-				"data": "fullPath"
+				"data": "parent",
+				"render": function (data, type, row) {
+					if (type === "display" && data) {
+						return "<a href=" + data.id + ">" + data.name + "</a>";
+					}
+					return data ? data.name : 'Каталог';
+				}
 			},
 			{
-				"data": "active"
+				"data": "fullPath",
+				"render": function (data, type, row) {
+					if (type === "display") {
+						return "<a href=/catalog/" + data + ">" + data + "</a>";
+					}
+					return data;
+				}
 			},
 			{
-				"data": "deleted"
+				"data": "active",
+				"render": function (data, type, row) {
+					if (type === "display") {
+						return data
+							? "<button class='btn btn-sm btn-success'>"+feather.icons['check-circle'].toSvg({ 'width': 16, 'height': 16 })+"</button>"
+							: "<button class='btn btn-sm btn-danger'>"+feather.icons['circle'].toSvg({ 'width': 16, 'height': 16 })+"</button>";
+					}
+					return data;
+				}
+			},
+			{
+				"data": "deleted",
+				"render": function (data, type, row) {
+					if (type === "display") {
+						return data
+							? "<button class='btn btn-sm btn-danger'>"+feather.icons['x-circle'].toSvg({ 'width': 16, 'height': 16 })+"</button>"
+							: "<button class='btn btn-sm btn-success'>"+feather.icons['plus-circle'].toSvg({ 'width': 16, 'height': 16 })+"</button>";
+					}
+					return data;
+				}
 			},
 		]
 	});

@@ -7,7 +7,6 @@ const $ = require("jquery");
 // no need to set this to a variable, just require it
 require("bootstrap");
 
-feather.replace();
 
 require("./categories.datatable");
 
@@ -38,3 +37,5 @@ require("./categories.datatable");
 		}
 	});
 })();
+
+feather.replace();
