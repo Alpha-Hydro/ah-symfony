@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block content %}
+    {% spaceless %}
     <div class="row product-item">
         <div class="col-sm-3">
             {{ include('base/catalog/_product_images.html.twig') }}
@@ -42,6 +43,7 @@
             {{ include('base/catalog/_product_modifications.html.twig') }}
         </div>
     </div>
+    {% endspaceless %}
 {% endblock %}
 
 

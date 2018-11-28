@@ -174,4 +174,15 @@ class ProductsController extends AbstractController
 
         return $this->redirectToRoute('products_index');
     }
+
+
+    /**
+     * @Route("/{id}/draft", name="products_draft", methods={"POST"})
+     * @param Request $request
+     * @param Products $product
+     */
+    public function draft(Request $request, Products $product)
+    {
+
+    }
 }

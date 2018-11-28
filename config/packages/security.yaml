@@ -2,8 +2,8 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     role_hierarchy:
         ROLE_ROOT: [ROLE_ADMIN]
-        ROLE_ADMIN: [ROLE_USER, ROLE_MANAGER, ROLE_REDACTOR]
-        ROLE_REDACTOR: [ROLE_USER, ROLE_MANAGER]
+        ROLE_ADMIN: [ROLE_REDACTOR]
+        ROLE_REDACTOR: [ROLE_MANAGER]
         ROLE_MANAGER: [ROLE_USER]
     providers:
         chain_provider:
