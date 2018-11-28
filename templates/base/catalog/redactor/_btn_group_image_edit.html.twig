@@ -1,0 +1,12 @@
+{% if is_granted('ROLE_REDACTOR')  %}
+    {% spaceless %}
+    <div class="btn-group image-edit" role="group">
+        {% if item.fileImage is not null %}
+            <button type="button" class="btn btn-default btn-action-img" data-img-event="download"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-default btn-action-img" data-img-event="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+        {% else %}
+            <button type="button" class="btn btn-default btn-action-img" data-img-event="download"><i class="fa fa-download" aria-hidden="true"></i></button>
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endif %}

@@ -1,9 +1,10 @@
+{% spaceless %}
 <div class="product-images">
     <div class="row">
         {#<div class="col-xs-6 col-sm-12">
             {% if product.image is not null and product.image != '' %}
                 <div class="thumbnail">
-                    <img src="{{ product.uploadPath }}{{ product.image }}"
+                    <img id="imageUploadView" src="{{ product.uploadPath }}{{ product.image }}"
                          alt="{{ product.name }}">
                 </div>
             {% endif %}
@@ -12,8 +13,7 @@
             {% if product.draft is not null and product.draft != '' %}
                 <div class="thumbnail">
                     <a href="#" data-toggle="modal" data-target="#draftImageProduct">
-                        <img src="{{ product.uploadPathDraft }}{{ product.draft }}"
-                             alt="{{ product.name }}">
+                        <img id="draftUploadView" src="{{ product.uploadPathDraft }}{{ product.draft }}" alt="{{ product.name }}">
                     </a>
                 </div>
                 <div class="modal fade" id="draftImageProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -33,10 +33,11 @@
                 </div>
             {% else %}
                 <div class="thumbnail">
-                    <img src="{{ asset('files/images/no-foto.jpg') }}"
-                         alt="{{ product.name }}">
+                    <img id="draftUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}">
                 </div>
             {% endif %}
+            {{ include('base/catalog/redactor/_btn_group_draft_edit.html.twig', {'item': product}) }}
         </div>
     </div>
 </div>
+{% endspaceless %}
