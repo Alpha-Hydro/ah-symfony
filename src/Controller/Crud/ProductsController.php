@@ -2,10 +2,14 @@
 
 namespace App\Controller\Crud;
 
+use App\Entity\ProductDraft;
+use App\Entity\ProductImages;
 use App\Entity\Products;
 use App\Form\ProductsType;
 use App\Repository\ProductsRepository;
+use App\Service\UploadImageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductsController extends AbstractController
 {
+    const UPLOAD_PATH = '/upload/products/';
+    const UPLOAD_PATH_DRAFT = '/upload/products/draft/';
+
     /**
      * @Route("/", name="products_index", methods="GET")
      * @param ProductsRepository $productsRepository
@@ -180,9 +187,29 @@ class ProductsController extends AbstractController
      * @Route("/{id}/draft", name="products_draft", methods={"POST"})
      * @param Request $request
      * @param Products $product
+     * @param UploadImageService $uploadImageService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function draft(Request $request, Products $product)
+    public function uploadDraft(Request $request, Products $product, UploadImageService $uploadImageService)
     {
+        /** @var UploadedFile $file */
+        $file = $request->files->get('imageUpload');
+        if (null != $file) {
+            $fileName = $uploadImageService->upload($file, $this->getParameter('upload_products_draft'));
 
+            // @Todo delete old file
+            $image = new ProductDraft();
+            $image->setFileName($fileName);
+            $product
+                ->setFileDraft($image)
+                // @Todo template is draft file name ???
+                ->setDraft($fileName)
+                ->setUploadPathDraft(self::UPLOAD_PATH_DRAFT)
+            ;
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirect($request->headers->get('referer'));
     }
 }

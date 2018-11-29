@@ -4,6 +4,8 @@ parameters:
     locale: 'en'
     upload_categories: '%kernel.project_dir%/public/upload/categories'
     upload_media_items: '%kernel.project_dir%/public/upload/media/items'
+    upload_products: '%kernel.project_dir%/public/upload/products'
+    upload_products_draft: '%kernel.project_dir%/public/upload/products/draft'
 
 services:
     # default configuration for services in *this* file

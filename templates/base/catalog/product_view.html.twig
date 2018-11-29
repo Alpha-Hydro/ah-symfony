@@ -52,5 +52,8 @@
     {% if is_granted('ROLE_MANAGER') %}
         <script src="{{ asset('build/js/passportPdf.js') }}"></script>
     {% endif %}
+    {% if is_granted('ROLE_REDACTOR') %}
+        <script src="{{ asset('build/js/redactor.js') }}"></script>
+    {% endif %}
 {% endblock %}
 

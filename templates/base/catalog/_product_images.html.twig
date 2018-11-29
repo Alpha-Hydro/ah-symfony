@@ -13,7 +13,7 @@
             {% if product.draft is not null and product.draft != '' %}
                 <div class="thumbnail">
                     <a href="#" data-toggle="modal" data-target="#draftImageProduct">
-                        <img id="draftUploadView" src="{{ product.uploadPathDraft }}{{ product.draft }}" alt="{{ product.name }}">
+                        <img id="imageUploadView" src="{{ product.uploadPathDraft }}{{ product.draft }}" alt="{{ product.name }}">
                     </a>
                 </div>
                 <div class="modal fade" id="draftImageProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -33,7 +33,7 @@
                 </div>
             {% else %}
                 <div class="thumbnail">
-                    <img id="draftUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}">
+                    <img id="imageUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}">
                 </div>
             {% endif %}
             {{ include('base/catalog/redactor/_btn_group_draft_edit.html.twig', {'item': product}) }}

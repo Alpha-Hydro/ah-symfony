@@ -2,5 +2,6 @@
   "build/css/app.css": "/build/css/app.css",
   "build/css/dashboard.css": "/build/css/dashboard.css",
   "build/js/app.js": "/build/js/app.js",
-  "build/js/passportPdf.js": "/build/js/passportPdf.js"
+  "build/js/passportPdf.js": "/build/js/passportPdf.js",
+  "build/js/redactor.js": "/build/js/redactor.js"
 }

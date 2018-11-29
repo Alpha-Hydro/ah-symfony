@@ -8,8 +8,8 @@
                 <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-view="draftUploadView"><i class="fa fa-download" aria-hidden="true"></i></button>
             {% endif %}
         </div>
-        <form class="invisible" id="itemDraft" method="post" action="{{ path('products_draft', {'id': product.id}) }}" enctype="multipart/form-data">
-            <input type="file" id="draftUpload" name="imageUpload" accept="image/*">
+        <form id="itemDraft" class="invisible" method="post" action="{{ path('products_draft', {'id': product.id}) }}" enctype="multipart/form-data">
+            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
             <input type="hidden" name="_token" value="{{ csrf_token('draft' ~ product.id) }}">
         </form>
     {% endspaceless %}
