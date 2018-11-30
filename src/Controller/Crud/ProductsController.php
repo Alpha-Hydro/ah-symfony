@@ -10,6 +10,8 @@ use App\Repository\ProductsRepository;
 use App\Service\UploadImageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -188,17 +190,18 @@ class ProductsController extends AbstractController
      * @param Request $request
      * @param Products $product
      * @param UploadImageService $uploadImageService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function uploadDraft(Request $request, Products $product, UploadImageService $uploadImageService)
     {
         /** @var UploadedFile $file */
         $file = $request->files->get('imageUpload');
+
         if (null != $file) {
             $fileName = $uploadImageService->upload($file, $this->getParameter('upload_products_draft'));
 
             // @Todo delete old file
-            $image = new ProductDraft();
+            $image = $product->getFileDraft() ?? new ProductDraft();
             $image->setFileName($fileName);
             $product
                 ->setFileDraft($image)
@@ -210,6 +213,47 @@ class ProductsController extends AbstractController
 
         $this->getDoctrine()->getManager()->flush();
 
+        if ($request->isXmlHttpRequest()){
+            return $this->json($file->getClientOriginalName());
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/{id}/delete_draft", name="products_delete_draft", methods={"POST"})
+     * @param Request $request
+     * @param Products $product
+     * @param UploadImageService $uploadImageService
+     * @return JsonResponse|RedirectResponse
+     */
+    public function deleteDraft(Request $request, Products $product, UploadImageService $uploadImageService)
+    {
+        $result = true;
+
+        $fileDraft = $product->getFileDraft();
+        if (null != $fileDraft) {
+            $filePath = $this->getParameter('upload_products_draft') . DIRECTORY_SEPARATOR . $fileDraft->getFileName();
+            $result = $uploadImageService->delete($filePath);
+
+            $product->setFileDraft(null);
+        }
+
+        $draft = $product->getDraft();
+        if (null != $draft){
+            $filePath = $product->getUploadPathDraft() . $draft;
+            $result = $uploadImageService->delete($filePath);
+
+            $product->setDraft(null)->setUploadPathDraft(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->remove($fileDraft);
+        $em->flush();
+
+        if ($request->isXmlHttpRequest()){
+            return $this->json($result);
+        }
         return $this->redirect($request->headers->get('referer'));
     }
 }

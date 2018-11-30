@@ -2,15 +2,17 @@
     {% spaceless %}
         <div class="btn-group image-edit" role="group">
             {% if item.draft is not null %}
-                <button type="button" class="btn btn-default btn-action-img" data-img-event="download" data-view="draftUploadView"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-default btn-action-img" data-img-event="download" data-view="draftUploadView" data-path-upload="{{ path('products_draft', {'id': product.id}) }}">
+                    <i data-feather="refresh-ccw">&nbsp;</i>
+                </button>
+                <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}">
+                    <i data-feather="trash-2">&nbsp;</i>
+                </button>
             {% else %}
-                <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-view="draftUploadView"><i class="fa fa-download" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-view="draftUploadView">
+                    <i data-feather="download">&nbsp;</i>
+                </button>
             {% endif %}
         </div>
-        <form id="itemDraft" class="invisible" method="post" action="{{ path('products_draft', {'id': product.id}) }}" enctype="multipart/form-data">
-            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
-            <input type="hidden" name="_token" value="{{ csrf_token('draft' ~ product.id) }}">
-        </form>
     {% endspaceless %}
 {% endif %}

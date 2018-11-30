@@ -15,6 +15,8 @@ interface UploadImageService
 {
     public function upload(UploadedFile $file, string $uploadPath);
 
+    public function delete(string $filePath);
+
     public function generateUniqueFileName();
 
 }

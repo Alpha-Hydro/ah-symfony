@@ -9,6 +9,8 @@
 namespace App\Service;
 
 
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadImageImpl implements UploadImageService
@@ -20,7 +22,8 @@ class UploadImageImpl implements UploadImageService
      */
     public function upload(UploadedFile $file, string $uploadPath): string
     {
-        $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+        //$fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+        $fileName = $file->getClientOriginalName();
         $file->move(
             $uploadPath,
             $fileName
@@ -30,6 +33,20 @@ class UploadImageImpl implements UploadImageService
     }
 
 
+    public function delete(string $filePath)
+    {
+        $fileSystem = new Filesystem();
+        if ($fileSystem->exists($filePath)) {
+            try {
+                $fileSystem->remove($filePath);
+            } catch (IOExceptionInterface $exception){
+                return $exception->getMessage();
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @return string
      */
@@ -37,4 +54,5 @@ class UploadImageImpl implements UploadImageService
     {
         return md5(uniqid());
     }
+
 }
