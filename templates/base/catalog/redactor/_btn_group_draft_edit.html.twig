@@ -1,18 +1,20 @@
-{% if is_granted('ROLE_REDACTOR')  %}
+{% if is_granted('ROLE_REDACTOR') %}
     {% spaceless %}
         <div class="btn-group image-edit" role="group">
+            <button type="button" class="btn btn-success btn-action-img" data-img-event="download"
+                    data-view="draftUploadView" data-path-upload="{{ path('products_draft', {'id': product.id}) }}">
+                <i data-feather="download">&nbsp;</i>
+            </button>
             {% if item.draft is not null %}
-                <button type="button" class="btn btn-default btn-action-img" data-img-event="download" data-view="draftUploadView" data-path-upload="{{ path('products_draft', {'id': product.id}) }}">
-                    <i data-feather="refresh-ccw">&nbsp;</i>
-                </button>
-                <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}">
+                <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete"
+                        data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}">
                     <i data-feather="trash-2">&nbsp;</i>
                 </button>
-            {% else %}
-                <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-view="draftUploadView">
-                    <i data-feather="download">&nbsp;</i>
-                </button>
             {% endif %}
+            {#<button type="button" class="btn btn-success btn-action-img" data-img-event="download"#}
+                    {#data-view="draftUploadView" data-path-upload="{{ path('products_draft', {'id': product.id}) }}">#}
+                {#<i data-feather="download">&nbsp;</i>#}
+            {#</button>#}
         </div>
     {% endspaceless %}
 {% endif %}

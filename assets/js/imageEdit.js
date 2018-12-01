@@ -36,7 +36,14 @@ let imageEdit = {
 					console.log(response);
 					let reader = new FileReader();
 					reader.onload = function () {
-						imageOutput.src = reader.result;
+						if (imageOutput instanceof HTMLCollection){
+							for (let item of imageOutput) {
+								item.src = reader.result;
+							}
+						}
+						else{
+							imageOutput.src = reader.result;
+						}
 					};
 					reader.readAsDataURL(fileData);
 				})
@@ -46,11 +53,20 @@ let imageEdit = {
 		})
 	},
 	
-	imageDelete(pathDelete, imageOutput) {
+	imageDelete(pathDelete, imageOutput, callback) {
 		axios.post(pathDelete)
 			.then(function () {
-				imageOutput.src = '/files/images/no-foto.jpg';
-			}).catch(function (response) {
+				if (imageOutput instanceof HTMLCollection){
+					for (let item of imageOutput){
+						item.src = '/files/images/no-foto.jpg';
+					}
+				}
+				else{
+					imageOutput.src = '/files/images/no-foto.jpg';
+				}
+				callback && callback();
+			})
+			.catch(function (response) {
 				console.log(response);
 		});
 	}
