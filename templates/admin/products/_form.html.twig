@@ -1,4 +1,45 @@
+{% set uploadPathImage =  'upload/products/' %}
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            {% if product.fileImage %}
+                <img id="imageUploadView" src="{{ asset(uploadPathImage ~ product.fileImage.fileName) }}" alt="{{ product.name }}" class="card-img-top p-2">
+            {% else %}
+                <img id="imageUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}" class="card-img-top p-2">
+            {% endif %}
+            <div class="card-body text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-target="imageUploadView"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-target="imageUploadView" data-path-delete="{{ path('products_delete_image', {'id': product.id}) }}"><i data-feather="trash-2">&nbsp;</i></button>
+                </div>
+            </div>
+            <div class="d-none">
+                {{ form_widget(form.imageUpload,  {'id': 'imageUpload', 'attr': {'assept' : 'image/*', 'class' : 'd-none'} }) }}
+            </div>
+        </div>
+        <div class="card">
+            {% if product.fileDraft %}
+                <img id="draftUploadView" src="{{ asset(uploadPathImage ~ 'draft/' ~ product.fileDraft.fileName) }}" alt="{{ product.name }}" class="card-img-top p-2">
+            {% else %}
+                <img id="draftUploadView" src="{{ asset('files/images/no-foto.jpg') }}" alt="{{ product.name }}" class="card-img-top p-2">
+            {% endif %}
+            <div class="card-body text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-target="draftUploadView"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-target="draftUploadView" data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}"><i data-feather="trash-2">&nbsp;</i></button>
+                </div>
+            </div>
+            <div class="d-none">
+                {{ form_widget(form.draftUpload,  {'id': 'draftUpload', 'attr': {'assept' : 'image/*', 'class' : 'd-none'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        {{ form_widget(form) }}
+    </div>
+</div>
+
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

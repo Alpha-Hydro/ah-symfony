@@ -1,14 +1,14 @@
 {% spaceless %}
 <div class="product-images">
     <div class="row">
-        {#<div class="col-xs-6 col-sm-12">
-            {% if product.image is not null and product.image != '' %}
+        {% if product.fileImage %}
+            <div class="col-xs-6 col-sm-12">
                 <div class="thumbnail">
                     <img id="imageUploadView" src="{{ product.uploadPath }}{{ product.image }}"
                          alt="{{ product.name }}">
                 </div>
-            {% endif %}
-        </div>#}
+            </div>
+        {% endif %}
         <div class="col-xs-6 col-sm-12">
             {% if product.draft is not null and product.draft != '' %}
                 <div class="thumbnail">

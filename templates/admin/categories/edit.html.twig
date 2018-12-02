@@ -1,8 +1,8 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{category.name}} - Edit Categories{% endblock %}
+{% set pageTitle = category.name %}
 
-{% block pageHeader %}<h1 class="display-4 mb-4">{{ category.name }}</h1>{% endblock %}
+{% block title %}{{pageTitle}} - Edit Categories{% endblock %}
 
 {% block body %}
 

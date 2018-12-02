@@ -62,7 +62,7 @@ class ProductsController extends AbstractController
 
         $products->setDeleted(!$isDeleted);
 
-        if ($isDeleted === true){
+        if ($isDeleted === true) {
             $products->setActive(false);
         }
 
@@ -207,13 +207,12 @@ class ProductsController extends AbstractController
                 ->setFileDraft($image)
                 // @Todo template is draft file name ???
                 ->setDraft($fileName)
-                ->setUploadPathDraft(self::UPLOAD_PATH_DRAFT)
-            ;
+                ->setUploadPathDraft(self::UPLOAD_PATH_DRAFT);
         }
 
         $this->getDoctrine()->getManager()->flush();
 
-        if ($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()) {
             return $this->json($file->getClientOriginalName());
         }
         return $this->redirect($request->headers->get('referer'));
@@ -239,7 +238,7 @@ class ProductsController extends AbstractController
         }
 
         $draft = $product->getDraft();
-        if (null != $draft){
+        if (null != $draft) {
             $filePath = $product->getUploadPathDraft() . $draft;
             $result = $uploadImageService->delete($filePath);
 
@@ -251,7 +250,78 @@ class ProductsController extends AbstractController
         $em->remove($fileDraft);
         $em->flush();
 
-        if ($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()) {
+            return $this->json($result);
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/{id}/image", name="products_image", methods={"POST"})
+     * @param Request $request
+     * @param Products $product
+     * @param UploadImageService $uploadImageService
+     * @return JsonResponse|RedirectResponse
+     */
+    public function uploadImage(Request $request, Products $product, UploadImageService $uploadImageService)
+    {
+        /** @var UploadedFile $file */
+        $file = $request->files->get('imageUpload');
+
+        if (null != $file) {
+            $fileName = $uploadImageService->upload($file, $this->getParameter('upload_products'));
+
+            // @Todo delete old file
+            $image = $product->getFileImage() ?? new ProductImages();
+            $image->setFileName($fileName);
+            $product
+                ->setFileImage($image)
+                // @Todo template is draft file name ???
+                ->setImage($fileName)
+                ->setUploadPath(self::UPLOAD_PATH);
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json($file->getClientOriginalName());
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/{id}/delete_image", name="products_delete_image", methods={"POST"})
+     * @param Request $request
+     * @param Products $product
+     * @param UploadImageService $uploadImageService
+     * @return JsonResponse|RedirectResponse
+     */
+    public function deleteImage(Request $request, Products $product, UploadImageService $uploadImageService)
+    {
+        $result = true;
+
+        $fileImage = $product->getFileImage();
+        if (null != $fileImage) {
+            $filePath = $this->getParameter('upload_products') . DIRECTORY_SEPARATOR . $fileImage->getFileName();
+            $result = $uploadImageService->delete($filePath);
+
+            $product->setFileImage(null);
+        }
+
+        $image = $product->getImage();
+        if (null != $image) {
+            $filePath = $product->getUploadPath() . $image;
+            $result = $uploadImageService->delete($filePath);
+
+            $product->setImage(null)->setUploadPath(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->remove($fileImage);
+        $em->flush();
+
+        if ($request->isXmlHttpRequest()) {
             return $this->json($result);
         }
         return $this->redirect($request->headers->get('referer'));

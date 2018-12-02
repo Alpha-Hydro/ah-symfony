@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductsRepository")
@@ -84,6 +85,12 @@ class Products extends BaseEntity
      * @ORM\OneToOne(targetEntity="App\Entity\ProductDraft", cascade={"persist", "remove"})
      */
     private $fileDraft;
+
+    /**
+     * @Assert\File(mimeTypes={ "image/jpeg","image/jpg","image/png","application/pdf" })
+     */
+    private $draftUpload;
+
 
     public function __construct()
     {
@@ -286,6 +293,24 @@ class Products extends BaseEntity
     {
         $this->fileDraft = $fileDraft;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDraftUpload()
+    {
+        return $this->draftUpload;
+    }
+
+    /**
+     * @param mixed $draftUpload
+     * @return Products
+     */
+    public function setDraftUpload($draftUpload)
+    {
+        $this->draftUpload = $draftUpload;
         return $this;
     }
 }

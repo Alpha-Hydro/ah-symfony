@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% spaceless %}
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -22,13 +23,12 @@
             {{ include('admin/components/_sidebar.html.twig') }}
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                 {% block pageHeader %}
-                    <h1 class="display-4">{{ pageTitle | default('Alpha-Hydro')}}</h1>
+                    <h1 class="display-4 mb-4">{{ pageTitle | default('Alpha-Hydro')}}</h1>
                 {% endblock %}
                 {% block body %}{% endblock %}
             </main>
         </div>
     </div>
-
 </div>
 
 <footer class="app-footer">
@@ -48,3 +48,4 @@
 {% endblock %}
 </body>
 </html>
+{% endspaceless %}
