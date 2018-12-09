@@ -1,7 +1,23 @@
 const axios = require("axios");
 
 let imageEdit = {
-	imageUpload(inputFile, imageOutput, callback) {
+	imageEvent(btnEvent, inputFile){
+		btnEvent.click(function (e) {
+			e.preventDefault();
+			
+			let imgEvent = this.dataset.imgEvent;
+			let imageView = document.getElementById(this.dataset.target);
+			
+			if(imgEvent === 'download'){
+				imageEdit.imageUpload(inputFile, imageView);
+			}
+			if (imgEvent === 'delete') {
+				imageEdit.imageDelete(this.dataset.pathDelete, imageView);
+			}
+		});
+	},
+	
+	imageUpload(inputFile, imageOutput) {
 		inputFile.click();
 		
 		inputFile.addEventListener('change', function (event) {
@@ -9,12 +25,12 @@ let imageEdit = {
 			
 			let reader = new FileReader();
 			reader.onload = function () {
+				console.log(imageOutput);
 				imageOutput.src = reader.result;
 			};
 			reader.readAsDataURL(input.files[0]);
-			
-			callback && callback();
 		});
+		return false;
 	},
 	
 	imageUploadAjax(url, imageOutput){

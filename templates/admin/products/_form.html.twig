@@ -27,8 +27,8 @@
             {% endif %}
             <div class="card-body text-center">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success btn-action-img" data-img-event="download" data-target="draftUploadView"><i data-feather="download">&nbsp;</i></button>
-                    <button type="button" class="btn btn-danger btn-action-img" data-img-event="delete" data-target="draftUploadView" data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}"><i data-feather="trash-2">&nbsp;</i></button>
+                    <button type="button" class="btn btn-success btn-action-draft" data-img-event="download" data-target="draftUploadView"><i data-feather="download">&nbsp;</i></button>
+                    <button type="button" class="btn btn-danger btn-action-draft" data-img-event="delete" data-target="draftUploadView" data-path-delete="{{ path('products_delete_draft', {'id': product.id}) }}"><i data-feather="trash-2">&nbsp;</i></button>
                 </div>
             </div>
             <div class="d-none">
