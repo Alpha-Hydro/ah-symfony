@@ -23,14 +23,6 @@
     </div>
 {% endblock %}
 
-{% set galleryImage = [
-    {"img":"IMG_5130s.jpg", "thumb":"IMG_5130s_thumb.jpg", "ofset":""},
-    {"img":"IMG_5140s2.jpg", "thumb":"IMG_5140s2_thumb.jpg", "ofset":""},
-    {"img":"IMG_5145as.jpg", "thumb":"IMG_5145as_thumb.jpg", "ofset":""},
-    {"img":"IMG_5164s.jpg", "thumb":"IMG_5164s_thumb.jpg", "ofset":"col-md-offset-2"},
-    {"img":"IMG_5170s.jpg", "thumb":"IMG_5170s_thumb.jpg", "ofset":""},
-] %}
-
 {% block body %}
     <div class="col-md-9">
         <div class="mt2">
@@ -53,39 +45,31 @@
             <p>С уважением, Коллектив ALPHA-HYDRO</p>
         </div>
         <hr/>
-        <div class="popup-gallery mt2">
-            {% for image in galleryImage %}
-                <div class="col-md-4 {{ image.ofset }} item">
-                    <a href="{{ asset('upload/about/' ~ image.img) }}" class="thumbnail">
-                        <img src="{{ asset('upload/about/thumbs/' ~ image.thumb) }}" alt="">
-                    </a>
+    </div>
+    <div class="flex-box col-3">
+        <div class="flex-box-item card hover">
+            <a href="/files/pdf/ALPHA-HYDRO-GOST.pdf" target="_blank">
+                <div class="card-image"><img src="/files/images/about/GOST.jpg"></div>
+                <div class="card-title bottom text-center">
+                    Сертификат соответствия ГОСТ
                 </div>
-            {% endfor %}
+            </a>
+        </div>
+        <div class="flex-box-item card hover">
+            <a href="/files/pdf/WandfluhAG-ALPHA-HYDRO-reseller.pdf" target="_blank">
+                <div class="card-image"><img src="/files/images/about/Wandfluh_reseller.jpg"></div>
+                <div class="card-title bottom text-center">
+                    Сертификат представителя WANDFLUH AG Hydraulics + Electronics
+                </div>
+            </a>
+        </div>
+        <div class="flex-box-item card hover">
+            <a href="/files/pdf/Wandfluh-sootv.pdf" target="_blank">
+                <div class="card-image"><img src="/files/images/about/Wandfluh_sootv.jpg"></div>
+                <div class="card-title bottom text-center">
+                    Таможенный сертификат
+                </div>
+            </a>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('ah-bs3/js/magnific/jquery.magnific-popup.min.js') }}"></script>
-    <script>
-			(function ($) {
-				return $('.popup-gallery').magnificPopup({
-					delegate: 'a',
-					type: 'image',
-					mainClass: 'mfp-img-mobile',
-					gallery: {
-						enabled: true,
-						navigateByImgClick: true,
-						preload: [0, 1]
-					},
-					image: {
-						tError: 'The image could not be loaded.',
-						titleSrc: function (item) {
-							return item.el.attr('title');
-						}
-					}
-				});
-			})(jQuery);
-    </script>
 {% endblock %}
